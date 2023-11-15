@@ -14,7 +14,51 @@
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
+<script type="text/javascript">
+	$(function(){
+$("#search").keyup(function(){
+			
+			var search=$(this).val();
+			//alert(search);
+			
+			$.ajax({
+				type:"get",
+				dataType:"json",
+				url:"/search/result",
+				data:{"search":search},
+				success:function(res){
+					var s="";
+					
+					$.each(res,function(i,dto){
+						s+="<b onclick='selectSearch()' class='searchResult'style='font-size: 15pt;'>"+dto+"</b><br>"
+					});
+					
+					if(search==""){
+						$("#result").html("");
+					}
+					else{
+						$("#result").html(s);
+					}
+				}
+			});
+		});
+	});
+	
+	function selectSearch() {
+		$(document).on("click","b.searchResult",function(event){
+			var s=$(this).html();
+			//alert(s);
+			
+			$("#search").val(s);
+			$("#result").html("");
+		});
+	}
+</script>
 <style type="text/css">
+.searchResult{
+	cursor: pointer;
+}
+
 nav{
 	font-size: 1.5em;
 }
@@ -52,9 +96,10 @@ nav{
 				<div class="input-group w-25" >
 					<input type="search" class="form-control rounded"
 						placeholder="Search" aria-label="Search"
-						aria-describedby="search-addon" />
+						aria-describedby="search-addon" id="search"/>
 					<button type="button" class="btn btn-dark" onclick="location.href='/loginform'">search</button>
 				</div>
+				
 
 				<!-- 장바구니 -->
 				<!-- <form class="d-flex">
@@ -64,6 +109,7 @@ nav{
 					</button>
 				</form> -->
 			</div>
+			<div id="result"></div>
 		</div>
 	</nav>
 </body>
