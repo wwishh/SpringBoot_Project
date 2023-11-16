@@ -97,7 +97,7 @@ nav{
 					<input type="search" class="form-control rounded"
 						placeholder="Search" aria-label="Search"
 						aria-describedby="search-addon" id="search"/>
-					<button type="button" class="btn btn-dark" onclick="location.href='/loginform'">search</button>
+					<button type="button" class="btn btn-dark" onclick="location.href='/search'">search</button>
 				</div>
 				
 
