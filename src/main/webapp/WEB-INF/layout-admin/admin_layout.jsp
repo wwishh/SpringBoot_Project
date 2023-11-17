@@ -14,12 +14,8 @@
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>admin_layout</title>
-
 </head>
 <body>
-
-
-
 
 	<!-- Bootstrap core JS-->
 	<script
@@ -31,9 +27,9 @@
 		<div class="main" >
 			<tiles:insertAttribute name="main" />
 		</div>
-		<%-- <div class="menu" >
+		<div class="menu" >
 			<tiles:insertAttribute name="menu" />
-		</div> --%>
+		</div>
 	</div>
 
 </body>
