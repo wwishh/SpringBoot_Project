@@ -379,8 +379,18 @@ select:disabled {
   display: none !important;
 }
 
-
-
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+button:not(:disabled),
+[type=button]:not(:disabled),
+[type=reset]:not(:disabled),
+[type=submit]:not(:disabled) {
+  cursor: pointer;
+}
 
 ::-moz-focus-inner {
   padding: 0;
@@ -7736,6 +7746,10 @@ textarea.form-control-lg {
   padding-left: 1rem !important;
 }
 
+.sort{
+	  float: right;
+  }
+
 .px-4 {
   padding-right: 1.5rem !important;
   padding-left: 1.5rem !important;
@@ -7777,7 +7791,7 @@ textarea.form-control-lg {
 }
 
 .pt-0 {
-  padding-top: 0 !important;
+  padding-top: 0 !important;  
 }
 
 .pt-1 {
@@ -10812,5 +10826,9 @@ textarea.form-control-lg {
   }
   .d-print-none {
     display: none !important;
+  }
+  .hidden{
+	  overflow: hidden;
+	  position: absolute;
   }
 }

@@ -2,38 +2,28 @@ package boot.data.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
 	
 	@GetMapping("/")
 	public String index() {
-		return "/1/layout/main";
+		return "/layout/main";
 	}
 	
-	@GetMapping("/detail")
+	@GetMapping("/index2")
 	public String index2() {
-		return"/2/detail/detail";
+		return "/category/layout/main";
 	}
 	
-	@GetMapping("/search")
+	@GetMapping("/index3")
 	public String index3() {
-		return"/3/search2/search2";
+		return "/detail/layout/main";
 	}
 	
-	@GetMapping("/admin")
-	public String adminIndex() {
-		return"/admin/layout-admin/admin_main";
+	@GetMapping("/loginform")
+	public String loginform() {
+		return "/index/login/main";
 	}
-	
-	/*
-	 * @GetMapping("/index2") public String index2() { return "/layout2/category"; }
-	 * 
-	 * @GetMapping("/index3") public String index3() { return "/layout/detail"; }
-	 * 
-	 * @GetMapping("/loginform") public String loginform() { return
-	 * "/index/login/main"; }
-	 */
 	
 }
