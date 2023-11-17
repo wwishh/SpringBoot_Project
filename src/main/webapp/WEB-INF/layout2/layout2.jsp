@@ -26,20 +26,6 @@
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
-<!-- <style type="text/css">
-	.menu{
-		background-color: blue;
-	}
-	.header{
-	background-color: yellow;
-	}
-	.main{
-	background-color: red;
-	}
-	.footer{
-	background-color: gray;
-	}
-</style> -->
 </head>
 <body>
 
@@ -52,12 +38,9 @@
 	<!-- Core theme JS-->
 	<script src="js/scripts.js"></script>
 
-	<div class="layout">
+	<div class="layout2">
 		<div class="menu">
 			<tiles:insertAttribute name="menu" />
-		</div>
-		<div class="header">
-			<tiles:insertAttribute name="header" />
 		</div>
 		<div class="main">
 			<tiles:insertAttribute name="main" />
