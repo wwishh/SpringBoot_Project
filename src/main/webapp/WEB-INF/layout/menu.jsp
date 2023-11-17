@@ -45,20 +45,20 @@
       });
 
       $("#search").keypress(function(e){
-			//검색어 입력 후 엔터키 입력하면 조회버튼 클릭
-			if(e.keyCode && e.keyCode == 13){
-				$("#btnsearch").trigger("click");
-				return false;
-			}
-			//엔터키 막기
-			if(e.keyCode && e.keyCode == 13){
-				  e.preventDefault();	
-			}
-		});
+         //검색어 입력 후 엔터키 입력하면 조회버튼 클릭
+         if(e.keyCode && e.keyCode == 13){
+            $("#btnsearch").trigger("click");
+            return false;
+         }
+         //엔터키 막기
+         if(e.keyCode && e.keyCode == 13){
+              e.preventDefault();   
+         }
+      });
       
       $("#btnsearch").click(function(){
-			alert("이벤트 감지");
-		});
+         alert("이벤트 감지");
+      });
    });
    
    function selectSearch() {
@@ -73,12 +73,12 @@
    
    
    $(document).on("mouseover",".searchResult", function(event){
-		$(this).css("background-color", "lightgray");
-	});
-	
-	$(document).on("mouseout",".searchResult", function(event){
-		$(this).css("background-color", "white");
-	}); 
+      $(this).css("background-color", "lightgray");
+   });
+   
+   $(document).on("mouseout",".searchResult", function(event){
+      $(this).css("background-color", "white");
+   }); 
 </script>
 <style type="text/css">
 .searchResult{
@@ -118,16 +118,15 @@ nav{
             </ul>
             
             
-
             <!-- 검색창 -->
             <div class="input-group w-25" >
                <input type="search" class="form-control rounded"
                   placeholder="Search" aria-label="Search"
                   aria-describedby="search-addon" id="search"/>
-               <button type="button" id="btnsearch" class="btn btn-dark" onclick="location.href='/loginform'">search</button>
-               
-               
+               <button type="button" class="btn btn-dark" onclick="location.href='/search'">search</button>
             </div>
+            
+
             <div id="result"></div>
             
 
