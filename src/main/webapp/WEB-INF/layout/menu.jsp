@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
@@ -7,11 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+   rel="stylesheet">
 <link
-	href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
-	rel="stylesheet">
+   href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
+   rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
 
@@ -81,8 +81,12 @@
    }); 
 </script>
 <style type="text/css">
+.searchResult{
+   cursor: pointer;
+}
+
 nav{
-	font-size: 1.5em;
+   font-size: 1.5em;
 }
 </style>
 </head>
@@ -118,19 +122,26 @@ nav{
 				<div class="input-group w-25" >
 					<input type="search" class="form-control rounded"
 						placeholder="Search" aria-label="Search"
-						aria-describedby="search-addon" />
-					<button type="button" class="btn btn-dark" onclick="location.href='/loginform'">search</button>
+						aria-describedby="search-addon" id="search"/>
+					<button type="button" class="btn btn-dark" onclick="location.href='/search'">search</button>
 				</div>
+				
 
-				<!-- 장바구니 -->
-				<!-- <form class="d-flex">
-					<button class="btn btn-outline-dark" type="submit">
-						<i class="bi-cart-fill me-1"></i> Cart <span
-							class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-					</button>
-				</form> -->
-			</div>
-		</div>
-	</nav>
+            <div id="result"></div>
+            
+
+            <!-- 장바구니 -->
+            <!-- <form class="d-flex">
+               <button class="btn btn-outline-dark" type="submit">
+                  <i class="bi-cart-fill me-1"></i> Cart <span
+                     class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+               </button>
+            </form> -->
+         </div>
+         
+      </div>
+
+   </nav>
+         
 </body>
 </html>

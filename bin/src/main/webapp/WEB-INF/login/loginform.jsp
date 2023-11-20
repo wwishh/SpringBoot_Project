@@ -22,7 +22,9 @@
 			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
 				<div class="card card-signin my-5">
 					<div class="card-body">
-						<h5 class="card-title text-center"><b>Log In</b></h5>
+						<h5 class="card-title text-center">
+							<b>Log In</b>
+						</h5>
 						<form class="form-signin " method="post" action="login">
 							<div class="form-label-group">
 								<input type="text" id="id" name="id" class="form-control"
@@ -58,17 +60,23 @@
 	</div>
 
 	<script type="text/javascript">
-  function findid(){
-		var url="find_id_form";
-		
-		window.open(url, "_blank_1", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=500, height=500");
-	}
-  
-  function findpassword(){
-	  var url="find_password_form";
-	  
-	  window.open(url, "_blank_1", "toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=500, height=500");
-  }
+		function findid() {
+			var url = "find_id_form";
+
+			window
+					.open(url, "_blank_1",
+							"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=500, height=500");
+		}
+
+		function findpassword() {
+			var url = "find_password_form";
+
+			window
+					.open(url, "_blank_1",
+							"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=500, height=500");
+		}
+	</script>
+
 
 </body>
 </html>

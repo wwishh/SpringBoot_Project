@@ -13,9 +13,7 @@
 	href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
 <title>Insert title here</title>
-
 </head>
 <body>
 	<!-- Section-->
@@ -40,7 +38,7 @@
 						<!-- Product actions-->
 						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="/index3">View
+								<a class="btn btn-outline-dark mt-auto" href="/detail">View
 									options</a>
 							</div>
 						</div>

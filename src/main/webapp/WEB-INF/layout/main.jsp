@@ -18,7 +18,7 @@
 <body>
 	<!-- Section-->
 	<section class="py-3">
-		<div class="container px-4 px-lg-5 mt-5">			
+		<div class="container px-4 px-lg-5 mt-5">
 			<div class="sort">
 				<div class="sort_insert">
 					<a href="/insert">글쓰기</a>
@@ -74,7 +74,7 @@
 						<!-- Product actions-->
 						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="/index3">View
+								<a class="btn btn-outline-dark mt-auto" href="/detail">View
 									options</a>
 							</div>
 						</div>
@@ -288,7 +288,6 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</section>
 </body>

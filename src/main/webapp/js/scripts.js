@@ -9,6 +9,7 @@
 //header slider
 $("#carouselExampleControls").carousel();
 
+/*	HC's_js	--	start	*/
 function listShow() {
 		document.getElementById("listType").style.display = "";
 		document.getElementById("cardType").style.display = "none";
@@ -17,3 +18,4 @@ function listShow() {
 		document.getElementById("listType").style.display = "none";
 		document.getElementById("cardType").style.display = "";
 	}
+/*	HC's_js	--	end	*/
