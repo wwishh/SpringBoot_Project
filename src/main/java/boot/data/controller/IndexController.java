@@ -26,4 +26,9 @@ public class IndexController {
 		return "/index/login/main";
 	}
 	
+	@GetMapping("/insert")
+	public String insert() {
+		return "/detail/layout/main";
+	}
+	
 }

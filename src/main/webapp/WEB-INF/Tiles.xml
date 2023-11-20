@@ -56,11 +56,10 @@
    	<put-attribute name="main" value="/WEB-INF/{1}/{2}.jsp"></put-attribute>
    </definition>
    
-   <!-- 레이아웃4, Login page -->
-   <definition name="layout4" template="/WEB-INF/layout/layout4.jsp">
-      <put-attribute name="menu" value="/WEB-INF/layout/menu.jsp"/>
-      <put-attribute name="login" value="/WEB-INF/login/loginform.jsp"/>
-      <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp"/>
+   <!-- admin_레이아웃 -->
+   <definition name="admin_layout" template="/WEB-INF/layout-admin/admin_layout.jsp">
+      <put-attribute name="main" value="/WEB-INF/layout-admin/admin_main.jsp"/>
+      <put-attribute name="menu" value="/WEB-INF/layout-admin/admin_menu.jsp"/> 
    </definition>
    
    <!-- wild card 레이아웃4 -->

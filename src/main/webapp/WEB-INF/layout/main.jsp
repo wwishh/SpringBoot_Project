@@ -19,7 +19,7 @@
 	<!-- Section-->
 	<section class="py-3">
 		<div class="container px-4 px-lg-5 mt-5">			
-			<div class="sort">
+			<div class="sort_listType">
 				<!-- is Selected -->
 				<span class="blind" class="sort_card" onclick="cardShow()">
 					<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 92 92" enable-background="new 0 0 92 92" xml:space="preserve">
