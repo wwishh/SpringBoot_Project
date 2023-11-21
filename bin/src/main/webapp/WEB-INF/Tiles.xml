@@ -46,7 +46,11 @@
    <!-- admin_레이아웃 -->
    <definition name="admin_layout" template="/WEB-INF/layout-admin/admin_layout.jsp">
       <put-attribute name="main" value="/WEB-INF/layout-admin/admin_main.jsp"/>
+<<<<<<< HEAD
      <!--  <put-attribute name="menu" value="/WEB-INF/layout-admin/admin_menu.jsp"/> -->
+=======
+      <put-attribute name="menu" value="/WEB-INF/layout-admin/admin_menu.jsp"/> 
+>>>>>>> 9cb86d5c2071f06dd7f871fea0f3eb25a6d9f4a3
    </definition>
    
    <!-- wild card admin_레이아웃 -->

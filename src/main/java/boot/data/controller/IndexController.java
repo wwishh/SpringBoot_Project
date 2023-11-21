@@ -36,4 +36,9 @@ public class IndexController {
 	 * "/index/login/main"; }
 	 */
 	
+	
+	@GetMapping("/insert")
+	public String insert() {
+		return"/2/Product/P_insert";
+	}
 }
