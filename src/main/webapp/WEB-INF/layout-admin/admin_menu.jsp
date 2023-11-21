@@ -64,7 +64,7 @@
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                        <a href="index.html">
+                        <a href="admin">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
@@ -72,13 +72,13 @@
                     <li>
                         <a href="pages/typography.html">
                             <i class="material-icons">text_fields</i>
-                            <span>Typography</span>
+                            <span>개인회원정보</span>
                         </a>
                     </li>
                     <li>
-                        <a href="pages/helper-classes.html">
+                        <a href="notice">
                             <i class="material-icons">layers</i>
-                            <span>Helper Classes</span>
+                            <span>공지사항</span>
                         </a>
                     </li>
                     <li>
@@ -88,7 +88,7 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
+                                <a href="javascript:void(0); " class="menu-toggle">
                                     <span>Cards</span>
                                 </a>
                                 <ul class="ml-menu">
@@ -404,10 +404,16 @@
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2016 - 2017 <a href="javascript:void(0);">AdminBSB - Material Design</a>.
+                    &copy; 2023 - 2024 <a href="javascript:void(0);">Admin Page</a>.
                 </div>
                 <div class="version">
-                    <b>Version: </b> 1.0.5
+                    <b>오늘 날짜 : </b> 
+                  
+					    <script>
+					        date = new Date().toLocaleDateString();
+					        document.write(date);
+					    </script>
+					
                 </div>
             </div>
             <!-- #Footer -->
