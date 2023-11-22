@@ -30,6 +30,7 @@
 <script>
 $(function(){
     $("#btnsearch2").click(function(e){
+    	
        
        var search=$("#search2").val();
        var option= $("#selOption").val();
@@ -107,7 +108,7 @@ $(function(){
 
   <div class="input-group w-25" >
       <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"
-       id="search2" autocomplete="off" value="${search}"/>
+       id="search2" autocomplete="off"/>
       <input type="button" value="버튼" id="btnsearch2" class="btn btn-dark">
      </div>
      <div id=search>
