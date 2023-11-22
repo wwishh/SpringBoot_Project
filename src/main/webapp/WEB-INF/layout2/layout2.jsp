@@ -26,6 +26,7 @@
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
+<link href="css/BinggraeFont.css" rel="stylesheet" />
 </head>
 <body>
 
