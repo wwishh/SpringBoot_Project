@@ -12,4 +12,7 @@ public interface SearchMapperInter {
 	
 	//최근 검색 기능
 	public List<String> searchSave(String s_id);
+	
+	//인기 검색어 기능(10개)
+	public List<String> bestsearch();
 }

@@ -21,6 +21,16 @@
          var search=$(this).val();
          //alert(search);
          
+         //검색창에 검색어 입력시 다른 div hide
+         if($("#search").val() != ""){
+       	  $("#recent").hide();
+       	  $("#best").hide();
+         }
+         else{
+       	  $("#recent").show();
+       	  $("#best").show();
+         }
+         
          $.ajax({
             type:"get",
             dataType:"json",
@@ -30,7 +40,7 @@
                var s="";
                
                $.each(res,function(i,dto){
-                   s+="<div id='eachdiv'>"
+                   s+="<div class='eachdiv'>"
                    s+="<b onclick='selectSearch()' class='searchResult'style='font-size: 15pt;'>"+dto+"</b><br>"
                    s+="</div>"
                 });
@@ -67,6 +77,13 @@
     	 
     	 $("#search").val(recentSearch);
       });
+      
+      //인기 검색어 클릭시 검색창에 값 받아오기
+      $(".bestsearch").click(function(){
+     	 var recentSearch=$(this).children("span").html();
+     	 
+     	 $("#search").val(recentSearch);
+       });
       
    });
    
@@ -117,12 +134,6 @@
    }); 
 </script>
 <style type="text/css">
-html,body{
-	width: 100%;
-	height: 100%;
-	padding: 0px;
-	margin: 0px;
-}
 .searchResult{
    cursor: pointer;
 }
@@ -144,13 +155,28 @@ html,body{
 	padding: 5px 5px 5px 5px;
 	cursor: pointer;
 }
+.bestsearch{
+	cursor: pointer;
+	width: 200px;
+	margin: 7px 0px 7px 0px; 
+}
+#bestdiv1{
+	width: 500px;
+}
+#bestdiv2{
+	width: 500px;
+}
+#best{
+	width: 1000px;
+	display: inline-flex;
+}
 </style>
 </head>
 <body>
    <div class="input-group w-50">
       <input type="search" class="form-control rounded" placeholder="상품을 입력하세요" aria-label="Search" aria-describedby="search-addon"
        id="search" autocomplete="off"/>
-      <input type="hidden" id="btnsearch" class="btn btn-dark" onclick="location.href='/loginform'">
+      <input type="hidden" id="btnsearch" class="btn btn-dark" onclick="location.href=''">
     </div>
     
     <div id="recent">
@@ -158,6 +184,26 @@ html,body{
 	    <c:forEach var="dto" items="${list }" varStatus="i">
 	    	<div class="recentsearch">${dto }</div>
 	    </c:forEach>
+    </div>
+    <br>
+    <div>
+    	<b>인기 검색어</b><br>
+    	<div id="best">
+    	<div id="bestdiv1">
+	    	<c:forEach var="title" items="${title }" varStatus="i">
+	    		<c:if test="${i.count <= 5}">
+	    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
+	    		</c:if>
+	    	</c:forEach>
+    	</div>
+    	<div id="bestdiv2">
+	    	<c:forEach var="title" items="${title }" varStatus="i">
+	    		<c:if test="${i.count > 5}">
+	    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
+	    		</c:if>
+	    	</c:forEach>
+    	</div>
+    	</div>
     </div>
     
     <div id="result"></div>
