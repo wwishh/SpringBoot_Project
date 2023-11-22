@@ -6,4 +6,8 @@
 	<select id="sangSearch" parameterType="String" resultType="String">
   		select j_title from junggosangpum where j_title like concat('%',#{search},'%')  order by j_title limit 5
   	</select>
+  	
+  	<select id="searchSave" parameterType="String" resultType="String">
+  		select s_searchword from searchsave where s_id=#{s_id} order by s_num desc
+  	</select>
 </mapper>

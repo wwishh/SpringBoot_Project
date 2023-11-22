@@ -30,13 +30,9 @@
                var s="";
                
                $.each(res,function(i,dto){
-                  
+                   s+="<div id='eachdiv'>"
                    s+="<b onclick='selectSearch()' class='searchResult'style='font-size: 15pt;'>"+dto+"</b><br>"
-                   $(document).on("keydown","#search", function(event){
-                        if(event.keyCode==40){
-                               $(".searchResult:eq(0)").css("background-color", "lightgray");
-                            }
-                   });
+                   s+="</div>"
                 });
                
                if(search==""){
@@ -57,14 +53,50 @@
          }
          //엔터키 막기
          if(e.keyCode && e.keyCode == 13){
-              e.preventDefault();   
+              e.preventDefault();
          }
       });
       
       $("#btnsearch").click(function(){
          alert("이벤트 감지");
       });
+      
+      //최근 검색어 클릭시 검색창에 값 받아오기
+      $(".recentsearch").click(function(){
+    	 var recentSearch=$(this).html();
+    	 
+    	 $("#search").val(recentSearch);
+      });
+      
    });
+   
+	// 방향키 이벤트
+   var selectedIndex = -1; // 초기 선택 인덱스
+     document.addEventListener('keydown', function(event) {
+        switch(event.key) {
+           case 'ArrowUp':
+              // 위쪽 방향키 눌렸을 때의 동작
+              if (selectedIndex > 0) {
+                 // 이전 선택 취소
+                 $(".searchResult:eq(" + selectedIndex + ")").css("background-color", "white");
+                 // 현재 선택
+                 selectedIndex--;
+                 $(".searchResult:eq(" + selectedIndex + ")").css("background-color", "lightgray");
+              }
+              break;
+           case 'ArrowDown':
+              // 아래쪽 방향키 눌렸을 때의 동작
+              if (selectedIndex < $(".searchResult").length - 1) {
+                 // 이전 선택 취소
+                 $(".searchResult:eq(" + selectedIndex + ")").css("background-color", "white");
+                 // 현재 선택
+                 selectedIndex++;
+                 $(".searchResult:eq(" + selectedIndex + ")").css("background-color", "lightgray");
+              }
+              break;
+        }
+     });
+   
    
    function selectSearch() {
        $(document).on("click","b.searchResult",function(event){
@@ -76,12 +108,6 @@
        });
     }
    
-   /* $(document).on("keydown","#search", function(event){
-      if(event.keyCode==40){
-         $(".searchResult").css("background-color", "lightgray");
-      }
-   }); */
-   
    $(document).on("mouseover",".searchResult", function(event){
       $(this).css("background-color", "lightgray");
    });
@@ -91,17 +117,51 @@
    }); 
 </script>
 <style type="text/css">
+html,body{
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+}
 .searchResult{
    cursor: pointer;
+}
+#search{
+	left: 50%;
+	top: 100px;
+}
+#result{
+	text-align: center;
+	margin-top: 110px;
+}
+.recentsearch{
+	display: inline-block;
+	border: 1px solid gray;
+	border-radius: 30px;
+	width: auto;
+	height: auto;
+	text-align: center;
+	padding: 5px 5px 5px 5px;
+	cursor: pointer;
 }
 </style>
 </head>
 <body>
-   <div class="input-group w-25" >
-      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"
+   <div class="input-group w-50">
+      <input type="search" class="form-control rounded" placeholder="상품을 입력하세요" aria-label="Search" aria-describedby="search-addon"
        id="search" autocomplete="off"/>
       <input type="hidden" id="btnsearch" class="btn btn-dark" onclick="location.href='/loginform'">
-     </div>
-   <div id="result"></div>
+    </div>
+    
+    <div id="recent">
+	    <b>최근 검색어</b><br>
+	    <c:forEach var="dto" items="${list }" varStatus="i">
+	    	<div class="recentsearch">${dto }</div>
+	    </c:forEach>
+    </div>
+    
+    <div id="result"></div>
+    
+    
 </body>
 </html>

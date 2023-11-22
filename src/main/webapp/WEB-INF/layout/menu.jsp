@@ -120,10 +120,7 @@ nav{
 				
 				<!-- 검색창 -->
 				<div class="input-group w-25" >
-					<input type="search" class="form-control rounded"
-						placeholder="Search" aria-label="Search"
-						aria-describedby="search-addon" id="search"/>
-					<button type="button" class="btn btn-dark" onclick="location.href='/search'">search</button>
+					<i class="bi bi-search" onclick="location.href='/search?s_id=test'" style="cursor: pointer;"></i>
 				</div>
 				
 
