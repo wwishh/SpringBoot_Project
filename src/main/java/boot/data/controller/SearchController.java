@@ -20,7 +20,5 @@ public class SearchController {
 	public List<String> result(String search) {
 		return inter.sangSearch(search);
 	}
-
-	
 	
 }

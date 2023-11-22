@@ -24,11 +24,11 @@
          //검색창에 검색어 입력시 다른 div hide
          if($("#search").val() != ""){
        	  $("#recent").hide();
-       	  $("#best").hide();
+       	  $("#bestsearchword").hide();
          }
          else{
        	  $("#recent").show();
-       	  $("#best").show();
+       	  $("#bestsearchword").show();
          }
          
          $.ajax({
@@ -68,7 +68,10 @@
       });
       
       $("#btnsearch").click(function(){
-         alert("이벤트 감지");
+         //alert("이벤트 감지");
+         var searchword=$("#search").val();
+         
+         location.href="search/main?search="+searchword
       });
       
       //최근 검색어 클릭시 검색창에 값 받아오기
@@ -132,6 +135,7 @@
    $(document).on("mouseout",".searchResult", function(event){
       $(this).css("background-color", "white");
    }); 
+   
 </script>
 <style type="text/css">
 .searchResult{
@@ -176,7 +180,7 @@
    <div class="input-group w-50">
       <input type="search" class="form-control rounded" placeholder="상품을 입력하세요" aria-label="Search" aria-describedby="search-addon"
        id="search" autocomplete="off"/>
-      <input type="hidden" id="btnsearch" class="btn btn-dark" onclick="location.href=''">
+      <input type="hidden" id="btnsearch" class="btn btn-dark">
     </div>
     
     <div id="recent">
@@ -186,23 +190,23 @@
 	    </c:forEach>
     </div>
     <br>
-    <div>
+    <div id="bestsearchword">
     	<b>인기 검색어</b><br>
     	<div id="best">
-    	<div id="bestdiv1">
-	    	<c:forEach var="title" items="${title }" varStatus="i">
-	    		<c:if test="${i.count <= 5}">
-	    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
-	    		</c:if>
-	    	</c:forEach>
-    	</div>
-    	<div id="bestdiv2">
-	    	<c:forEach var="title" items="${title }" varStatus="i">
-	    		<c:if test="${i.count > 5}">
-	    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
-	    		</c:if>
-	    	</c:forEach>
-    	</div>
+	    	<div id="bestdiv1">
+		    	<c:forEach var="title" items="${title }" varStatus="i">
+		    		<c:if test="${i.count <= 5}">
+		    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
+		    		</c:if>
+		    	</c:forEach>
+	    	</div>
+	    	<div id="bestdiv2">
+		    	<c:forEach var="title" items="${title }" varStatus="i">
+		    		<c:if test="${i.count > 5}">
+		    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
+		    		</c:if>
+		    	</c:forEach>
+	    	</div>
     	</div>
     </div>
     
