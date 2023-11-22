@@ -17,4 +17,11 @@
   		select count(*) from junggosangpum where j_title like concat('%',#{search},'%')
   	</select>
   	
+  	<select id="searchSave" parameterType="String" resultType="String">
+  		select s_searchword from searchsave where s_id=#{s_id} order by s_num desc
+  	</select>
+  	
+  	<select id="bestsearch" resultType="String">
+  		select j_title from junggosangpum order by j_readcount limit 10
+  	</select>
 </mapper>
