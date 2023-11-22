@@ -13,6 +13,8 @@ public interface SearchMapperInter {
 	//관련검색어 기능
 	public List<String> sangSearch(String search);
 	
+	public List<SangpumDto> mainSangList(String search);
+	
 	//검색리스트
 	public List<SangpumDto> sangList(String search, String option);
 	

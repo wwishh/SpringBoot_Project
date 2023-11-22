@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.SangpumDto;
 import boot.data.mapper.SearchMapperInter;
@@ -28,8 +29,17 @@ public class SearchController {
 	
 	//검색 결과 화면
 	@GetMapping("/search/main")
-	public String searchMain() {
-		return"/2/search/searchList";
+	public ModelAndView searchMain(String search) {
+		
+		List<SangpumDto> list = inter.mainSangList(search);
+		
+		ModelAndView model = new ModelAndView();
+		
+		model.addObject("search", search);
+		model.addObject("list", list);
+		model.setViewName("/2/search/searchList");
+		
+		return model;
 	}
 	
 	//검색 상품 리스트
