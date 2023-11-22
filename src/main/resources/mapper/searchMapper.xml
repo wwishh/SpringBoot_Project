@@ -7,6 +7,11 @@
   		select j_title from junggosangpum where j_title like concat('%',#{search},'%')  order by j_title limit 5
   	</select>
   	
+  	<select id="mainSangList" parameterType="String" resultType="sangpum">
+  		select * from junggosangpum where j_title like concat('%',#{search},'%') order by j_readcount desc	
+  	</select>
+  	
+  	
   	<select id="sangList" parameterType="String" resultType="sangpum">
   		select * from junggosangpum where j_title like concat('%',#{search},'%') order by ${option}
   		<if test="option!='J_PRICE'">desc</if>
