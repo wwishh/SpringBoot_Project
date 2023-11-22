@@ -19,4 +19,6 @@ public class SangpumDto {
 	private Timestamp j_postdate;
 	private String j_addr;
 	private String j_imageurl;
+	private int j_readcount;
+	private int j_interest;
 }
