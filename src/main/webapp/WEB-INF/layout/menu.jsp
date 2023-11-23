@@ -120,7 +120,7 @@ nav{
 				
 				<!-- 검색창 -->
 				<div class="input-group w-25" >
-					<i class="bi bi-search" onclick="location.href='/search?s_id=test'" style="cursor: pointer;"></i>
+					<i class="bi bi-search" onclick="location.href='/search?s_id=t'" style="cursor: pointer;"></i>
 				</div>
 				
 

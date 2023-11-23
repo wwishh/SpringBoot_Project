@@ -151,10 +151,10 @@
 }
 .recentsearch{
 	display: inline-block;
-	border: 1px solid gray;
-	border-radius: 30px;
 	width: auto;
 	height: auto;
+	border: 1px solid gray;
+	border-radius: 30px;
 	text-align: center;
 	padding: 5px 5px 5px 5px;
 	cursor: pointer;
