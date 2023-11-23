@@ -122,20 +122,26 @@ nav{
 				<button type="button" class="btn btn-outline-primary" onclick="location.href='loginform'">로그인</button>
 				</c:if>
 				
-				<c:if test="${sessionScope.loginok!=null && sessionScope.myid!='ho' &&sessionScope.myid!='wish'}">
+				<c:if test="${sessionScope.loginok!=null && sessionScope.myid!='ho' &&sessionScope.myid!='wish' &&sessionScope.myid!='oliver'}">
 				<img alt="" src="../img/hani1.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
 				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
 				</c:if>
 				
-				<c:if test="${sessionScope.loginok!=null && sessionScope.myid=='ho' &&sessionScope.myid!='wish'}">
+				<c:if test="${sessionScope.loginok!=null && sessionScope.myid=='ho' &&sessionScope.myid!='wish'&&sessionScope.myid!='oliver'}">
 				<img alt="" src="../img/wow3.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
 				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
 				</c:if>
 				
-				<c:if test="${sessionScope.loginok!=null && sessionScope.myid!='ho' && sessionScope.myid=='wish' }">
+				<c:if test="${sessionScope.loginok!=null && sessionScope.myid!='ho' && sessionScope.myid=='wish'&&sessionScope.myid!='oliver' }">
 				<img alt="" src="../img/wish.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
+				<b>${sessionScope.myname}님이 로그인중입니다</b>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				</c:if>
+				
+				<c:if test="${sessionScope.loginok!=null && sessionScope.myid!='ho' && sessionScope.myid!='wish' &&sessionScope.myid='oliver' }">
+				<img alt="" src="../img/oliversam.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
 				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
 				</c:if>
