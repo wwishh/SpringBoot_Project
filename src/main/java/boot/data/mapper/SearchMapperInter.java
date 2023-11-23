@@ -24,4 +24,7 @@ public interface SearchMapperInter {
 	
 	//인기 검색어 기능(10개)
 	public List<String> bestsearch();
+	
+	//검색어 입력하면 해당 아이디에 따른 검색어 저장
+	public void searchsaveinsert(String s_id);
 }

@@ -29,4 +29,8 @@
   	<select id="bestsearch" resultType="String">
   		select j_title from junggosangpum order by j_readcount limit 10
   	</select>
+  	
+  	<insert id="searchsaveinsert" parameterType="String">
+  		insert into searchsave values (null,'#{s_id}','#{s_searchword}') where s_id=#{s_id}
+  	</insert>
 </mapper>

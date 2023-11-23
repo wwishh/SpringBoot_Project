@@ -41,7 +41,7 @@
                
                $.each(res,function(i,dto){
                    s+="<div class='eachdiv'>"
-                   s+="<b onclick='selectSearch()' class='searchResult'style='font-size: 15pt;'>"+dto+"</b><br>"
+                   s+="<b onclick='selectSearch()' class='searchResult'>"+dto+"</b><br>"
                    s+="</div>"
                 });
                
@@ -140,20 +140,18 @@
 <style type="text/css">
 .searchResult{
    cursor: pointer;
-}
-#search{
-	left: 50%;
-	top: 100px;
+   font-size: 13pt;
+   margin-bottom: 10px;
 }
 #result{
-	text-align: center;
-	margin-top: 110px;
+	margin-left: 25%;
+	margin-top: 9%;
 }
 .recentsearch{
 	display: inline-block;
 	width: auto;
 	height: auto;
-	border: 1px solid gray;
+	border: 1px solid lightgray;
 	border-radius: 30px;
 	text-align: center;
 	padding: 5px 5px 5px 5px;
@@ -165,53 +163,80 @@
 	margin: 7px 0px 7px 0px; 
 }
 #bestdiv1{
-	width: 500px;
+	width: 400px;
 }
 #bestdiv2{
-	width: 500px;
+	width: 400px;
 }
 #best{
 	width: 1000px;
 	display: inline-flex;
 }
+#allsearch{
+	position: absolute;
+	left: 25%;
+	top: 22%;
+}
+#searchdiv{
+	position: absolute;
+	border-bottom: 3px solid black;
+	left: 25%;
+	top: 12%;
+	padding-bottom: 5px;
+}
+#search{
+	border: 0px;
+}
+input::placeholder{
+	font-size: 17pt;
+
+}
 </style>
 </head>
 <body>
-   <div class="input-group w-50">
+<div id="mainsearch">
+	<div class="input-group w-50" id="searchdiv">
       <input type="search" class="form-control rounded" placeholder="상품을 입력하세요" aria-label="Search" aria-describedby="search-addon"
        id="search" autocomplete="off"/>
       <input type="hidden" id="btnsearch" class="btn btn-dark">
     </div>
-    
-    <div id="recent">
-	    <b>최근 검색어</b><br>
-	    <c:forEach var="dto" items="${list }" varStatus="i">
-	    	<div class="recentsearch">${dto }</div>
-	    </c:forEach>
-    </div>
-    <br>
-    <div id="bestsearchword">
-    	<b>인기 검색어</b><br>
-    	<div id="best">
-	    	<div id="bestdiv1">
-		    	<c:forEach var="title" items="${title }" varStatus="i">
-		    		<c:if test="${i.count <= 5}">
-		    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
-		    		</c:if>
-		    	</c:forEach>
-	    	</div>
-	    	<div id="bestdiv2">
-		    	<c:forEach var="title" items="${title }" varStatus="i">
-		    		<c:if test="${i.count > 5}">
-		    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
-		    		</c:if>
-		    	</c:forEach>
-	    	</div>
-    	</div>
-    </div>
-    
     <div id="result"></div>
-    
-    
+</div>
+   
+    <div id="allsearch">
+	    <div id="recent">
+		    <b>최근 검색어</b><br>
+		    <c:forEach var="dto" items="${list }" varStatus="i">
+		    	<c:if test="${i.count%7 == 0}">
+		    		<div class="recentsearch">${dto }</div><br>
+		    	</c:if>
+		    	
+		    	<c:if test="${i.count%7 != 0}">
+		    		<div class="recentsearch">${dto }</div>
+		    	</c:if>
+		    </c:forEach>
+	    </div>
+	    <br>
+	    <div id="bestsearchword">
+	    	<b>인기 검색어</b><br>
+	    	<div id="best">
+		    	<div id="bestdiv1">
+			    	<c:forEach var="title" items="${title }" varStatus="i">
+			    		<c:if test="${i.count <= 5}">
+			    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
+			    		</c:if>
+			    	</c:forEach>
+		    	</div>
+		    	<div id="bestdiv2">
+			    	<c:forEach var="title" items="${title }" varStatus="i">
+			    		<c:if test="${i.count > 5}">
+			    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
+			    		</c:if>
+			    	</c:forEach>
+		    	</div>
+	    	</div>
+	    </div>
+    </div>
+
 </body>
 </html>

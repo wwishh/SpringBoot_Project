@@ -29,9 +29,10 @@ public class SearchController {
 	
 	//검색 결과 화면
 	@GetMapping("/search/main")
-	public ModelAndView searchMain(String search) {
+	public ModelAndView searchMain(String search, String s_id) {
 		
 		List<SangpumDto> list = inter.mainSangList(search);
+		inter.searchsaveinsert(s_id);
 		
 		ModelAndView model = new ModelAndView();
 		
