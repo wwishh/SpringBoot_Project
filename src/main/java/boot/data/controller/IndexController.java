@@ -2,6 +2,7 @@ package boot.data.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -22,9 +23,9 @@ public class IndexController {
 		return"/3/search2/search2";
 	}
 	
-	@GetMapping("/admin")
+	@PostMapping("/adminPage")
 	public String adminIndex() {
-		return"/admin/layout-admin/admin_main";
+		return"/admin/layout-admin/admin_main/admin_main";
 	}
 	
 	/*
