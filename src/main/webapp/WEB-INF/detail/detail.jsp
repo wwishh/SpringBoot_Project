@@ -25,7 +25,7 @@
 
 		<div class="carousel-inner rounded">
 			<div class="carousel-item active">
-				<img src="../img/detail1.PNG" class="d-block w-100" alt="...">
+				<img src="../img/${dto.j_imageurl }" class="d-block w-100" alt="...">
 			</div>
 			<div class="carousel-item">
 				<img src="../img/detail2.PNG" class="d-block w-100" alt="...">
@@ -52,8 +52,8 @@
 				<img alt="달달이" src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-c649f052a34ebc4eee35048815d8e4f73061bf74552558bb70e07133f25524f9.png">
 			</div>
 			<div id="article-profile-left">
-				<div id="nickname">달달이</div>
-				<div id="region-name">성동구 행당제2동</div>
+				<div id="nickname">세션아이디${sessionScope.myid }</div>
+				<div id="region-name">${dto.j_addr }</div>
 			</div>
 			<div style="margin-left: auto; margin-top: 5vh;">
 				<button class="btn btn-dark" onclick="location.href='chatRoom'">채팅</button>
@@ -75,17 +75,16 @@
 		<hr>
 	
 		<div>
-			<b>다이슨 청소기 </b><br>
-			<small class="text-secondary">디지털 기기</small><br>
-			<b>15,000원</b><br><br>
+			<b>${dto.j_title } </b><br>
+			<small class="text-secondary">${dto.j_category }</small><br>
+			<b><fmt:formatNumber value="${dto.j_price }" type="currency"/></b><br><br>
 			<div>
 				<p>
-					청소기 팝니다. 기능엔 전혀 문제 없습니다!<br>
-					사진애 보이는 동그란 파란 부분에 흠이 있습니다.
+					${dto.j_explanation }
 				</p>
 			</div>
 			<div>
-				<small class="text-secondary">관심 12 채팅 5 조회 412</small>
+				<small class="text-secondary">관심 ${dto.j_interest } 채팅 아직없음 조회 ${dto.j_readcount }</small>
 			</div>
 			<br>
 			<hr>

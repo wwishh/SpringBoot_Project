@@ -21,10 +21,9 @@ public class IndexController {
 		return "/1/layout/main";
 	}
 	
-	@GetMapping("/detail")
-	public String index2() {
-		return"/2/detail/detail";
-	}
+	/*
+	 * @GetMapping("/detail") public String index2() { return"/2/detail/detail"; }
+	 */
 	
 	@GetMapping("/search")
 	public ModelAndView index3(@RequestParam String s_id) {
