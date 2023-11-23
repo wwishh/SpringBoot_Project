@@ -26,5 +26,8 @@ public interface SearchMapperInter {
 	public List<String> bestsearch();
 	
 	//검색어 입력하면 해당 아이디에 따른 검색어 저장
-	public void searchsaveinsert(String s_id);
+	public void searchsaveinsert(String s_id, String s_searchword);
+	
+	//해당 아이디에서 해당 검색어 개수 출력
+	public int countsearchword(String s_id, String s_searchword);
 }

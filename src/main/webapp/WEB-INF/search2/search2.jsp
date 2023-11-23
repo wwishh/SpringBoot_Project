@@ -70,8 +70,10 @@
       $("#btnsearch").click(function(){
          //alert("이벤트 감지");
          var searchword=$("#search").val();
+         var s_id=$("#btnsearch").val();
          
-         location.href="search/main?search="+searchword
+         
+         location.href="search/main?search="+searchword+"&s_id="+s_id
       });
       
       //최근 검색어 클릭시 검색창에 값 받아오기
@@ -194,11 +196,12 @@ input::placeholder{
 </style>
 </head>
 <body>
+
 <div id="mainsearch">
 	<div class="input-group w-50" id="searchdiv">
       <input type="search" class="form-control rounded" placeholder="상품을 입력하세요" aria-label="Search" aria-describedby="search-addon"
        id="search" autocomplete="off"/>
-      <input type="hidden" id="btnsearch" class="btn btn-dark">
+      <input type="hidden" id="btnsearch" class="btn btn-dark" value="${sessionScope.myid }">
     </div>
     <div id="result"></div>
 </div>
