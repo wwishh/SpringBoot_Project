@@ -100,7 +100,7 @@
    <div class="input-group w-25" >
       <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"
        id="search" autocomplete="off"/>
-      <input type="hidden" id="btnsearch" class="btn btn-dark" onclick="location.href='/loginform'">
+      <input type="hidden" id="btnsearch" class="btn btn-dark" onclick="location.href='#'">
      </div>
    <div id="result"></div>
 </body>
