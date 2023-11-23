@@ -77,7 +77,8 @@
 						<!-- Product actions-->
 						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="/detail">View
+							<!-- num이 필요함!! 일단 임시로 num 안넣음 -->
+								<a class="btn btn-outline-dark mt-auto" href="sangpum/detail">View
 									options</a>
 							</div>
 						</div>

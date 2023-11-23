@@ -21,10 +21,9 @@ public class IndexController {
 		return "/1/layout/main";
 	}
 	
-	@GetMapping("/detail")
-	public String index2() {
-		return"/2/detail/detail";
-	}
+	/*
+	 * @GetMapping("/detail") public String index2() { return"/2/detail/detail"; }
+	 */
 	
 	@GetMapping("/search")
 	public ModelAndView index3(@RequestParam String s_id) {
@@ -46,13 +45,6 @@ public class IndexController {
 		return"/admin/layout-admin/admin_main";
 	}
 	
-	/*
-	 * @GetMapping("/index2") public String index2() { return "/layout2/category"; }
-	 * 
-	 * @GetMapping("/index3") public String index3() { return "/layout/detail"; }
-	 * 
-	 * @GetMapping("/loginform") public String loginform() { return
-	 * "/index/login/main"; }
-	 */
+	
 	
 }

@@ -17,11 +17,12 @@
 <style>
 
 #list{
-	width:1200px;
-	height:1200px;
+	width:auto;
+	height:auto;
 }
 
 .sangpum{
+	cursor : pointer;
 	display : inline-block;
 }
 
@@ -34,8 +35,8 @@ $(function(){
     $("#btnsearch2").click(function(e){
     	
        
-       var search=$("#search2").val();
-       var option= $("#selOption").val();
+       var search=$("#search2").val(); //검색어
+       var option= $("#selOption").val(); //필터
        //alert(option);
        
        $.ajax({
@@ -71,11 +72,13 @@ $(function(){
         	 //alert("hi")
         	   
              var s="";
+        	 var count = 1;
              
              $.each(res,function(i,dto){
             	
 
                 s+="<div class='sangpum' style='width:250px; height:250px; margin: 20px'>";
+                s+="<input type='hidden' name='num' id='num' value='" + dto.j_sangid + "'>";
                 s+="<img src='../img/"+ dto.j_imageurl + "' style='width:250px; height:250px'><br>";
                 s+="<b>" + dto.j_title + "</b>";
                 s+="<p>" + dto.j_explanation + "</p>";
@@ -83,7 +86,12 @@ $(function(){
                 s+= "<br><i class='bi bi-eye-fill'>" + dto.j_readcount + "</i>&nbsp;&nbsp;";
                 s+= "<i class='bi bi-heart-fill'>" + dto.j_interest + "</i>";
                 s+="</div>";
+                if(count%4==0){
+                	s+="<br>";
+                }
                 
+                count++;
+                //console.log(count)
 
               });
              
@@ -102,7 +110,24 @@ $(function(){
     	$("#btnsearch2").trigger("click");
     });
     
+    $("#search2").keypress(function(e){
+        //검색어 입력 후 엔터키 입력하면 조회버튼 클릭
+        if(e.keyCode && e.keyCode == 13){
+           $("#btnsearch2").trigger("click");
+           return false;
+        }
+
+     });
+
 });
+
+$(document).on("click","div.sangpum", function(event){
+	
+	var num = $(this).find('#num').val();
+	//alert(num)
+	location.href="../sangpum/detail?num=" + num;
+});
+
 
 
 </script>
@@ -112,7 +137,7 @@ $(function(){
   <div class="input-group w-25" >
       <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"
        id="search2" autocomplete="off" value="${search }"/>
-      <input type="button" value="버튼" id="btnsearch2" class="btn btn-dark">
+      <input type="button" value="검색" id="btnsearch2" class="btn btn-dark">
      </div>
      <div id=search>
      	<div id="sangCount" style="margin-top : 50px; margin-left:280px;"></div>
@@ -130,6 +155,7 @@ $(function(){
      	<c:if test="${list.size()!=0 }">
      	<c:forEach var="dto" items="${list }">
      		<div class='sangpum' style='width:250px; height:250px; margin: 20px'>
+     			<input type="hidden" name="num" id="num" value="${dto.j_sangid }">
                 <img src="../img/${dto.j_imageurl }" style='width:250px; height:250px'><br>
                 <b>${dto.j_title}</b>
                 <p>${dto.j_explanation}</p>
