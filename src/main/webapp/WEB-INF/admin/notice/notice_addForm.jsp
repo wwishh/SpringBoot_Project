@@ -47,7 +47,7 @@
 				<td colspan="2" align="center">
 					<button type="submit" class="btn btn-outline-success">등록</button>
 					<button type="button" class="btn btn-outline-info"
-					onclick="location.href='list'">목록</button>
+					onclick="location.href='notice'">목록</button>
 				</td>
 			</tr>
 		</table>

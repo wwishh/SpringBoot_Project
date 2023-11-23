@@ -19,6 +19,11 @@ public class SearchController {
 	SearchMapperInter inter;
 
 	
+	@GetMapping("/search/searchPage")
+	public String searchpage() {
+		return "/search/searchPage";
+	}
+	
 	@GetMapping("/search/result")
 	@ResponseBody
 	public List<String> result(String search) {
