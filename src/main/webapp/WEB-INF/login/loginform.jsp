@@ -57,7 +57,7 @@
 							
 							
 							<button type="button" style="border:2px solid white; background-color:white">
-								<img src="../img/kakaologo.png" style="width:20vh; height:6.1vh; border-radius: 30px;">
+								<img src="../img/kakaologin.png" style="width:20vh; height:6.1vh; border-radius: 30px;">
 							</button>
 								
 								
