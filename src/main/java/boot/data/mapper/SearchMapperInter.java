@@ -1,6 +1,5 @@
 package boot.data.mapper;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -25,4 +24,10 @@ public interface SearchMapperInter {
 	
 	//인기 검색어 기능(10개)
 	public List<String> bestsearch();
+	
+	//검색어 입력하면 해당 아이디에 따른 검색어 저장
+	public void searchsaveinsert(String s_id, String s_searchword);
+	
+	//해당 아이디에서 해당 검색어 개수 출력
+	public int countsearchword(String s_id, String s_searchword);
 }

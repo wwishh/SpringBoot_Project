@@ -19,6 +19,11 @@ public class SearchController {
 	SearchMapperInter inter;
 
 	
+	@GetMapping("/search/searchPage")
+	public String searchpage() {
+		return "/search/searchPage";
+	}
+	
 	@GetMapping("/search/result")
 	@ResponseBody
 	public List<String> result(String search) {
@@ -29,17 +34,31 @@ public class SearchController {
 	
 	//검색 결과 화면
 	@GetMapping("/search/main")
-	public ModelAndView searchMain(String search) {
+	public ModelAndView searchMain(String search, String s_id) {
 		
 		List<SangpumDto> list = inter.mainSangList(search);
+		int count = inter.countsearchword(s_id, search);
 		
-		ModelAndView model = new ModelAndView();
-		
-		model.addObject("search", search);
-		model.addObject("list", list);
-		model.setViewName("/2/search/searchList");
-		
-		return model;
+		if(count<1) {
+			inter.searchsaveinsert(s_id,search);
+			
+			ModelAndView model = new ModelAndView();
+			
+			model.addObject("search", search);
+			model.addObject("list", list);
+			model.setViewName("/2/search/searchList");
+			
+			return model;
+		}
+		else {
+			ModelAndView model = new ModelAndView();
+			
+			model.addObject("search", search);
+			model.addObject("list", list);
+			model.setViewName("/2/search/searchList");
+			
+			return model;
+		}
 	}
 	
 	//검색 상품 리스트
