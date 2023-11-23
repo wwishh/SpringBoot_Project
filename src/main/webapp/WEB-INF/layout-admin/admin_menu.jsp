@@ -26,8 +26,14 @@
 
 	<style type="text/css">
 		.menu{
-		margin-top: 100px;
+			margin-top: 100px;
 		}
+		.logout{
+			position: absolute;
+			margin-left: 180px;
+			top: 0%;
+		}
+		
 	</style>    
 </head>
 
@@ -42,8 +48,9 @@
                     <img src="images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
-                    <div class="email">john.doe@example.com</div>
+                    <div class="a_name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
+                    <div class="a_email">john.doe@example.com</div>
+                    <div class="logout"><button type="button" onclick="location.href='adminlogoutprocess'">로그아웃</button></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
@@ -64,7 +71,7 @@
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                        <a href="index.html">
+                        <a href="admin">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
@@ -72,13 +79,13 @@
                     <li>
                         <a href="pages/typography.html">
                             <i class="material-icons">text_fields</i>
-                            <span>Typography</span>
+                            <span>개인회원정보</span>
                         </a>
                     </li>
                     <li>
-                        <a href="pages/helper-classes.html">
+                        <a href="notice">
                             <i class="material-icons">layers</i>
-                            <span>Helper Classes</span>
+                            <span>공지사항</span>
                         </a>
                     </li>
                     <li>
@@ -88,7 +95,7 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
+                                <a href="javascript:void(0); " class="menu-toggle">
                                     <span>Cards</span>
                                 </a>
                                 <ul class="ml-menu">
@@ -404,10 +411,16 @@
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2016 - 2017 <a href="javascript:void(0);">AdminBSB - Material Design</a>.
+                    &copy; 2023 - 2024 <a href="javascript:void(0);">Admin Page</a>.
                 </div>
                 <div class="version">
-                    <b>Version: </b> 1.0.5
+                    <b>오늘 날짜 : </b> 
+                  
+					    <script>
+					        date = new Date().toLocaleDateString();
+					        document.write(date);
+					    </script>
+					
                 </div>
             </div>
             <!-- #Footer -->

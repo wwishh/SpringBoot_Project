@@ -104,6 +104,87 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+/*	HC's_CSS	--	start	*/
+.sort{
+	display: flex;
+	justify-content: space-between;
+}
+.sort_insert{
+	float: left;
+}
+
+.sort_listType{
+	  float: right;
+  }
+
+.Product_title, .Product_category, .Product_name, .Product_price, .Product_file{
+	display: flex;
+	justify-content: space-between;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+}
+
+.Product_content > textarea{
+	height: 30vh;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+}
+
+.insert_content{
+	width: 23vw;
+}
+
+/* 카카오 채팅하기 아이콘*/ 
+.kakao_inquiry {		
+	float: right;
+	display: flex;
+	margin-right: 21rem;
+	margin-top: -6.5rem; 
+	width: 7rem;
+    height: 3rem;
+    z-index: 99;
+}
+
+#kakao-talk-channel-chat-button > a > img {
+	height: 3rem;
+}
+
+ /*!sc*/
+.write {
+    height: 40px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1rem;
+    border-radius: 20px;
+    background: none;
+    border: 0.5px solid darkGray;
+    outline: none;
+    font-weight: bold;
+    word-break: keep-all;
+    background: var(--bg-element5);
+    color: var(--button-text);
+    -webkit-transition: 0.125s all ease-in;
+    transition: 0.125s all ease-in;
+    cursor: pointer;
+    font-family: Binggrae-Bold;
+}
+
+/*!sc*/
+.write:hover {
+    background: var(--bg-element6);
+}
+
+/*!sc*/
+.write:focus {
+    box-shadow: 0px 2px 12px #00000030;
+}
+
+/*!sc*/
+.write:disabled {
+    background: var(--bg-element2);
+}
+/*	HC's_CSS	--	end	*/
+
 hr {
   margin: 1rem 0;
   color: inherit;
