@@ -45,20 +45,20 @@
       });
 
       $("#search").keypress(function(e){
-			//검색어 입력 후 엔터키 입력하면 조회버튼 클릭
-			if(e.keyCode && e.keyCode == 13){
-				$("#btnsearch").trigger("click");
-				return false;
-			}
-			//엔터키 막기
-			if(e.keyCode && e.keyCode == 13){
-				  e.preventDefault();	
-			}
-		});
+         //검색어 입력 후 엔터키 입력하면 조회버튼 클릭
+         if(e.keyCode && e.keyCode == 13){
+            $("#btnsearch").trigger("click");
+            return false;
+         }
+         //엔터키 막기
+         if(e.keyCode && e.keyCode == 13){
+              e.preventDefault();   
+         }
+      });
       
       $("#btnsearch").click(function(){
-			alert("이벤트 감지");
-		});
+         alert("이벤트 감지");
+      });
    });
    
    function selectSearch() {
@@ -73,12 +73,12 @@
    
    
    $(document).on("mouseover",".searchResult", function(event){
-		$(this).css("background-color", "lightgray");
-	});
-	
-	$(document).on("mouseout",".searchResult", function(event){
-		$(this).css("background-color", "white");
-	}); 
+      $(this).css("background-color", "lightgray");
+   });
+   
+   $(document).on("mouseout",".searchResult", function(event){
+      $(this).css("background-color", "white");
+   }); 
 </script>
 <style type="text/css">
 .searchResult{
@@ -116,14 +116,45 @@ nav{
 							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
 						</ul></li>
 				</ul>
+				 
+				
+				
+				<c:if test="${sessionScope.loginok==null}">
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='loginform'">로그인</button>
+				</c:if>
+				
+				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid!='wish'&&sessionScope.myid!='oliver'}">
+				<img alt="" src="../img/hani1.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
+				<b>${sessionScope.myname}님이 로그인중입니다</b>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				</c:if>
+				
+				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid=='ho'&&sessionScope.myid!='wish'&&sessionScope.myid!='oliver'}">
+				<img alt="" src="../img/wow3.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
+				<b>${sessionScope.myname}님이 로그인중입니다</b>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				</c:if>
+				
+				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid=='wish'&&sessionScope.myid!='oliver'}">
+				<img alt="" src="../img/wish.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
+				<b>${sessionScope.myname}님이 로그인중입니다</b>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				</c:if>
+				
+				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid!='wish'&&sessionScope.myid=='oliver' }">
+				<img alt="" src="../img/oliversam.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
+				<b>${sessionScope.myname}님이 로그인중입니다</b>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				</c:if>
+				 
+				 
+				
+				
 				
 				
 				<!-- 검색창 -->
 				<div class="input-group w-25" >
-					<input type="search" class="form-control rounded"
-						placeholder="Search" aria-label="Search"
-						aria-describedby="search-addon" id="search"/>
-					<button type="button" class="btn btn-dark" onclick="location.href='/search'">search</button>
+					<i class="bi bi-search" onclick="location.href='/search?s_id=test'" style="cursor: pointer;"></i>
 				</div>
 				
 
