@@ -45,13 +45,6 @@ public class IndexController {
 		return"/admin/layout-admin/admin_main";
 	}
 	
-	/*
-	 * @GetMapping("/index2") public String index2() { return "/layout2/category"; }
-	 * 
-	 * @GetMapping("/index3") public String index3() { return "/layout/detail"; }
-	 * 
-	 * @GetMapping("/loginform") public String loginform() { return
-	 * "/index/login/main"; }
-	 */
+	
 	
 }
