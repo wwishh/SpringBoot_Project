@@ -99,6 +99,10 @@ public class LoginController {
 		public String logout(HttpSession session)
 		{
 			session.removeAttribute("loginok");
+			session.removeAttribute("myid");
+			session.removeAttribute("myname");
+			session.removeAttribute("myhp");
+			session.removeAttribute("myemail");
 			
 			return "redirect:main";
 		}

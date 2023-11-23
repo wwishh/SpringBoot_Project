@@ -13,6 +13,11 @@
 	href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.5.0/kakao.min.js"
+  integrity="sha384-kYPsUbBPlktXsY6/oNHSUDZoTX6+YI51f63jCPEIPFP09ttByAdxd2mEjKuhdqn4" crossorigin="anonymous"></script>
+<script>
+  Kakao.init('3336b0db7f7e18999056f7f419eb0d26'); // 사용하려는 앱의 JavaScript 키 입력
+</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -51,14 +56,16 @@
 								
 							<br>
 							
-							<button type="button" style="border:2px solid white; background-color:white">
+							<button type="button" id="naverloginbtn" name="naverloginbtn"style="border:2px solid white; background-color:white">
 								<img src="../img/naverlogo.png" style="width:20vh; height:6.1vh; border-radius:30px;">
 							</button>
 							
 							
-							<button type="button" style="border:2px solid white; background-color:white">
+							<button type="button" id="kakao-login-btn" name="kakaologinbtn "style="border:2px solid white; background-color:white"
+							onclick="location.href='javascript:loginWithKakao()'">
 								<img src="../img/kakaologin.png" style="width:20vh; height:6.1vh; border-radius: 30px;">
 							</button>
+							<p id="token-result"></p>
 								
 								
 							<hr class="my-4">
@@ -72,6 +79,7 @@
 			</div>
 		</div>
 	</div>
+
 
 	<script type="text/javascript">
 		function findid() {
@@ -89,6 +97,36 @@
 					.open(url, "_blank_1",
 							"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=500, height=500");
 		}
+		function loginWithKakao() {
+		    Kakao.Auth.authorize({
+		      redirectUri: 'https://developers.kakao.com/tool/demo/oauth',
+		    });
+		  }
+		//test 
+		displayToken()
+		  function displayToken() {
+		    var token = getCookie('authorize-access-token');
+
+		    if(token) {
+		      Kakao.Auth.setAccessToken(token);
+		      Kakao.Auth.getStatusInfo()
+		        .then(function(res) {
+		          if (res.status === 'connected') {
+		            document.getElementById('token-result').innerText
+		              = 'login success, token: ' + Kakao.Auth.getAccessToken();
+		          }
+		        })
+		        .catch(function(err) {
+		          Kakao.Auth.setAccessToken(null);
+		        });
+		    }
+		  }
+
+		  function getCookie(name) {
+		    var parts = document.cookie.split(name + '=');
+		    if (parts.length === 2) { return parts[1].split(';')[0]; }
+		  }
+		
 	</script>
 
 
