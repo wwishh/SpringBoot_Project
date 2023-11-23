@@ -1,11 +1,20 @@
 package boot.data.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import boot.data.mapper.SearchMapperInter;
 
 @Controller
 public class IndexController {
+	
+	@Autowired
+	SearchMapperInter inter;
 	
 	@GetMapping("/")
 	public String index() {
@@ -18,8 +27,18 @@ public class IndexController {
 	}
 	
 	@GetMapping("/search")
-	public String index3() {
-		return"/3/search2/search2";
+	public ModelAndView index3(@RequestParam String s_id) {
+		
+		ModelAndView model=new ModelAndView();
+		
+		List<String> list=inter.searchSave(s_id);
+		List<String> title=inter.bestsearch();
+		
+		model.addObject("list", list);
+		model.addObject("title", title);
+		model.setViewName("/3/search2/search2");
+		
+		return model;
 	}
 	
 	@GetMapping("/admin")

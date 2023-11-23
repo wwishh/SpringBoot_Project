@@ -91,38 +91,67 @@ nav{
 </style>
 </head>
 <body>
-   <!-- Navigation-->
-   <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container px-4 px-lg-3">
-         <a class="navbar-brand" href="/">
-            <img alt="" src="../img/icon.PNG" style="width: 20vh;"> 
-         </a>
-         <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-               <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-               <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fleamarket</a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                     <li><a class="dropdown-item" href="/index2">All Products</a></li>
-                     <li><hr class="dropdown-divider" /></li>
-                     <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                     <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                  </ul></li>
-            </ul>
-            
-            
-            <!-- 검색창 -->
-            <div class="input-group w-25" >
-               <i class="bi bi-search" onclick="location.href='/search?s_id=test'" style="cursor: pointer;"></i>
-            </div>
-            
+	<!-- Navigation-->
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<div class="container px-4 px-lg-3">
+			<a class="navbar-brand" href="/">
+				<img alt="" src="../img/icon.PNG" style="width: 20vh;"> 
+			</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fleamarket</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="/index2">All Products</a></li>
+							<li><hr class="dropdown-divider" /></li>
+							<li><a class="dropdown-item" href="#!">Popular Items</a></li>
+							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+						</ul></li>
+				</ul>
+				 
+				
+				<c:if test="${sessionScope.loginok==null }">
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='loginform'">로그인</button>
+				</c:if>
+				
+				<c:if test="${sessionScope.loginok!=null && sessionScope.myid!='ho' &&sessionScope.myid!='wish' &&sessionScope.myid!='oliver'}">
+				<img alt="" src="../img/hani1.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
+				<b>${sessionScope.myname}님이 로그인중입니다</b>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				</c:if>
+				
+				<c:if test="${sessionScope.loginok!=null && sessionScope.myid=='ho' &&sessionScope.myid!='wish'&&sessionScope.myid!='oliver'}">
+				<img alt="" src="../img/wow3.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
+				<b>${sessionScope.myname}님이 로그인중입니다</b>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				</c:if>
+				
+				<c:if test="${sessionScope.loginok!=null && sessionScope.myid!='ho' && sessionScope.myid=='wish'&&sessionScope.myid!='oliver' }">
+				<img alt="" src="../img/wish.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
+				<b>${sessionScope.myname}님이 로그인중입니다</b>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				</c:if>
+				
+				<c:if test="${sessionScope.loginok!=null && sessionScope.myid!='ho' && sessionScope.myid!='wish' &&sessionScope.myid='oliver' }">
+				<img alt="" src="../img/oliversam.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
+				<b>${sessionScope.myname}님이 로그인중입니다</b>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				</c:if>
+				
+				
+				<!-- 검색창 -->
+				<div class="input-group w-25" >
+					<i class="bi bi-search" onclick="location.href='/search?s_id=test'" style="cursor: pointer;"></i>
+				</div>
+				
 
             <div id="result"></div>
             
