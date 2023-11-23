@@ -52,7 +52,7 @@
 				<img alt="달달이" src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-c649f052a34ebc4eee35048815d8e4f73061bf74552558bb70e07133f25524f9.png">
 			</div>
 			<div id="article-profile-left">
-				<div id="nickname">세션아이디${sessionScope.myid }</div>
+				<div id="nickname">${sessionScope.myid }</div>
 				<div id="region-name">${dto.j_addr }</div>
 			</div>
 			<div style="margin-left: auto; margin-top: 5vh;">
