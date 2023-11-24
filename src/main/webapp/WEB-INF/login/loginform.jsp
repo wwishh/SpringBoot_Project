@@ -18,17 +18,24 @@
   integrity="sha384-kYPsUbBPlktXsY6/oNHSUDZoTX6+YI51f63jCPEIPFP09ttByAdxd2mEjKuhdqn4" crossorigin="anonymous"></script>
 <script>
 $(function(){
+	var passtype=$("#u_pass").attr("type");
 	
-	$("#btnpass").click(function(){
-		var passtype=$("#u_pass").attr("type");
+	$("#btnpasson").hide();
+
+	$("#btnpassoff").click(function(){
 		//alert(passtype);
-		if(passtype=="password")
 		$("#u_pass").attr("type","text");
-		else
-			$("#u_pass").attr("type","password");
-		
+		$("#btnpassoff").hide();
+		$("#btnpasson").show();
+
 	});
 	
+	$("#btnpasson").click(function(){
+		//alert(passtype);
+		$("#u_pass").attr("type","password");
+		$("#btnpasson").hide();
+		$("#btnpassoff").show();
+	});
 	
 	
 });
@@ -44,11 +51,19 @@ function CheckCapsLock(event){
   
 </script>
 <style>
-#btnpass{
+#btnpasson{
 cursor: pointer;
 position: absolute;
-top:115px;
-left: 480px;
+top:107px;
+left: 475px;
+font-size: 30px;
+}
+#btnpassoff{
+cursor: pointer;
+position: absolute;
+top:107px;
+left: 475px;
+font-size:30px;
 }
 
 </style>
@@ -76,7 +91,8 @@ left: 480px;
 								<input type="password" id="u_pass" name="u_pass" class="form-control"
 									placeholder="Password" required="required" onkeyup="CheckCapsLock(event)" onchange="CheckCapsLock(event)">
 									<div id="pwmsg" style="color: red;"></div>
-									<i class='bi bi-eye-fill' id="btnpass"></i> <!-- 누르면 비밀번호 보임 -->
+									<i class='bi bi-eye-fill' id="btnpasson"></i> 
+									<i class="bi bi-eye-slash-fill" id="btnpassoff"></i> 
 									
 							</div>
 							
