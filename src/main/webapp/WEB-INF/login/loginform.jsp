@@ -12,12 +12,42 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
 	rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.5.0/kakao.min.js"
   integrity="sha384-kYPsUbBPlktXsY6/oNHSUDZoTX6+YI51f63jCPEIPFP09ttByAdxd2mEjKuhdqn4" crossorigin="anonymous"></script>
 <script>
-  Kakao.init('3336b0db7f7e18999056f7f419eb0d26'); // 사용하려는 앱의 JavaScript 키 입력
+$(function(){
+	
+	$("#btnpass").click(function(){
+		var passtype=$("#u_pass").attr("type");
+		//alert(passtype);
+		if(passtype=="password")
+		$("#u_pass").attr("type","text");
+		else
+			$("#u_pass").attr("type","password");
+		
+	});
+	
+	
+	
+});
+var alreadyalert=false;
+function idalert(){
+	//alert("1");
+	if(!alreadyalert){
+		alert("111");
+		alreadyalert=true;
+	}
+}
+  
 </script>
+<style>
+#btnpass{
+cursor: pointer;
+}
+
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -33,14 +63,20 @@
 						<form class="form-signin " method="post" action="login">
 							<div class="form-label-group">
 								<input type="text" id="u_id" name="u_id" class="form-control"
-									placeholder="id" required autofocus>
+									placeholder="id" required="required" onfocus="idalert()">
+									<p id="id1"></p>
 							</div>
 							<br>
 
 							<div class="form-label-group">
 								<input type="password" id="u_pass" name="u_pass" class="form-control"
-									placeholder="Password" required>
+									placeholder="Password" required="required">
+									<i class='bi bi-eye-fill' id="btnpass"></i>
+									<p id="pass1"></p>
 							</div>
+							
+							<br>
+							
 
 							<hr>
 
@@ -71,7 +107,7 @@
 							<hr class="my-4">
 							Forgot your <a href="javascript:void(0)" onclick="findid()">ID</a>
 							or <a href="javascript:void(0)" onclick="findpassword()">Password</a>?
-							<button class="btn btn-lg btn-dark btn-block text-uppercase"
+							<button type="button" class="btn btn-lg btn-dark btn-block text-uppercase"
 								onclick="location='joinform'">Join</button>
 						</form>
 					</div>
@@ -103,6 +139,7 @@
 		    });
 		  }
 		//test 
+		Kakao.init('3336b0db7f7e18999056f7f419eb0d26'); // 사용하려는 앱의 JavaScript 키 입력
 		displayToken()
 		  function displayToken() {
 		    var token = getCookie('authorize-access-token');
