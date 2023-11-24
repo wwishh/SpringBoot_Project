@@ -32,19 +32,23 @@ $(function(){
 	
 	
 });
-var alreadyalert=false;
-function idalert(){
-	//alert("1");
-	if(!alreadyalert){
-		alert("111");
-		alreadyalert=true;
+
+function CheckCapsLock(event){
+	if(event.getModifierState("CapsLock")){
+		document.getElementById("pwmsg").innerText = "Caps Lock 활성화됨"
+	} else {
+		document.getElementById("pwmsg").innerText = ""
 	}
+	
 }
   
 </script>
 <style>
 #btnpass{
 cursor: pointer;
+position: absolute;
+top:115px;
+left: 480px;
 }
 
 </style>
@@ -63,16 +67,17 @@ cursor: pointer;
 						<form class="form-signin " method="post" action="login">
 							<div class="form-label-group">
 								<input type="text" id="u_id" name="u_id" class="form-control"
-									placeholder="id" required="required" onfocus="idalert()">
-									<p id="id1"></p>
+									placeholder="id" required="required" >
+									
 							</div>
 							<br>
 
 							<div class="form-label-group">
 								<input type="password" id="u_pass" name="u_pass" class="form-control"
-									placeholder="Password" required="required">
-									<i class='bi bi-eye-fill' id="btnpass"></i>
-									<p id="pass1"></p>
+									placeholder="Password" required="required" onkeyup="CheckCapsLock(event)" onchange="CheckCapsLock(event)">
+									<div id="pwmsg" style="color: red;"></div>
+									<i class='bi bi-eye-fill' id="btnpass"></i> <!-- 누르면 비밀번호 보임 -->
+									
 							</div>
 							
 							<br>
