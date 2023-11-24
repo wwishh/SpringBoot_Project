@@ -15,5 +15,5 @@ public interface SangpumServiceInter {
 	public SangpumDto getData(int j_sangid);
 	public void updateSangpum(SangpumDto dto);
 	public void deleteSangpum(int j_sangid);
-	public void updateInterest(int j_sangid);
+	public void updateInterest(int num);
 }

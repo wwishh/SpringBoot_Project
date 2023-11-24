@@ -28,7 +28,7 @@ public class SangpumController {
 	}
 	
 	@GetMapping("/sangpum/detail")
-	public ModelAndView detail(String num) {
+	public ModelAndView detail(int num) {
 		ModelAndView model = new ModelAndView();
 		
 		inter.updateReadCount(num);

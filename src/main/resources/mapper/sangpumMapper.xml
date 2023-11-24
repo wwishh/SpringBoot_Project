@@ -29,10 +29,6 @@
 		insert into junggosangpum values(null, #{j_title}, #{j_price}, #{member_id}, #{member_name}, #{member_hp}, #{j_explanation}, #{j_category}, now(), #{j_addr}, #{j_imageurl} ,#{j_imageurl}, 0, 0)
 	</insert>
 
-	<update id="updateReadCount" >
-		update junggosangpum set j_readcount=j_readcount+1 where j_sangid=#{j_sangid}
-	</update>
-
 	<update id="updateSangpum" parameterType="sangpum">
 		update junggosangpum set subject=#{subject}, content=#{content}
 		<if test="photo!=null">
@@ -45,11 +41,11 @@
 		delete from junggosangpum where j_sangid=#{j_sangid}
 	</delete>
 	
-	<select id="getSangpum" resultType="sangpum" parameterType="String">
+	<select id="getSangpum" resultType="sangpum" parameterType="int">
 		select * from junggosangpum where j_sangid=#{num}
 	</select>
 	
-	<update id="updateReadCount" parameterType="String">
+	<update id="updateReadCount" parameterType="int">
   		update junggosangpum set j_readcount=j_readcount+1 where j_sangid=#{num}
   	</update>
 </mapper>
