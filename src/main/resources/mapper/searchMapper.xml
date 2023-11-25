@@ -31,7 +31,9 @@
   	</select>
   	
   	<insert id="searchsaveinsert" parameterType="String">
-  		insert into searchsave (s_id,s_searchword) values (#{s_id},#{s_searchword})
+  		<if test="s_id!=null">
+  			insert into searchsave (s_id,s_searchword) values (#{s_id},#{s_searchword})
+  		</if>
   	</insert>
   	
   	<select id="countsearchword" parameterType="String" resultType="int">
