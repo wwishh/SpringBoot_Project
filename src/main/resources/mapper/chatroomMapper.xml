@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boot.data.mapper.ChatRoomMapperInter">
+	<insert id="insertChatRoom" parameterType="chatRoom">
+		insert into chatroom values(null, #{j_sangid}, #{seller_id}, #{buyer_id}, now())
+	</insert>
+	<select id="findRoomByInfo" parameterType="chatRoom" resultType="String">
+		select room_id from chatroom 
+		where seller_id=#{seller_id} and buyer_id=#{buyer_id} and j_sangid=#{j_sangid}
+	</select>
+	<select id="getAllChatRoom" resultType="chatRoom">
+		select * from chatroom order by room_id
+	</select>
+	<select id="getChatRoomById" parameterType="int" resultType="chatRoom">
+		select * from chatroom where room_id=#{room_id}
+	</select>
+	<select id="maxNumByRoom" resultType="int">
+		select ifnull(max(room_id),0) from chatroom
+	</select>
+	<select id="getChatRoomBySangID" parameterType="int">
+		select * from chatroom where j_sangid=#{j_sangid}
+	</select>
+</mapper>

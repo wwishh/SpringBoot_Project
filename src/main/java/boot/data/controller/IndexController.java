@@ -1,5 +1,7 @@
 package boot.data.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +15,8 @@ public class IndexController {
 	}
 	
 	@GetMapping("/detail")
-	public String index2() {
+	public String index2(HttpSession session) {
+		session.setAttribute("loginid", "joony");
 		return"/2/detail/detail";
 	}
 	
