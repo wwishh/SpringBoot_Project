@@ -44,4 +44,9 @@ public class IndexController {
 	public String insert() {
 		return"/2/Product/P_insert";
 	}
+	
+	@GetMapping("/messagemain")
+	public String messagemain() {
+		return "/2/jsp/chat";
+	}
 }

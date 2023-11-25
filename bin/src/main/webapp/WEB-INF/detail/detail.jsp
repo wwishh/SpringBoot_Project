@@ -10,6 +10,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
+<script type="text/javascript">
+$(function() {
+	
+	$("#createRoomBtn").click(function(){
+		var sangidx = $(this).attr("sangIdx");
+		//alert(sangidx); //상품idx가져와서 채팅room생성
+		
+		$.ajax({
+			type:"post",
+			url:"/creatRoom",
+			data:{"sangidx":sangidx},
+			dataType:"html",
+			success:function(res){
+				if(res==0){
+					alert("판매자와 구매자가 동일합니다.");
+				}else{
+					location.href="/moveChating?room_id="+res;
+				}				
+			}
+		})
+		
+	});
+	
+});
+</script>
 </head>
 <body>
 <div id="carouselExampleIndicators" class="carousel slide w-50 container">
@@ -56,7 +81,7 @@
 				<div id="region-name">성동구 행당제2동</div>
 			</div>
 			<div style="margin-left: auto; margin-top: 5vh;">
-				<button class="btn btn-dark" onclick="location.href='chatRoom'">채팅</button>
+				<button class="btn btn-dark" id="createRoomBtn" sangIdx="1">채팅</button>
 			</div>
 		</div>
 		<div id="article-profile-right">
@@ -93,7 +118,5 @@
 		
 	</div>
 	
-	
-
 </body>
 </html>

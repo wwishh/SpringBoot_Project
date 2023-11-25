@@ -14,7 +14,7 @@
 $(function() {
 	
 	$("#createRoomBtn").click(function(){
-		var sangidx = $(this).attr("sangIdx");
+		/* var sangidx = $(this).attr("sangIdx");
 		//alert(sangidx); //상품idx가져와서 채팅room생성
 		
 		$.ajax({
@@ -29,7 +29,8 @@ $(function() {
 					location.href="/moveChating?room_id="+res;
 				}				
 			}
-		})
+		}) */
+		location.href="/messagemain";
 		
 	});
 	

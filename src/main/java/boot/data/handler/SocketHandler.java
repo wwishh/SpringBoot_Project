@@ -17,15 +17,12 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import boot.data.Dto.ChatDto;
-import boot.data.service.ChatService;
-
 
 //상속받은 TextWebSocketHandler는 handleTextMessage를 실행
 @Component
 public class SocketHandler extends TextWebSocketHandler {
 	
-	HashMap<String, WebSocketSession> sessionMap = new HashMap<>(); //웹소켓 세션을 담아둘 맵
+	/*HashMap<String, WebSocketSession> sessionMap = new HashMap<>(); //웹소켓 세션을 담아둘 맵
 	
 	@Autowired
 	ChatService service;
@@ -161,8 +158,8 @@ public class SocketHandler extends TextWebSocketHandler {
 			}
 		}
 		super.afterConnectionClosed(session, status);
-	}*/
 	}
+	}*/
 	
 
 }

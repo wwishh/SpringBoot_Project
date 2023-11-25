@@ -15,81 +15,50 @@
 <meta charset="UTF-8">
 	<title>Chating</title>
 	<style>
-	* {
-		margin: 0;
-		padding: 0;
-	}
-	
-	.container {
-		width: 500px;
-		margin: 0 auto;
-		padding: 25px
-	}
-	
-	.container h1 {
-		text-align: left;
-		padding: 5px 5px 5px 15px;
-		color: #FFBB00;
-		border-left: 3px solid #FFBB00;
-		margin-bottom: 20px;
-	}
-	
-	.chating {
-		background-color: #000;
-		width: 500px;
-		height: 500px;
-		overflow: auto;
-	}
-	
-	.chating .me {
-		color: #F6F6F6;
-		text-align: right;
-	}
-	
-	.chating .others {
-		color: #FFE400;
-		text-align: left;
-	}
-	
-	input {
-		width: 330px;
-		height: 25px;
-	}
-	
-	.messagefilepreview {
-		position: inherit;
-		background: white;
-		box-shadow: 0px 0px 10px lightgray;
-		border-bottom: 1px solid lightgray;
-		width: 100%;
-		height: 100px;
-		display: inline-flex;
-		align-items: center;
-		bottom: 0;
-		margin-bottom: 55px;
-		z-index: 5p;
-		/* display: none; */
-	}
-	
-	.messagefilepreview div {
-		height: 75px;
-		margin: 0 auto;
-		margin-left: 15px;
-		display: inline-flex;
-		align-items: flex-end;
-	}
-	
-	.messagefilepreview img {
-		height: 75px;
-	}
-	
-	.messagefilepreview span {
-		cursor: pointer;
-	}
+		*{
+			margin:0;
+			padding:0;
+		}
+		.container{
+			width: 500px;
+			margin: 0 auto;
+			padding: 25px
+		}
+		.container h1{
+			text-align: left;
+			padding: 5px 5px 5px 15px;
+			color: #FFBB00;
+			border-left: 3px solid #FFBB00;
+			margin-bottom: 20px;
+		}
+		.chating{
+			background-color: #000;
+			width: 500px;
+			height: 500px;
+			overflow: auto;
+		}
+		.chating .me{
+			color: #F6F6F6;
+			text-align: right;
+		}
+		.chating .others{
+			color: #FFE400;
+			text-align: left;
+		}
+		input{
+			width: 330px;
+			height: 25px;
+		}
+		
 	</style>
 
 
 <script type="text/javascript">
+$(function() {
+	var ws;
+	wsOpen();
+	getChatting();
+});
 	/*var ws;
 
 	function wsOpen(){
@@ -156,10 +125,12 @@
 		ws.send(JSON.stringify(option))
 		$('#chatting').val("");
 	}*/
+	
+
 
 	//웹소켓 오픈
 	function wsOpen() {
-
+		
 		ws = new WebSocket("ws://" + location.host + "/chating");
 		wsEvt();
 	}
@@ -168,14 +139,15 @@
 		ws.onopen = function(data) {
 			//소켓이 열리면 초기화 세팅하기
 		}
-
+		
+	
 		//메시지 잘 들어왔을 때 실행하는 내용
 		ws.onmessage = function(data) {
 			var msg = data.data;
-			var d = JSON.parse(msg)
-
+			var d=JSON.parse(msg)
+			
 			alert(d.type);
-
+			
 			/* getChatting();
 			
 			if(d.type == "message"){
@@ -204,37 +176,35 @@
 	//메시지 보내면 동작하는 코드
 	function send() {
 
-		var roomNumber = $("#roomNumber").val();
-		var seller_id = $("#seller_id").val();
-		var buyer_id = $("#buyer_id").val();
-		var chat = $("#chatting").val();
-
-		alert(roomNumber + "," + seller_id + "," + buyer_id + "," + chat);
-
-		ws.send(JSON.stringify({
-			"roomNumber" : roomNumber,
-			"seller_id" : seller_id,
-			"buyer_id" : buyer_id,
-			"chat" : chat,
-			"type" : "message"
-		}));
-
-		$("#chatting").val("");
-		getChatting();
-
+			var	roomNumber = $("#roomNumber").val();
+			var	seller_id = $("#seller_id").val();
+			var	buyer_id = $("#buyer_id").val();
+			var	chat = $("#chatting").val();
+			
+			alert(roomNumber+","+seller_id+","+buyer_id+","+chat);
+			
+			ws.send(JSON.stringify({
+	            "roomNumber": roomNumber,
+	            "seller_id": seller_id,
+	            "buyer_id": buyer_id,
+	            "chat": chat,
+	            "type": "message"
+	        }));
+			
+			$("#chatting").val("");
+			getChatting();
+		 
 	}
-
-	function getChatting() {
+	
+	function getChatting(){
 		$.ajax({
-			type : "get",
-			dataType : "json",
-			url : "getChatting",
-			data : {
-				"room_id" : $("#roomNumber").val()
-			},
-			success : function(res) {
-				var chatContent = "";
-				$.each(res, function(i, data) {
+			type:"get",
+			dataType:"json",
+			url:"getChatting",
+			data:{"room_id":$("#roomNumber").val()},
+			success:function(res){
+				var chatContent="";
+				$.each(res,function(i,data){
 					alert(data.setter_id);
 				})
 				/* $.each(res, function(i,data){
@@ -247,46 +217,11 @@
 				
 				$("#chating").append(chatContent); */
 			}
-
+			
 		});
 	}
-
-	$(function() {
-		var ws;
-		wsOpen();
-		getChatting();
-
-		//사진 업로드
-		$(".chatuploadicon").click(function() {
-			$(".chatupload input").trigger("click");
-		})
-
-		//사진 선택 <--여기서부터~!
-		$("#msgfileupload").change(function(event) {
-							var input = event.target;
-
-							//미리보기 띄우기
-							if (input.files && input.files[0]) {
-								var reader = new FileReader();
-								reader.onload = function(e) {
-									$(".messagefilepreview").show();
-									var out = "<div><img src='"+e.target.result+"'>";
-									out += "<span class='glyphicon glyphicon-remove fileselcancel'></div>"
-									$(".messagefilepreview").html(out);
-								};
-								reader.readAsDataURL(input.files[0]);
-							} else {
-								out = "";
-							}
-						})
-
-		//사진 선택 취소
-		$(document).on("click", ".fileselcancel", function() {
-			$(".messagefilepreview").hide();
-			$("#msgfileupload").val(null);
-		})
-
-	});
+	
+	
 </script>
 </head>
 <body>
@@ -312,15 +247,8 @@
 			<table class="inputTable">
 				<tr>
 					<th>메시지</th>
-					<th>
-						<div class="messagefilepreview"></div>
-						<input id="chatting" placeholder="보내실 메시지를 입력하세요.">
-					</th>
+					<th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
 					<th><button onclick="send()" id="sendBtn">보내기</button></th>
-				</tr>
-				<tr>
-					<th>파일업로드</th>
-					<th><input type="file" accept="image/jpeg,.png,.gif" id="msgfileupload"></th>
 				</tr>
 			</table>
 		</div>

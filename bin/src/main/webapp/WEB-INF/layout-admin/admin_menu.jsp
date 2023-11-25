@@ -4,34 +4,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html>
-<head>
-<meta charset="UTF-8">
-<link
-=======
 <html ng-app="adminbsb">
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>AdminBSB - Material Design | Documentation</title>
     <link
->>>>>>> 9cb86d5c2071f06dd7f871fea0f3eb25a6d9f4a3
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<<<<<<< HEAD
-<title>admin_menu</title>
-
-</head>
-<body>
-<div style="position:absolute; width: 400px; height: 1500px; background-color: red; top: 0px;">
-</div>
-
-
-=======
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
     <link href="../plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -612,6 +595,5 @@
     <script>
 
     </script>
->>>>>>> 9cb86d5c2071f06dd7f871fea0f3eb25a6d9f4a3
 </body>
 </html>

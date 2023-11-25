@@ -24,7 +24,7 @@ div.carousel-item img{
 
 <hr class="text-dark">
 	<!-- Header-->
-	<header class="py-5">
+	<header class="py-3">
 		<div class="container px-4 px-lg-5 my-5">
 			<div class="text-center text-white">
 				<h1 class="display-4 fw-bolder text-dark">All Products</h1>

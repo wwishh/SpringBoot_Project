@@ -45,22 +45,6 @@
       });
 
       $("#search").keypress(function(e){
-<<<<<<< HEAD
-			//검색어 입력 후 엔터키 입력하면 조회버튼 클릭
-			if(e.keyCode && e.keyCode == 13){
-				$("#btnsearch").trigger("click");
-				return false;
-			}
-			//엔터키 막기
-			if(e.keyCode && e.keyCode == 13){
-				  e.preventDefault();	
-			}
-		});
-      
-      $("#btnsearch").click(function(){
-			alert("이벤트 감지");
-		});
-=======
          //검색어 입력 후 엔터키 입력하면 조회버튼 클릭
          if(e.keyCode && e.keyCode == 13){
             $("#btnsearch").trigger("click");
@@ -75,7 +59,6 @@
       $("#btnsearch").click(function(){
          alert("이벤트 감지");
       });
->>>>>>> 9cb86d5c2071f06dd7f871fea0f3eb25a6d9f4a3
    });
    
    function selectSearch() {
@@ -90,21 +73,12 @@
    
    
    $(document).on("mouseover",".searchResult", function(event){
-<<<<<<< HEAD
-		$(this).css("background-color", "lightgray");
-	});
-	
-	$(document).on("mouseout",".searchResult", function(event){
-		$(this).css("background-color", "white");
-	}); 
-=======
       $(this).css("background-color", "lightgray");
    });
    
    $(document).on("mouseout",".searchResult", function(event){
       $(this).css("background-color", "white");
    }); 
->>>>>>> 9cb86d5c2071f06dd7f871fea0f3eb25a6d9f4a3
 </script>
 <style type="text/css">
 .searchResult{
