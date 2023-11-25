@@ -110,15 +110,15 @@ nav{
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fleamarket</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="/index2">All Products</a></li>
+							<li><a class="dropdown-item" href="/list">All Products</a></li>
 							<li><hr class="dropdown-divider" /></li>
 							<li><a class="dropdown-item" href="#!">Popular Items</a></li>
-							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+							<li><a class="dropdown-item" href="/">New Arrivals</a></li>
 						</ul></li>
 				</ul>
 				 
 				
-				
+				<div style="justify-content: space-between;">
 				<c:if test="${sessionScope.loginok==null}">
 				<button type="button" class="btn btn-outline-primary" onclick="location.href='loginform'">로그인</button>
 				</c:if>
@@ -126,28 +126,28 @@ nav{
 				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid!='wish'&&sessionScope.myid!='oliver'}">
 				<img alt="" src="../img/hani1.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
 				</c:if>
 				
 				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid=='ho'&&sessionScope.myid!='wish'&&sessionScope.myid!='oliver'}">
 				<img alt="" src="../img/wow3.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
 				</c:if>
 				
 				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid=='wish'&&sessionScope.myid!='oliver'}">
 				<img alt="" src="../img/wish.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
 				</c:if>
 				
 				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid!='wish'&&sessionScope.myid=='oliver' }">
 				<img alt="" src="../img/oliversam.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
 				</c:if>
 				 
-				 
+				
 				
 				
 				
@@ -156,9 +156,9 @@ nav{
 				<div class="input-group w-25">
 					<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
 				</div>
-				
+				 </div>
 
-            <div id="result"></div>
+             <div id="result"></div>
             
 
             <!-- 장바구니 -->

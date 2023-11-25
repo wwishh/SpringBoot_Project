@@ -133,7 +133,6 @@ $(document).on("click","div.sangpum", function(event){
 </script>
 </head>
 <body>
-
   <div class="input-group w-25" >
       <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"
        id="search2" autocomplete="off" value="${search }"/>
