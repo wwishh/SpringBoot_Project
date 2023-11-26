@@ -1,5 +1,7 @@
 package boot.data.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,8 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import boot.data.Dto.MessageDto;
 import boot.data.Dto.MessageRoomDto;
@@ -41,9 +45,14 @@ public class MessageController {
 	@Autowired
 	SangpumService sangservice;
 	
+	
 	@GetMapping("/goChattingRoom")
 	public String goChattingRoom(@RequestParam int room_num,Model model) {
+		
+		String roomname = sangservice.getSangpumById(roomservice.getRoomById(room_num).getJ_sangid()).getJ_title();
+		
 		model.addAttribute("room_num", room_num);
+		model.addAttribute("roomName", roomname);
 		return "/2/jsp/chat";
 	}
 	
@@ -60,7 +69,7 @@ public class MessageController {
 	
 	@GetMapping("/message/chatting")
 	@ResponseBody
-	public List<MessageDto> chatting(int room_num, HttpSession session){
+	public List<MessageDto> chatting(@RequestParam(required = false) int room_num, HttpSession session){
 		
 		try {
 			Thread.sleep(100); //0.1초 기다리기
@@ -130,6 +139,34 @@ public class MessageController {
 		
 		return chat;
 		
+	}
+	
+	@PostMapping("/message/fileupload")
+	@ResponseBody
+	public Map<String,String> fileuUpload(@RequestParam MultipartFile upload,HttpSession session)
+	{
+		Map<String, String> map=new HashMap<>();
+		
+		//저장경로
+		String path=session.getServletContext().getRealPath("/messagephoto");
+		//파일 이름
+		String fileName=upload.getOriginalFilename();
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddhhmmss");
+		
+		String uploadName="msg_"+sdf.format(new Date())+fileName; //저장할 파일명
+		
+		//저장
+		try {
+			upload.transferTo(new File(path+"\\"+uploadName));
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		map.put("upload", uploadName);
+		
+		return map;
 	}
 	
 	

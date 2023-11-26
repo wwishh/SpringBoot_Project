@@ -8,8 +8,14 @@
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<link href="/messagejscss/emoji_jk.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="/messagejscss/emoji_jk.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <title>Insert title here</title>
 
 <meta charset="UTF-8">
@@ -26,29 +32,73 @@
 		padding: 25px
 	}
 	
+	.chatlist{
+		height: 500px;
+    	overflow: auto;
+	}
+	
+	.messagefooter {
+	background: white;
+	/* height: 55px; */
+	width: 80%;
+	position: inherit;
+	bottom: 0;
+	display: inline-flex;
+	align-items: center;
+	padding-left: 10px;
+}
+
+.chatuploadicon {
+	cursor: pointer;
+	color: #3582D3;
+}
+
+.chatinputbox {
+	width: 80%;
+	height: 35px;
+	line-height: 35px;
+	background-color: #F0F2F5;
+	border-radius: 60px;
+	text-align: center;
+	margin-left: 10px;
+	margin-right: 10px;
+	border: 1px solid;
+} 
+
+.chatinputbox input {
+	width: 90%;
+	background: none;
+	border: none;
+	outline: none;
+	font-size: 1.5em;
+}
+	
 	.container h1 {
 		text-align: left;
 		padding: 5px 5px 5px 15px;
 		color: #FFBB00;
 		border-left: 3px solid #FFBB00;
 		margin-bottom: 20px;
+		margin-top: 50px;
 	}
 	
 	.chating {
-		background-color: #000;
-		width: 500px;
-		height: 500px;
 		overflow: auto;
+		font-size: 2em;
 	}
 	
 	.chating .me {
-		color: #F6F6F6;
+		color: #black;
 		text-align: right;
 	}
 	
 	.chating .others {
-		color: #FFE400;
+		color: black;
 		text-align: left;
+	}
+	
+	.chating img{
+		height:75px;
 	}
 	
 	input {
@@ -91,12 +141,49 @@
 
 <script type="text/javascript">
 $(function(){
+	
 	wsOpen();//웹소켓 오픈
 	getChatting("${room_num}");//기존 채팅방 가져오기
+	$(".messagefilepreview").hide();
+	
+	
+	//사진 업로드
+	$(".chatuploadicon").click(function() {
+		$(".chatupload input").trigger("click");
+	})
+
+	//사진 선택 <--여기서부터~!
+	$("#msgfileupload").change(function(event) {
+		var input=event.target;
+		
+		//미리보기 띄우기
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$(".messagefilepreview").show();
+				var out="<div><img src='"+e.target.result+"'>";
+				out+="<span class='glyphicon glyphicon-remove fileselcancel'></div>"
+				$(".messagefilepreview").html(out);
+			};
+			reader.readAsDataURL(input.files[0]);
+		} else {
+			out="";
+		}
+	});
+	
+	//사진 선택 취소
+	$(document).on("click",".fileselcancel",function(){
+		$(".messagefilepreview").hide();
+		$("#msgfileupload").val(null);
+	});
+	
+	
 });
 
+
+
 	//상대방과 하던 채팅 가져오기
-	function getChatting(room_num){
+	function getChatting(room_num, scrollPos){
 		
 		//alert(room_num);
 		
@@ -121,13 +208,24 @@ $(function(){
 				});
 				
 				$("#chatShow").html(chatContent);
+				
+				if (scrollPos == null) {
+					setTimeout(function(){
+						$(".chatlist").scrollTop($(".chatlist").prop('scrollHeight'));
+					},300)
+					//$(".chatlist").scrollTop($(".chatlist")[0].scrollHeight); //스크롤 맨 아래로 내리기	
+				} else {
+					setTimeout(function(){
+						$(".chatlist").scrollTop(scrollPos);
+					},300)
+				}
 			}
 		});
-		
-		
-		
+	
 		
 	};
+	
+	
 
 
 	
@@ -170,16 +268,59 @@ $(function(){
 		var msg = $("#chatting").val();
 		var mynum = "${sessionScope.user_num}";
 		
-		alert(room_num);
+		
+		//alert(room_num);
+		
+		//만약 사진을 선택하지 않았다면
+		if(!$("#msgfileupload").val()){
 			
-		ws.send(JSON.stringify({
-			"room_num" : room_num,
-			"msg" : msg,
-			"mynum" : mynum,
-			"type" : "chat"
-		}));
+			ws.send(JSON.stringify({
+				"room_num" : room_num,
+				"msg" : msg,
+				"mynum" : mynum,
+				"type" : "chat"
+			}));
+			
+		}else{
+			//사진부터 업로드...
+			var form=new FormData();
+			form.append("upload",$("#msgfileupload")[0].files[0]); //선택한 1개만 추가
+			
+			$.ajax({
+				type:"post",
+				dataType:"json",
+				url:"/message/fileupload",
+				processData:false,
+				contentType:false,
+				data:form,
+				success:function(res){
+					
+					ws.send(JSON.stringify({
+						"room_num" : room_num,
+						"msg" : res.upload,
+						"mynum" : mynum,
+						"type" : "img"
+					}));
+
+					$(".messagefilepreview").hide();
+					$("#msgfileupload").val(null);
+				}
+			});
+			
+			//메시지도 적었다면 한 번 더 전송
+			if(msg!=""){
+				ws.send(JSON.stringify({
+					"room_num" : room_num,
+					"msg" : msg,
+					"mynum" : mynum,
+					"type" : "chat"
+				}));
+			}
+		}
+			
 
 		$("#chatting").val("");
+		
 		getChatting(room_num); 
 
 	}
@@ -191,23 +332,80 @@ $(function(){
 		<h1>${roomName}의 채팅방</h1>
 		<input type="hidden" id="room_num" value="${room_num}">		
 		
-		<div id="chatShow" class="chating">
+		<!-- 채팅보이는 구간 -->
+		<div class="chatlist">
+			<div id="chatShow" class="chating w-75"></div>
 		</div>
 		
-		<div id="yourMsg">
-			<table class="inputTable">
-				<tr>
-					<th>메시지</th>
-					<th>
-						<input id="chatting" placeholder="보내실 메시지를 입력하세요.">
-					</th>
-					<th><button onclick="send()" id="sendBtn">보내기</button></th>
-				</tr>
-				<tr>
-					<th>파일업로드</th>
-					<th><input type="file" accept="image/jpeg,.png,.gif" id="msgfileupload"></th>
-				</tr>
-			</table>
+		<div class="messagefilepreview"></div>
+
+			<div class="messagefooter">
+				<!-- 이모지 시작-->
+				<div class="chatemoji">
+					<img class="emoji_pickup" id="emoji_pickup_before"
+						src="/messagejscss/img/emoji/1f642.png"> <img
+						class="emoji_pickup" id="emoji_pickup_after"
+						src="/messagejscss/img/emoji/1f600.png">
+
+					<div id="emoji_popup">
+						<!-- emoji popup div start -->
+						<div id="people">
+							<h5>People</h5>
+						</div>
+						<span class="emoji_list" id="&#x1F601;">&#x1F601;</span> <span
+							class="emoji_list" id="&#x1F602;">&#x1F602;</span> <span
+							class="emoji_list" id="&#x1F603;">&#x1F603;</span> <span
+							class="emoji_list" id="&#x1F604;">&#x1F604;</span> <span
+							class="emoji_list" id="&#x1F605;">&#x1F605;</span> <span
+							class="emoji_list" id="&#x1F606;">&#x1F606;</span> <span
+							class="emoji_list" id="&#x1F609;">&#x1F609;</span> <span
+							class="emoji_list" id="&#x1F60A;">&#x1F60A;</span> <span
+							class="emoji_list" id="&#x1F60B;">&#x1F60B;</span> <span
+							class="emoji_list" id="&#x1F60C;">&#x1F60C;</span> <span
+							class="emoji_list" id="&#x1F60D;">&#x1F60D;</span> <span
+							class="emoji_list" id="&#x1F60F;">&#x1F60F;</span> <span
+							class="emoji_list" id="&#x1F612;">&#x1F612;</span> <span
+							class="emoji_list" id="&#x1F613;">&#x1F613;</span> <span
+							class="emoji_list" id="&#x1F614;">&#x1F614;</span> <span
+							class="emoji_list" id="&#x1F616;">&#x1F616;</span> <span
+							class="emoji_list" id="&#x1F618;">&#x1F618;</span> <span
+							class="emoji_list" id="&#x1F61A;">&#x1F61A;</span> <span
+							class="emoji_list" id="&#x1F61C;">&#x1F61C;</span> <span
+							class="emoji_list" id="&#x1F61D;">&#x1F61D;</span> <span
+							class="emoji_list" id="&#x1F61E;">&#x1F61E;</span> <span
+							class="emoji_list" id="&#x1F620;">&#x1F620;</span> <span
+							class="emoji_list" id="&#x1F621;">&#x1F621;</span> <span
+							class="emoji_list" id="&#x1F622;">&#x1F622;</span> <span
+							class="emoji_list" id="&#x1F623;">&#x1F623;</span> <span
+							class="emoji_list" id="&#x1F624;">&#x1F624;</span> <span
+							class="emoji_list" id="&#x1F625;">&#x1F625;</span> <span
+							class="emoji_list" id="&#x1F628;">&#x1F628;</span> <span
+							class="emoji_list" id="&#x1F629;">&#x1F629;</span> <span
+							class="emoji_list" id="&#x1F62A;">&#x1F62A;</span> <span
+							class="emoji_list" id="&#x1F62B;">&#x1F62B;</span> <span
+							class="emoji_list" id="&#x1F62D;">&#x1F62D;</span> <span
+							class="emoji_list" id="&#x1F630;">&#x1F630;</span> <span
+							class="emoji_list" id="&#x1F631;">&#x1F631;</span> <span
+							class="emoji_list" id="&#x1F632;">&#x1F632;</span> <span
+							class="emoji_list" id="&#x1F633;">&#x1F633;</span> <span
+							class="emoji_list" id="&#x1F635;">&#x1F635;</span> <span
+							class="emoji_list" id="&#x1F637;">&#x1F637;</span>
+						<!-- emoji popup div end -->
+					</div>
+				</div>
+				<!-- 이모지 끝 -->
+				<!-- 사진 올리기 -->
+				<div class="chatupload">
+					<input type="file" accept="image/jpeg,.png,.gif" id="msgfileupload" style="display: none;"> 
+					<i class="glyphicon glyphicon-picture chatuploadicon" style="font-size: 2em;"></i>
+				</div>
+				<div class="chatinputbox">			
+					<input type="text" id="chatting" placeholder="채팅 입력">
+				</div>
+				<button onclick="send()" id="sendBtn">
+					<i class="glyphicon glyphicon-send" style="font-size: 2em;"></i>
+				</button>
+			</div>
 		</div>
 	</div>
 </body>

@@ -60,13 +60,14 @@ public class SocketHandler extends TextWebSocketHandler {
         JSONObject ob=new JSONObject(msg);
         
         
-      //메시지 구분(보낸사람:내용)
+      //메시지 구분(보낸사람:내용), default로 채팅방에 receiver는 판매자가 되고, sender는 구매자가 됨
         int mynum=Integer.parseInt(ob.getString("mynum")); //보낸사람
         int room_num=ob.getInt("room_num"); //그룹
         int reciever= roomservice.getRoomById(room_num).getReceiver_num();//받는사람num
         String content=ob.getString("msg"); //내용
+        String type=ob.getString("type");
         
-        if(mynum==reciever) {//판매자가 채팅창에 들어올 때, 즉 판매자가 구매자에게 메시지를 보내게 됨
+        if(mynum==reciever) {//판매자가 채팅창에 들어올 때, 즉 구매자가 판매자의 메시지를 받는 사람이 됨
         	reciever=roomservice.getRoomById(room_num).getSender_num();
         }
         
@@ -79,6 +80,11 @@ public class SocketHandler extends TextWebSocketHandler {
         dto.setReceiver_num(reciever);
         
         dto.setRoom_num(room_num);
+        
+        //사진을 보냈다면
+        if(type.equals("img")) {
+        	content="<img src='/messagephoto/"+content+"'>";
+        }
         
         dto.setMess_content(content);
 		  
