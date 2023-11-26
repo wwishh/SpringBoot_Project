@@ -1,6 +1,8 @@
 package boot.data.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,5 +45,17 @@ public class MessageService implements MessageServiceInter {
 		// TODO Auto-generated method stub
 		mapper.deleteMessageByRoom(room_num);
 	}
+
+
+	/*@Override
+	public int getCountOfMessage(String user_num, String other) {
+		// TODO Auto-generated method stub
+		Map<String, String> map=new HashMap<>();
+		
+		map.put("user_num", user_num);
+		map.put("other", other);
+		
+		return mapper.getCountOfMessage(map);
+	}*/
 
 }

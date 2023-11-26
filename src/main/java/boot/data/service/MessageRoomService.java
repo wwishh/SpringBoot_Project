@@ -15,6 +15,12 @@ public class MessageRoomService implements MessageRoomServiceInter {
 	
 	@Autowired
 	MessageRoomMapperInter mapper;
+	
+	@Override
+	public int getMaxRoom() {
+		// TODO Auto-generated method stub
+		return mapper.getMaxRoom();
+	}
 
 	@Override
 	public void insertRoom(MessageRoomDto dto) {
@@ -29,12 +35,26 @@ public class MessageRoomService implements MessageRoomServiceInter {
 	}
 
 	@Override
-	public int getRoomBySangIdxAndUserId(int j_sangid, int user_num) {
+	public String getRoomBySangIdxAndUserId(int j_sangid, int sender_num) {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<>();
 		map.put("j_sangid", j_sangid);
-		map.put("user_num", user_num);
+		map.put("sender_num", sender_num);
 		return mapper.getRoomBySangIdxAndUserId(map);
 	}
+
+	@Override
+	public MessageRoomDto getRoomById(int room_num) {
+		// TODO Auto-generated method stub
+		return mapper.getRoomById(room_num);
+	}
+
+	@Override
+	public List<MessageRoomDto> getRoomsBySangpum(int j_sangid) {
+		// TODO Auto-generated method stub
+		return mapper.getRoomsBySangpum(j_sangid);
+	}
+
+	
 
 }

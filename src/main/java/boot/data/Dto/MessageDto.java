@@ -17,4 +17,6 @@ public class MessageDto {
 	private String sender_photo;
 	private String mess_content;
 	private Timestamp mess_writeday;
+	
+	private String mess_time;
 }

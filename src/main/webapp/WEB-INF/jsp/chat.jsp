@@ -90,73 +90,47 @@
 
 
 <script type="text/javascript">
-	/*var ws;
+$(function(){
+	wsOpen();//웹소켓 오픈
+	getChatting("${room_num}");//기존 채팅방 가져오기
+});
 
-	function wsOpen(){
-		//웹소켓 전송시 현재 방의 번호를 넘겨서 보낸다.
-		ws = new WebSocket("ws://" + location.host + "/chating/"+$("#roomNumber").val());
-		wsEvt();
-	}
+	//상대방과 하던 채팅 가져오기
+	function getChatting(room_num){
 		
-	function wsEvt() {
-		ws.onopen = function(data){
-			//소켓이 열리면 동작
+		//alert(room_num);
+		
+		if(room_num==0){
+			return;
 		}
 		
-		ws.onmessage = function(data) {
-			//메시지를 받으면 동작
-			var msg = data.data;
-			if(msg != null && msg.trim() != ''){
-				var d = JSON.parse(msg);
-				if(d.type == "getId"){
-					var si = d.sessionId != null ? d.sessionId : "";
-					if(si != ''){
-						$("#sessionId").val(si); 
-					}
-				}else if(d.type == "message"){
-					if(d.sessionId == $("#sessionId").val()){
-						$("#chating").append("<p class='me'>나 :" + d.msg + "</p>");	
+		$.ajax({
+			type:"get",
+			dataType:"json",
+			url:"/message/chatting",
+			data:{"room_num":room_num},
+			success:function(res){
+				var chatContent="";
+				$.each(res, function(i,ele){
+					
+					if(ele.sender_num=="${user_num}"){
+						chatContent+="<p class='me' style='text-align: right;'>("+ele.mess_time+")&nbsp;&nbsp;나:"+ele.mess_content+"</p>";
 					}else{
-						$("#chating").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
+						chatContent+="<p class='other' style='text-align: left;'>("+ele.mess_time+")&nbsp;&nbsp; 상대:"+ele.mess_content+"</p>";
 					}
-						
-				}else{
-					console.warn("unknown type!")
-				}
-			}
-		}
-
-		document.addEventListener("keypress", function(e){
-			if(e.keyCode == 13){ //enter press
-				send();
+				});
+				
+				$("#chatShow").html(chatContent);
 			}
 		});
-	}
+		
+		
+		
+		
+	};
 
-	function chatName(){
-		var userName = $("#userName").val();
-		if(userName == null || userName.trim() == ""){
-			alert("사용자 이름을 입력해주세요.");
-			$("#userName").focus();
-		}else{
-			wsOpen();
-			$("#yourName").hide();
-			$("#yourMsg").show();
-		}
-	}
 
-	function send() {
-		var option ={
-			type: "message",
-			roomNumber: $("#roomNumber").val(),
-			sessionId : $("#sessionId").val(),
-			userName : $("#userName").val(),
-			msg : $("#chatting").val()
-		}
-		ws.send(JSON.stringify(option))
-		$('#chatting').val("");
-	}*/
-
+	
 	//웹소켓 오픈
 	function wsOpen() {
 
@@ -172,23 +146,11 @@
 		//메시지 잘 들어왔을 때 실행하는 내용
 		ws.onmessage = function(data) {
 			var msg = data.data;
-			var d = JSON.parse(msg)
+			var msgJson = JSON.parse(msg)
 
-			alert(d.type);
-
-			/* getChatting();
+			var room_num = $("#room_num").val();//현제 선택된 채팅방
 			
-			if(d.type == "message"){
-				$("#chating").append("<p>" + msg + "</p>");
-			} */
-
-			/* if(d.type == "message"){
-				if(d.seller_id==${loginid}){//판매자가 현재 로그인한 아이디와 같다면
-					$("#chating").append("<p class='me'>나 :" + d.msg + "</p>");	
-				}else{
-					$("#chating").append("<p class='others'>"+ d.buyer_id + " :" + d.msg + "</p>");
-				}
-			} */
+			getChatting(room_num);
 		}
 
 		//채팅 입력창에서 엔터 누르면 채팅 보내짐
@@ -203,117 +165,40 @@
 
 	//메시지 보내면 동작하는 코드
 	function send() {
-
-		var roomNumber = $("#roomNumber").val();
-		var seller_id = $("#seller_id").val();
-		var buyer_id = $("#buyer_id").val();
-		var chat = $("#chatting").val();
-
-		alert(roomNumber + "," + seller_id + "," + buyer_id + "," + chat);
-
+		
+		var room_num=$("#room_num").val();
+		var msg = $("#chatting").val();
+		var mynum = "${sessionScope.user_num}";
+		
+		alert(room_num);
+			
 		ws.send(JSON.stringify({
-			"roomNumber" : roomNumber,
-			"seller_id" : seller_id,
-			"buyer_id" : buyer_id,
-			"chat" : chat,
-			"type" : "message"
+			"room_num" : room_num,
+			"msg" : msg,
+			"mynum" : mynum,
+			"type" : "chat"
 		}));
 
 		$("#chatting").val("");
-		getChatting();
+		getChatting(room_num); 
 
 	}
 
-	function getChatting() {
-		$.ajax({
-			type : "get",
-			dataType : "json",
-			url : "getChatting",
-			data : {
-				"room_id" : $("#roomNumber").val()
-			},
-			success : function(res) {
-				var chatContent = "";
-				$.each(res, function(i, data) {
-					alert(data.setter_id);
-				})
-				/* $.each(res, function(i,data){
-					if(data.seller_id==data.loginid){
-						chatContent+="<p class='seller' del="+data.chat_id+">나 :" + data.content + "</p>";
-					}else{
-						chatContent+="<p class='buyer' del="+data.chat_id+">" + data.sender + " :" + data.content + "</p>"
-					}
-				}); 
-				
-				$("#chating").append(chatContent); */
-			}
-
-		});
-	}
-
-	$(function() {
-		var ws;
-		wsOpen();
-		getChatting();
-
-		//사진 업로드
-		$(".chatuploadicon").click(function() {
-			$(".chatupload input").trigger("click");
-		})
-
-		//사진 선택 <--여기서부터~!
-		$("#msgfileupload").change(function(event) {
-							var input = event.target;
-
-							//미리보기 띄우기
-							if (input.files && input.files[0]) {
-								var reader = new FileReader();
-								reader.onload = function(e) {
-									$(".messagefilepreview").show();
-									var out = "<div><img src='"+e.target.result+"'>";
-									out += "<span class='glyphicon glyphicon-remove fileselcancel'></div>"
-									$(".messagefilepreview").html(out);
-								};
-								reader.readAsDataURL(input.files[0]);
-							} else {
-								out = "";
-							}
-						})
-
-		//사진 선택 취소
-		$(document).on("click", ".fileselcancel", function() {
-			$(".messagefilepreview").hide();
-			$("#msgfileupload").val(null);
-		})
-
-	});
 </script>
 </head>
 <body>
 	<div id="container" class="container">
 		<h1>${roomName}의 채팅방</h1>
-		<input type="hidden" id="roomNumber" value="${room_id}">
-		<input type="hidden" id="seller_id" value="${seller_id }">
-		<input type="hidden" id="buyer_id" value="${buyer_id }">
+		<input type="hidden" id="room_num" value="${room_num}">		
 		
-		<div id="chating" class="chating">
+		<div id="chatShow" class="chating">
 		</div>
 		
-		<!-- <div id="yourName">
-			<table class="inputTable">
-				<tr>
-					<th>사용자명</th>
-					<th><input type="text" name="userName" id="userName"></th>
-					<th><button onclick="chatName()" id="startBtn">이름 등록</button></th>
-				</tr>
-			</table>
-		</div> -->
 		<div id="yourMsg">
 			<table class="inputTable">
 				<tr>
 					<th>메시지</th>
 					<th>
-						<div class="messagefilepreview"></div>
 						<input id="chatting" placeholder="보내실 메시지를 입력하세요.">
 					</th>
 					<th><button onclick="send()" id="sendBtn">보내기</button></th>

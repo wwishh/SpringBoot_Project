@@ -14,25 +14,25 @@
 $(function() {
 	
 	$("#createRoomBtn").click(function(){
-		/* var sangidx = $(this).attr("sangIdx");
+		var sangidx = $(this).attr("sangIdx");
 		//alert(sangidx); //상품idx가져와서 채팅room생성
 		
 		$.ajax({
 			type:"post",
-			url:"/creatRoom",
+			url:"/createRoom",
 			data:{"sangidx":sangidx},
 			dataType:"html",
 			success:function(res){
 				if(res==0){
-					alert("판매자와 구매자가 동일합니다.");
+					alert("자신이 판매하는 상품은 구매할 수 없습니다.");
+					location.href="/goSellerRooms?sangidx="+sangidx;
 				}else{
-					location.href="/moveChating?room_id="+res;
+					location.href="/goChattingRoom?room_num="+res;
 				}				
 			}
-		}) */
-		location.href="/messagemain";
+		})
 		
-	});
+	})
 	
 });
 </script>
