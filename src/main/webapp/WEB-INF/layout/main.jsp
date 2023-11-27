@@ -22,13 +22,11 @@
 			<!-- 출력방식 설정 -->
 			<div class="sort">
 				<div class="sort_insert">
-					<!-- <a href="/form">글쓰기</a> -->
 					 <a href="/form">
 						<button style="color: black" class="write"><img src="../../img/writePost.png" style="width: 20px;">글쓰기</button>
 					</a>
 				</div>
 				<div class="sort_list">
-					<!-- <a href="/form">글쓰기</a> -->
 					 <a href="/list">
 						<button style="color: black" class="write">모든상품</button>
 					</a>
@@ -36,26 +34,6 @@
 			</div>
 			
 			<br>
-			
-			<!-- 리스트형 출력방식 / 기본값 : hide-->
-			<div style="display: none" id="listType" class="form-control">
-				<table class="table table-bordered">
-					<tr>
-						<th width="100">상품명</th>
-						<th width="30">금액</th>
-						<th width="20">판매자</th>
-						<th width="40">등록일자</th>
-					</tr>
-					<tr>
-						<td>상품명</td>
-						<td>금액</td>
-						<td>판매자</td>
-						<td>등록일자</td>
-					</tr>
-				</table>
-			</div>
-			
-			<!-- 카드형 출력방식 -->
 			<div id="cardType" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">     	
 		     	<c:forEach var="dto" items="${list }">
 		     	<div class="col mb-5">
@@ -77,7 +55,7 @@
 				</div>			
 		     	</c:forEach>
 	     	</div>
-	     	 <br><br><br>
+     		<br><br><br>
 			<div class="kakao_inquiry">
 				<div id="kakao-talk-channel-add-button"
 					data-channel-public-id="_BpxgxjG" data-size="large"
