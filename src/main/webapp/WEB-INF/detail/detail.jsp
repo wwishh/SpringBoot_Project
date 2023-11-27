@@ -9,6 +9,13 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<!-- iamport.payment.js --> 
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<style>
+	#iamportPayment{
+		cursor: pointer;
+	}
+</style>
 <title>Insert title here</title>
 <script type="text/javascript">
 $(function() {
@@ -34,7 +41,47 @@ $(function() {
 		
 	})
 	
-});
+
+	
+		$("#iamportPayment").click(function(){ 
+        	payment(); //버튼 클릭하면 호출 
+        });
+	});
+	
+	//버튼 클릭하면 실행
+    function payment(data) {
+    	const randomString = generateRandomString(8);
+        IMP.init('imp78057427');//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
+        IMP.request_pay({// param
+            pg: "kakaopay.TC0ONETIME", //pg사명 or pg사명.CID (잘못 입력할 경우, 기본 PG사가 띄워짐)
+            pay_method: "card", //지불 방법
+            merchant_uid: randomString, //"iamport_test_id", //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+            name: "${dto.j_title}",//"도서", //결제창에 노출될 상품명
+            amount: "${dto.j_price}", //금액
+            buyer_email : "${sessionScope.myemail}", 
+            buyer_name : "${sessionScope.myname}",
+            buyer_tel : "${sessionScope.myhp}"
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
+            } else {
+                alert("실패 : 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
+            }
+        });
+    }
+	
+ // 길이 8의 랜덤 문자열 생성
+    function generateRandomString(length) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          result += characters.charAt(randomIndex);
+        }
+
+        return result;
+      }
 </script>
 </head>
 <body>
@@ -51,7 +98,7 @@ $(function() {
 
 		<div class="carousel-inner rounded">
 			<div class="carousel-item active">
-				<img src="../img/detail1.PNG" class="d-block w-100" alt="...">
+				<img src="../img/${dto.j_imageurl }" class="d-block w-100" alt="...">
 			</div>
 			<div class="carousel-item">
 				<img src="../img/detail2.PNG" class="d-block w-100" alt="...">
@@ -78,8 +125,8 @@ $(function() {
 				<img alt="달달이" src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-c649f052a34ebc4eee35048815d8e4f73061bf74552558bb70e07133f25524f9.png">
 			</div>
 			<div id="article-profile-left">
-				<div id="nickname">달달이</div>
-				<div id="region-name">성동구 행당제2동</div>
+				<div id="nickname">${sessionScope.myid }</div>
+				<div id="region-name">${dto.j_addr }</div>
 			</div>
 			<div style="margin-left: auto; margin-top: 5vh;">
 				<button class="btn btn-dark" id="createRoomBtn" sangIdx="1">채팅</button>
@@ -101,17 +148,17 @@ $(function() {
 		<hr>
 	
 		<div>
-			<b>다이슨 청소기 </b><br>
-			<small class="text-secondary">디지털 기기</small><br>
-			<b>15,000원</b><br><br>
+			<b>${dto.j_title } </b><br>
+			<small class="text-secondary">${dto.j_category }</small><br>
+			<b><fmt:formatNumber value="${dto.j_price }" type="currency"/></b><br><br>
 			<div>
 				<p>
-					청소기 팝니다. 기능엔 전혀 문제 없습니다!<br>
-					사진애 보이는 동그란 파란 부분에 흠이 있습니다.
+					${dto.j_explanation }
 				</p>
 			</div>
 			<div>
-				<small class="text-secondary">관심 12 채팅 5 조회 412</small>
+				<small class="text-secondary">관심 ${dto.j_interest } 채팅 아직없음 조회 ${dto.j_readcount }</small>
+           		<img src="../img/kakaopay.png" style="width:70px; height:30px" id="iamportPayment"> 
 			</div>
 			<br>
 			<hr>
