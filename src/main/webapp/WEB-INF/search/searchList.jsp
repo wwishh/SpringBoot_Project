@@ -24,6 +24,13 @@
 .sangpum{
 	cursor : pointer;
 	display : inline-block;
+	width:250px;
+	height:250px;
+	margin: 20px;
+}
+
+.interest{
+	cursor : pointer;
 }
 
 
@@ -76,15 +83,18 @@ $(function(){
              
              $.each(res,function(i,dto){
             	
-
-                s+="<div class='sangpum' style='width:250px; height:250px; margin: 20px'>";
+				s+="<div style='display : inline-block;'>";
+                s+="<div class='sangpum'>";
                 s+="<input type='hidden' name='num' id='num' value='" + dto.j_sangid + "'>";
                 s+="<img src='../img/"+ dto.j_imageurl + "' style='width:250px; height:250px'><br>";
                 s+="<b>" + dto.j_title + "</b>";
                 s+="<p>" + dto.j_explanation + "</p>";
                 s+="<b>"+dto.j_price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }) +"</b>";
-                s+= "<br><i class='bi bi-eye-fill'>" + dto.j_readcount + "</i>&nbsp;&nbsp;";
-                s+= "<i class='bi bi-heart-fill'>" + dto.j_interest + "</i>";
+                s+="</div>";
+                s+="<div style='margin-left:20px;'>";
+                s+= "<i class='bi bi-eye-fill'>" + dto.j_readcount + "</i>&nbsp;&nbsp;";
+                s+= "<i class='bi bi-heart-fill interest' num='" + dto.j_sangid + "'>" + dto.j_interest + "</i>";
+                s+="</div>";
                 s+="</div>";
                 if(count%4==0){
                 	s+="<br>";
@@ -118,6 +128,78 @@ $(function(){
         }
 
      });
+    
+    //하트누르면 1증가 및 db에 좋아요 여부 저장
+    $(document).on ("click","i.interest", function(event){
+    	var currentColor = $(this).css("color");
+    	
+
+    	var num = $(this).attr('num');
+    	
+    	var i_id = $("#myid").val();
+    	//alert(i_id);
+    	//alert(num);
+    	
+    	
+    	 
+    	 
+    	 
+    	 
+    	 
+    	 
+    	 if (currentColor === "rgb(255, 0, 0)") {
+             // 현재 색상이 빨간색인 경우 검은색으로 변경합니다.
+             $(this).css("color", "black");
+             $.ajax({
+               type: "get",
+               dataType:"html",
+               url: "/interest/delete",
+               data: {"i_id":i_id, "i_sangpum":num},
+               success: function(data) {
+                console.log("좋아요취소");
+                  
+               }
+             });
+             
+             $.ajax({
+             	   type:"get",
+             	   dataType:"json",
+             	   url:"/sangpum/minusInterest",
+             	   data:{"num":num},
+             	   success:function(res){
+             		  $("i.interest").text(res.mInterest);
+             		       		   
+             	   }
+                });
+             
+             
+         } else {
+             // 현재 색상이 빨간색이 아닌 경우 빨간색으로 변경합니다.
+             $(this).css("color", "red");
+             $.ajax({
+               type: "get",
+               dataType:"html",
+               url: "/interest/insert",
+               data: {"i_id":i_id, "i_sangpum":num},
+               success: function(data) {
+                console.log("좋아요클릭");
+                  
+               }
+             });
+             
+             $.ajax({
+           	   type:"get",
+           	   dataType:"json",
+           	   url:"/sangpum/plusInterest",
+           	   data:{"num":num},
+           	   success:function(res){
+           		  $("i.interest").text(res.pInterest);
+           		       		   
+           	   }
+              });
+         }
+
+    });
 
 });
 
@@ -134,6 +216,7 @@ $(document).on("click","div.sangpum", function(event){
 </head>
 <body>
   <div class="input-group w-25" >
+  	  <input type="hidden" id="myid" value="${sessionScope.myid }">
       <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"
        id="search2" autocomplete="off" value="${search }"/>
       <input type="button" value="검색" id="btnsearch2" class="btn btn-dark">
@@ -152,16 +235,23 @@ $(document).on("click","div.sangpum", function(event){
      		<b>${search }에 대한 검색결과가 없습니다</b>
      	</c:if>
      	<c:if test="${list.size()!=0 }">
+     	<div style="margin-left:20px">
+     	<b>상품 ${list.size() }</b>
+     	</div>
      	<c:forEach var="dto" items="${list }">
-     		<div class='sangpum' style='width:250px; height:250px; margin: 20px'>
+     	<div style='display : inline-block;'>
+     		<div class='sangpum'>
      			<input type="hidden" name="num" id="num" value="${dto.j_sangid }">
-                <img src="../img/${dto.j_imageurl }" style='width:250px; height:250px'><br>
-                <b>${dto.j_title}</b>
-                <p>${dto.j_explanation}</p>
-                <b><fmt:formatNumber value="${dto.j_price}" type="currency"/></b>
-                <br><i class='bi bi-eye-fill'>${dto.j_readcount}</i>&nbsp;&nbsp;
-                <i class='bi bi-heart-fill'>${dto.j_interest}</i>
+                	<img src="../img/${dto.j_imageurl }" style='width:250px; height:250px'><br>
+                	<b>${dto.j_title}</b>
+                	<p>${dto.j_explanation}</p>
+                	<b><fmt:formatNumber value="${dto.j_price}" type="currency"/></b>
                 </div>
+                <div style='margin-left:20px;'>
+                	<i class='bi bi-eye-fill'>${dto.j_readcount}</i>&nbsp;&nbsp;
+                	<i class='bi bi-heart-fill interest' num='${dto.j_sangid }'>${dto.j_interest}</i>
+                </div>
+             </div>  
      	</c:forEach>
      	</c:if>
      	</div>

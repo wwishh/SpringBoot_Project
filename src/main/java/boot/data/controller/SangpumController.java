@@ -1,12 +1,15 @@
 package boot.data.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.SangpumDto;
@@ -40,6 +43,34 @@ public class SangpumController {
 		model.setViewName("/2/detail/detail");
 		
 		return model;
+	}
+	
+	@GetMapping("/sangpum/plusInterest")
+	@ResponseBody
+	public Map<String, Integer> plusInterest(int num) {
+		Map<String, Integer> map = new HashMap<>();
+		
+		inter.plusInterest(num);
+		
+		int pInterst = inter.getSangpum(num).getJ_interest();
+		
+		map.put("pInterest", pInterst);
+		
+		return map;
+	}
+	
+	@GetMapping("/sangpum/minusInterest")
+	@ResponseBody
+	public Map<String, Integer> minusInterest(int num) {
+		Map<String, Integer> map = new HashMap<>();
+		
+		inter.minusInterest(num);
+		
+		int mInterst = inter.getSangpum(num).getJ_interest();
+		
+		map.put("mInterest", mInterst);
+		
+		return map;
 	}
 	
 	@GetMapping("/list")

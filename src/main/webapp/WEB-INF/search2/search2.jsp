@@ -71,6 +71,8 @@
          //alert("이벤트 감지");
          var searchword=$("#search").val();
          var s_id=$("#btnsearch").val();
+         
+          
 
          location.href="search/main?search="+searchword+"&s_id="+s_id
 
