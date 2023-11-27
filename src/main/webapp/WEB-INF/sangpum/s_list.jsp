@@ -53,7 +53,11 @@
 							<li class="form-control">	
 								<article>
 									<div class="item-list-div">
-										<img class="item-list-img" src="../img/${dto.j_imageurl }" alt="..."/>
+										<c:if test="${dto.j_imageurl != 'no' }">
+						     				<c:forTokens var="pho" items="${dto.j_imageurl }" delims="," begin="0" end="0">
+						                		<img class="item-list-img" src="../img/${pho }" alt="..."/>
+						                	</c:forTokens>
+						                </c:if> 
 										<div class="item-list-content">
 											<h2 class="fw-bolder item-list-title">&nbsp;${dto.j_title}</h2><br>
 											<h6 class="item-list-price"><fmt:formatNumber value="${dto.j_price}" type="currency"/></h6> 
@@ -71,7 +75,11 @@
 		     	<c:forEach var="dto" items="${list }">
 		     	<div class="col mb-5">
 		     		<div class="card h-100">
-		                <img class="card-img-top" src="../img/${dto.j_imageurl }" alt="..."/> 
+		                <c:if test="${dto.j_imageurl != 'no' }">
+		     				<c:forTokens var="pho" items="${dto.j_imageurl }" delims="," begin="0" end="0">
+		                		<img class="card-img-top" src="../img/${pho }" alt="..." />
+		                	</c:forTokens>
+		                </c:if> 
 		                <div class="card-body p-4">
 			            	<div class="text-center">
 			            		<h5 class="fw-bolder">${dto.j_title}</h5>
