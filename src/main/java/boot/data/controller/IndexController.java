@@ -1,10 +1,13 @@
 package boot.data.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.MessageRoomDto;
+import boot.data.Dto.SangpumDto;
+import boot.data.mapper.SearchMapperInter;
 import boot.data.service.MessageRoomService;
 import boot.data.service.SangpumService;
 import boot.data.service.UserService;
@@ -28,25 +33,16 @@ public class IndexController {
 	@Autowired
 	MessageRoomService roomservice;
 	
+	@Autowired
+	SearchMapperInter inter;
+	
+
 	@GetMapping("/")
-	public String index(HttpSession session) {
-		session.setAttribute("myid", "test2");
-		return "/1/layout/main";
-	}
-	
-	@GetMapping("/detail")
-	public String index2() {
-		return"/2/detail/detail";
-	}
-	
-	@GetMapping("/search")
-	public String index3() {
-		return"/3/search2/search2";
-	}
-	
-	
-	@GetMapping("/")
-	public ModelAndView index(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(value = "option", required = false) String option, @RequestParam(value = "search", required = false) String search, @ModelAttribute SangpumDto dto) {
+	public ModelAndView index(@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam(value = "option", required = false) String option, 
+			@RequestParam(value = "search", required = false) String search, 
+			@ModelAttribute SangpumDto dto,
+			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		
 		int totalCount;
@@ -83,9 +79,10 @@ public class IndexController {
 		return model;
 	}
 	
-	/*
-	 * @GetMapping("/detail") public String index2() { return"/2/detail/detail"; }
-	 */
+	@GetMapping("/detail")
+	public String index2() {
+		return"/2/detail/detail";
+	}
 	
 	
 	@GetMapping("/insert")
