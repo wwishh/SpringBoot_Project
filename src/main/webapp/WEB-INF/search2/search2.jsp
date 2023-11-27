@@ -71,9 +71,9 @@
          //alert("이벤트 감지");
          var searchword=$("#search").val();
          var s_id=$("#btnsearch").val();
-         
-         
+
          location.href="search/main?search="+searchword+"&s_id="+s_id
+
       });
       
       //최근 검색어 클릭시 검색창에 값 받아오기

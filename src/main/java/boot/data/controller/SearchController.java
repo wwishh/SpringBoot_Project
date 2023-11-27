@@ -17,20 +17,12 @@ public class SearchController {
 
 	@Autowired
 	SearchMapperInter inter;
-
-	
-	@GetMapping("/search/searchPage")
-	public String searchpage() {
-		return "/search/searchPage";
-	}
 	
 	@GetMapping("/search/result")
 	@ResponseBody
 	public List<String> result(String search) {
 		return inter.sangSearch(search);
 	}
-	
-	
 	
 	//검색 결과 화면
 	@GetMapping("/search/main")
@@ -39,10 +31,12 @@ public class SearchController {
 		List<SangpumDto> list = inter.mainSangList(search);
 		int count = inter.countsearchword(s_id, search);
 		
-		if(count<1) {
+		System.out.println("검색어 개수: "+count+", 아이디 값: "+s_id);
+		
+		ModelAndView model = new ModelAndView();
+		
+		if (count < 1 && !s_id.equals("guest")) {
 			inter.searchsaveinsert(s_id,search);
-			
-			ModelAndView model = new ModelAndView();
 			
 			model.addObject("search", search);
 			model.addObject("list", list);
@@ -51,8 +45,6 @@ public class SearchController {
 			return model;
 		}
 		else {
-			ModelAndView model = new ModelAndView();
-			
 			model.addObject("search", search);
 			model.addObject("list", list);
 			model.setViewName("/2/search/searchList");
