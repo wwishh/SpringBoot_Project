@@ -12,8 +12,8 @@ public class MessageRoomDto {
 	
 	private int room_num;
 	private int j_sangid;
-	private int sender_num;
-	private int receiver_num;
+	private String sender_id;
+	private String receiver_id;
 	private Timestamp room_createday;
 
 }

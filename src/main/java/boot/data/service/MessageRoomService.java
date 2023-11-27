@@ -29,17 +29,17 @@ public class MessageRoomService implements MessageRoomServiceInter {
 	}
 
 	@Override
-	public List<MessageRoomDto> getRoomsByUser(int user_num) {
+	public List<MessageRoomDto> getRoomsByUser(String user_id) {
 		// TODO Auto-generated method stub
-		return mapper.getRoomsByUser(user_num);
+		return mapper.getRoomsByUser(user_id);
 	}
 
 	@Override
-	public String getRoomBySangIdxAndUserId(int j_sangid, int sender_num) {
+	public String getRoomBySangIdxAndUserId(int j_sangid, String sender_id) {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<>();
 		map.put("j_sangid", j_sangid);
-		map.put("sender_num", sender_num);
+		map.put("sender_id", sender_id);
 		return mapper.getRoomBySangIdxAndUserId(map);
 	}
 

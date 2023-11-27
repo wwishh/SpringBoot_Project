@@ -61,23 +61,23 @@ public class SocketHandler extends TextWebSocketHandler {
         
         
       //메시지 구분(보낸사람:내용), default로 채팅방에 receiver는 판매자가 되고, sender는 구매자가 됨
-        int mynum=Integer.parseInt(ob.getString("mynum")); //보낸사람
+        String mynum=ob.getString("mynum"); //보낸사람
         int room_num=ob.getInt("room_num"); //그룹
-        int reciever= roomservice.getRoomById(room_num).getReceiver_num();//받는사람num
+        String reciever= roomservice.getRoomById(room_num).getReceiver_id();//받는사람num
         String content=ob.getString("msg"); //내용
         String type=ob.getString("type");
         
-        if(mynum==reciever) {//판매자가 채팅창에 들어올 때, 즉 구매자가 판매자의 메시지를 받는 사람이 됨
-        	reciever=roomservice.getRoomById(room_num).getSender_num();
+        if(mynum.equals(reciever)) {//판매자가 채팅창에 들어올 때, 즉 구매자가 판매자의 메시지를 받는 사람이 됨
+        	reciever=roomservice.getRoomById(room_num).getSender_id();
         }
         
         //메시지 저장
         MessageDto dto=new MessageDto();
 		  
-        int user_num=mynum;
-        dto.setSender_num(user_num);
+        String user_id=mynum;
+        dto.setSender_id(user_id);
         
-        dto.setReceiver_num(reciever);
+        dto.setReceiver_id(reciever);
         
         dto.setRoom_num(room_num);
         

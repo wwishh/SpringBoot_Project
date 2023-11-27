@@ -6,7 +6,7 @@
 		select * from message where room_num=#{room_num}
 	</select>
 	<insert id="insertMessage" parameterType="message">
-		insert into message values(null,#{room_num},#{sender_num},#{receiver_num},#{sender_photo},#{mess_content},now())
+		insert into message values(null,#{room_num},#{sender_id},#{receiver_id},#{mess_content},now())
 	</insert>
 	<delete id="deleteMessage" parameterType="int">
 		delete from message where mess_num=#{mess_num}

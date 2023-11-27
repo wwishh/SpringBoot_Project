@@ -29,14 +29,13 @@ public class IndexController {
 	MessageRoomService roomservice;
 	
 	@GetMapping("/")
-	public String index() {
+	public String index(HttpSession session) {
+		session.setAttribute("myid", "test2");
 		return "/1/layout/main";
 	}
 	
 	@GetMapping("/detail")
-	public String index2(HttpSession session) {
-		session.setAttribute("myid", "test1");
-		session.setAttribute("user_num", uservice.getUserById("test1").getUser_id());
+	public String index2() {
 		return"/2/detail/detail";
 	}
 	
@@ -69,16 +68,16 @@ public class IndexController {
 	@ResponseBody
 	public int createRoom(@RequestParam int sangidx, HttpSession session){
 		
-		int sender_num= (int)session.getAttribute("user_num");
+		String sender_id= (String)session.getAttribute("myid");
 		//중고상품판매자의 user_num을 찾을 수 있도록 수정해야 됨
-		int seller_num = 2;
+		String seller_id = "test2";
 		
 		//현재 채팅을 보내려는 사용자가 판매자이면 방을 생성할 수 없음
-		if(sender_num==seller_num) {
+		if(sender_id.equals(seller_id)) {
 			return 0;
 		}else {
 			//기존에 존재하는 채팅방이라면 그곳으로 이동
-			String room = roomservice.getRoomBySangIdxAndUserId(sangidx, sender_num);
+			String room = roomservice.getRoomBySangIdxAndUserId(sangidx, sender_id);
 			System.out.println(room);
 			
 			if(room!=null) {
@@ -87,8 +86,8 @@ public class IndexController {
 				
 				MessageRoomDto newroom = new MessageRoomDto();
 				newroom.setJ_sangid(sangidx);
-				newroom.setSender_num(sender_num);
-				newroom.setReceiver_num(seller_num);
+				newroom.setSender_id(sender_id);
+				newroom.setReceiver_id(seller_id);
 				roomservice.insertRoom(newroom);
 				return roomservice.getMaxRoom();
 				

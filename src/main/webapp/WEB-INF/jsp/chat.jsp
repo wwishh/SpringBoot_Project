@@ -8,13 +8,15 @@
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
 <link href="/messagejscss/emoji_jk.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="/messagejscss/emoji_jk.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
 
@@ -70,7 +72,7 @@
 	background: none;
 	border: none;
 	outline: none;
-	font-size: 1.5em;
+	/*font-size: 1.5em;*/
 }
 	
 	.container h1 {
@@ -84,7 +86,7 @@
 	
 	.chating {
 		overflow: auto;
-		font-size: 2em;
+		/*font-size: 2em;*/
 	}
 	
 	.chating .me {
@@ -136,6 +138,10 @@
 	.messagefilepreview span {
 		cursor: pointer;
 	}
+	#sendBtn{
+		cursor: pointer;
+		font-size: 1.5em; 
+	}
 	</style>
 
 
@@ -162,7 +168,7 @@ $(function(){
 			reader.onload = function(e) {
 				$(".messagefilepreview").show();
 				var out="<div><img src='"+e.target.result+"'>";
-				out+="<span class='glyphicon glyphicon-remove fileselcancel'></div>"
+				out+="<span class='bi bi-file-x fileselcancel'></div>"
 				$(".messagefilepreview").html(out);
 			};
 			reader.readAsDataURL(input.files[0]);
@@ -200,7 +206,7 @@ $(function(){
 				var chatContent="";
 				$.each(res, function(i,ele){
 					
-					if(ele.sender_num=="${user_num}"){
+					if(ele.sender_id=="${sessionScope.myid}"){
 						chatContent+="<p class='me' style='text-align: right;'>("+ele.mess_time+")&nbsp;&nbsp;나:"+ele.mess_content+"</p>";
 					}else{
 						chatContent+="<p class='other' style='text-align: left;'>("+ele.mess_time+")&nbsp;&nbsp; 상대:"+ele.mess_content+"</p>";
@@ -266,64 +272,71 @@ $(function(){
 		
 		var room_num=$("#room_num").val();
 		var msg = $("#chatting").val();
-		var mynum = "${sessionScope.user_num}";
+		var mynum = "${sessionScope.myid}";
 		
 		
 		//alert(room_num);
-		
-		//만약 사진을 선택하지 않았다면
-		if(!$("#msgfileupload").val()){
 			
-			ws.send(JSON.stringify({
-				"room_num" : room_num,
-				"msg" : msg,
-				"mynum" : mynum,
-				"type" : "chat"
-			}));
-			
-		}else{
-			//사진부터 업로드...
-			var form=new FormData();
-			form.append("upload",$("#msgfileupload")[0].files[0]); //선택한 1개만 추가
-			
-			$.ajax({
-				type:"post",
-				dataType:"json",
-				url:"/message/fileupload",
-				processData:false,
-				contentType:false,
-				data:form,
-				success:function(res){
-					
+			//만약 사진을 선택하지 않았다면
+			if(!$("#msgfileupload").val()){
+				//글만 작성 했을 떄
+				if(msg!=""){
 					ws.send(JSON.stringify({
 						"room_num" : room_num,
-						"msg" : res.upload,
+						"msg" : msg,
 						"mynum" : mynum,
-						"type" : "img"
+						"type" : "chat"
 					}));
-
-					$(".messagefilepreview").hide();
-					$("#msgfileupload").val(null);
 				}
-			});
+				else{//아무것도 작성하지 않을 때
+					alert("메시지를 입력해 주세요.");
+				}
 			
-			//메시지도 적었다면 한 번 더 전송
-			if(msg!=""){
-				ws.send(JSON.stringify({
-					"room_num" : room_num,
-					"msg" : msg,
-					"mynum" : mynum,
-					"type" : "chat"
-				}));
+				
+			}else{
+				//사진부터 업로드...
+				var form=new FormData();
+				form.append("upload",$("#msgfileupload")[0].files[0]); //선택한 1개만 추가
+				
+				$.ajax({
+					type:"post",
+					dataType:"json",
+					url:"/message/fileupload",
+					processData:false,
+					contentType:false,
+					data:form,
+					success:function(res){
+						
+						ws.send(JSON.stringify({
+							"room_num" : room_num,
+							"msg" : res.upload,
+							"mynum" : mynum,
+							"type" : "img"
+						}));
+
+						$(".messagefilepreview").hide();
+						$("#msgfileupload").val(null);
+					}
+				});
+				
+				//메시지도 적었다면 한 번 더 전송
+				if(msg!=""){
+					ws.send(JSON.stringify({
+						"room_num" : room_num,
+						"msg" : msg,
+						"mynum" : mynum,
+						"type" : "chat"
+					}));
+				}
 			}
-		}
+				
+
+			$("#chatting").val("");
 			
-
-		$("#chatting").val("");
+			getChatting(room_num); 
+			
+		}
 		
-		getChatting(room_num); 
-
-	}
 
 </script>
 </head>
@@ -397,14 +410,12 @@ $(function(){
 				<!-- 사진 올리기 -->
 				<div class="chatupload">
 					<input type="file" accept="image/jpeg,.png,.gif" id="msgfileupload" style="display: none;"> 
-					<i class="glyphicon glyphicon-picture chatuploadicon" style="font-size: 2em;"></i>
+					<i class="bi bi-image chatuploadicon" style="font-size: 2em;"></i>
 				</div>
 				<div class="chatinputbox">			
 					<input type="text" id="chatting" placeholder="채팅 입력">
 				</div>
-				<button onclick="send()" id="sendBtn">
-					<i class="glyphicon glyphicon-send" style="font-size: 2em;"></i>
-				</button>
+					<i class="bi bi-send" onclick="send()" id="sendBtn"></i>
 			</div>
 		</div>
 	</div>

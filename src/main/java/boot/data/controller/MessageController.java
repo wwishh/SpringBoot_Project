@@ -80,7 +80,6 @@ public class MessageController {
 		
 		//사용자의 num 받기
 		String myid=(String)session.getAttribute("myid");
-		int user_num=uservice.getUserById(myid).getUser_id();
 						
 		List<MessageDto> chat=new ArrayList<>();
 		
@@ -105,7 +104,7 @@ public class MessageController {
 
 			long diffSec=(today.getTime()-writeday.getTime());
 			diffSec-=32400000L; //DB에 now()로 들어가는 시간이 9시간 차이 나서 빼줌
-			/* System.out.println(diffSec); */
+			/*System.out.println(diffSec); */
 
 			//일시분초
 			long day=(diffSec/(60*60*24*1000L))%365;
