@@ -154,7 +154,14 @@ nav{
 				
 				<!-- 검색창 -->
 				<div class="input-group w-25">
-					<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
+					<c:if test="${sessionScope.myid == null}">
+						${sessionScope.myid = "guest"}
+						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
+					</c:if>
+					<c:if test="${sessionScope.myid != null}">
+						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
+					</c:if>
+						
 				</div>
 				 </div>
 
