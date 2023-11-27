@@ -80,7 +80,7 @@
 						</div>
 						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 							<div class="text-center">	
-								<a class="btn btn-outline-dark mt-auto" href="/detail">상품보기</a>
+								<a class="btn btn-outline-dark mt-auto" href="/sangpum/detail?num=${dto.j_sangid }">상품보기</a>
 							</div>
 						</div>
 					</div>

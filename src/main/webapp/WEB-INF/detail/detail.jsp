@@ -74,7 +74,10 @@
 
 		<div class="carousel-inner rounded">
 			<div class="carousel-item active">
-				<img src="../img/${dto.j_imageurl }" class="d-block w-100" alt="...">
+				<%-- <img src="../img/${dto.j_imageurl }" class="d-block w-100" alt="..."> --%>
+				<c:forTokens var="pho" items="${dto.j_imageurl }" delims=",">
+               		<img class="card-img-top" src="../img/${pho }" alt="..." />
+               	</c:forTokens>
 			</div>
 			<div class="carousel-item">
 				<img src="../img/detail2.PNG" class="d-block w-100" alt="...">
