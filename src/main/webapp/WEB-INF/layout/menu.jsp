@@ -118,7 +118,7 @@ nav{
 				</ul>
 				 
 				
-				
+				<div style="justify-content: space-between;">
 				<c:if test="${sessionScope.loginok==null}">
 				<button type="button" class="btn btn-outline-primary" onclick="location.href='loginform'">로그인</button>
 				</c:if>
@@ -126,39 +126,46 @@ nav{
 				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid!='wish'&&sessionScope.myid!='oliver'}">
 				<img alt="" src="../img/hani1.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
 				</c:if>
 				
 				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid=='ho'&&sessionScope.myid!='wish'&&sessionScope.myid!='oliver'}">
 				<img alt="" src="../img/wow3.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
 				</c:if>
 				
 				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid=='wish'&&sessionScope.myid!='oliver'}">
 				<img alt="" src="../img/wish.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
 				</c:if>
 				
 				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid!='wish'&&sessionScope.myid=='oliver' }">
 				<img alt="" src="../img/oliversam.jpeg" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
 				<b>${sessionScope.myname}님이 로그인중입니다</b>
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='logoutprocess'">로그아웃</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
 				</c:if>
 				 
-				 
+				
 				
 				
 				
 				
 				<!-- 검색창 -->
-				<div class="input-group w-25" >
-					<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
+				<div class="input-group w-25">
+					<c:if test="${sessionScope.myid == null}">
+						${sessionScope.myid = "guest"}
+						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
+					</c:if>
+					<c:if test="${sessionScope.myid != null}">
+						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
+					</c:if>
+						
 				</div>
-				
+				 </div>
 
-            <div id="result"></div>
+             <div id="result"></div>
             
 
             <!-- 장바구니 -->

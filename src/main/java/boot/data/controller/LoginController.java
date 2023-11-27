@@ -76,6 +76,7 @@ public class LoginController {
 				HttpSession session)
 		{
 			HashMap<String, String> map = new HashMap<>();
+			
 			int check = service.loginPassCheck(u_id, u_pass);
 			
 			if(check==1) {

@@ -72,11 +72,10 @@ public class IndexController {
 		
 		List<String> list=inter.searchSave(s_id);
 		List<String> title=inter.bestsearch();
-		
+			
 		model.addObject("list", list);
 		model.addObject("title", title);
 		model.setViewName("/3/search2/search2");
-		
 		return model;
 	}
 	
