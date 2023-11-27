@@ -18,7 +18,31 @@
 </style>
 <title>Insert title here</title>
 <script type="text/javascript">
-	$(function(){
+$(function() {
+	
+	$("#createRoomBtn").click(function(){
+		var sangidx = $(this).attr("sangIdx");
+		//alert(sangidx); //상품idx가져와서 채팅room생성
+		
+		$.ajax({
+			type:"post",
+			url:"/createRoom",
+			data:{"sangidx":sangidx},
+			dataType:"html",
+			success:function(res){
+				if(res==0){
+					alert("자신이 판매하는 상품은 구매할 수 없습니다.");
+					location.href="/goSellerRooms?sangidx="+sangidx;
+				}else{
+					location.href="/goChattingRoom?room_num="+res;
+				}				
+			}
+		})
+		
+	})
+	
+
+	
 		$("#iamportPayment").click(function(){ 
         	payment(); //버튼 클릭하면 호출 
         });
@@ -108,7 +132,7 @@
 				<div id="region-name">${dto.j_addr }</div>
 			</div>
 			<div style="margin-left: auto; margin-top: 5vh;">
-				<button class="btn btn-dark" onclick="location.href='chatRoom'">채팅</button>
+				<button class="btn btn-dark" id="createRoomBtn" sangIdx="1">채팅</button>
 			</div>
 		</div>
 		<div id="article-profile-right">
@@ -145,8 +169,5 @@
 		
 	</div>
 	
-	
-	
-
 </body>
 </html>
