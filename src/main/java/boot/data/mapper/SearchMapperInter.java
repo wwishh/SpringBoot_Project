@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import boot.data.Dto.SangpumDto;
+import boot.data.Dto.SearchSaveDto;
 
 @Mapper
 public interface SearchMapperInter {
@@ -20,7 +21,7 @@ public interface SearchMapperInter {
 	//검색한 상품 갯수
 	public int getSangpumCount(String search);
 	//최근 검색 기능
-	public List<String> searchSave(String s_id);
+	public List<SearchSaveDto> searchSave(String s_id);
 	
 	//인기 검색어 기능(10개)
 	public List<String> bestsearch();
@@ -30,4 +31,11 @@ public interface SearchMapperInter {
 	
 	//해당 아이디에서 해당 검색어 개수 출력
 	public int countsearchword(String s_id, String s_searchword);
+	
+	//최근 검색어 삭제
+	public void recentdelete(String s_num);
+	
+	//최근 검색어 모두삭제
+	public void allrecentdelete(String s_id);
+	
 }

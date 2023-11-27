@@ -67,4 +67,20 @@ public class SearchController {
 		return inter.getSangpumCount(search);
 	}
 	
+	//최근검색어 삭제
+	@GetMapping("/search/delete")
+	@ResponseBody
+	public void recentdelete(String s_num) {
+		inter.recentdelete(s_num);
+	}
+	
+	//최근검색어 모두삭제
+	
+	 @GetMapping("/search/alldelete")
+	 @ResponseBody 
+	 public void allrecentdelete(String s_id) {
+		 inter.allrecentdelete(s_id); 
+	 }
+	 
+	
 }
