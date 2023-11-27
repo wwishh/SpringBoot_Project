@@ -3,6 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="boot.data.mapper.SangpumMapperInter">
+
+	<select id="getSangpumById" parameterType="int">
+  		select * from junggosangpum where j_sangid=#{j_sangid}
+  	</select>
+
 	<select id="getMaxNum" resultType="int">
   		select ifnull(max(j_sangid),0) from junggosangpum
   	</select>
@@ -26,7 +31,7 @@
 	</select>
 	
 	<insert id="insertSangpum" parameterType="sangpum">
-		insert into junggosangpum values(null, #{j_title}, #{j_price}, #{member_id}, #{member_name}, #{member_hp}, #{j_explanation}, #{j_category}, now(), #{j_addr}, #{j_imageurl} ,#{j_imageurl}, 0, 0)
+		insert into junggosangpum values(null, #{j_title}, #{j_price}, #{member_id}, #{member_name}, #{member_hp}, #{j_explanation}, #{j_category}, now(), #{j_addr}, #{j_imageurl} , 0, 0)
 	</insert>
 
 	<update id="updateSangpum" parameterType="sangpum">

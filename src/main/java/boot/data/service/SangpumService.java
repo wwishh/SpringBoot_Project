@@ -10,11 +10,18 @@ import org.springframework.stereotype.Service;
 import boot.data.Dto.SangpumDto;
 import boot.data.mapper.SangpumMapperInter;
 
+
 @Service
 public class SangpumService implements SangpumServiceInter {
-
+	
 	@Autowired
 	SangpumMapperInter mapperInter;
+
+	@Override
+	public SangpumDto getSangpumById(int sangIdx) {
+		// TODO Auto-generated method stub
+		return mapperInter.getSangpumById(sangIdx);
+	}
 
 	@Override
 	public int getMaxNum() {

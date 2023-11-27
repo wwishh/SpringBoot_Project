@@ -55,8 +55,19 @@
    </definition>
    
    
-   
-   
-
-   
+	<!-- insert page -->
+   <!-- 
+   <definition name="product" template="/WEB-INF/layout2/layout2.jsp">
+      <put-attribute name="menu" value="/WEB-INF/layout/menu.jsp"/>
+      <put-attribute name="main" value="/WEB-INF/layout/main.jsp"/>
+      <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp"/>
+   </definition>
+    -->
+    
+   <!-- wild card 레이아웃2 -->
+   <!-- 
+   <definition name="/products/*/*" extends="product">
+   	<put-attribute name="main" value="/WEB-INF/{1}/{2}.jsp"></put-attribute>
+   </definition>
+    -->
 </tiles-definitions>

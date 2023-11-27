@@ -1,12 +1,21 @@
 package boot.data.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.SangpumDto;
@@ -23,8 +32,40 @@ public class SangpumController {
 	SangpumService service;
 	
 	@GetMapping("/form")
-	public String insert() {
+	public String insertform() {
 		return"/2/sangpum/s_insert";
+	}
+	
+	@PostMapping("/insert")
+	public String insert(@ModelAttribute SangpumDto dto, @RequestParam ArrayList<MultipartFile> j_file, HttpSession session) {
+		
+		String path = session.getServletContext().getRealPath("/img");
+		System.out.println(path);
+		String uploadFileName = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		
+		if(j_file.get(0).getOriginalFilename().equals(""))
+			uploadFileName = "no";
+		else {
+			for(MultipartFile f : j_file) {
+				String j_fName = sdf.format(new Date())+"_"+f.getOriginalFilename();
+				uploadFileName += j_fName + ",";
+				
+				try {
+					f.transferTo(new File(path+"\\"+j_fName));
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			uploadFileName.substring(0, uploadFileName.length()-1);
+		}
+		dto.setJ_imageurl(uploadFileName);
+		inter.insertSangpum(dto);
+		return "redirect:list";
 	}
 	
 	@GetMapping("/sangpum/detail")
@@ -41,6 +82,7 @@ public class SangpumController {
 		
 		return model;
 	}
+
 	
 	@GetMapping("/list")
 	public ModelAndView allSangpum(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(value = "option", required = false) String option, @RequestParam(value = "search", required = false) String search, @ModelAttribute SangpumDto dto) {
