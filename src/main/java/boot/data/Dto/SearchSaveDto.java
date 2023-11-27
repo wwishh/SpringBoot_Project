@@ -8,7 +8,7 @@ import lombok.Data;
 @Alias("searchdto")
 public class SearchSaveDto {
 	
-	private int num;
+	private int s_num;
 	private String s_id;
 	private String s_searchword;
 }

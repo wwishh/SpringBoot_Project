@@ -116,6 +116,9 @@ body {
 .sort_listType{
 	  float: right;
   }
+#listType{
+	display: none;	
+}
 
 .Product_title, .Product_category, .Product_name, .Product_price, .Product_file{
 	display: flex;
@@ -138,7 +141,7 @@ body {
 .kakao_inquiry {		
 	float: right;
 	display: flex;
-	margin-right: 21rem;
+	margin-right: 6.6rem;
 	margin-top: -6.5rem; 
 	width: 7rem;
     height: 3rem;
@@ -183,6 +186,35 @@ body {
 .write:disabled {
     background: var(--bg-element2);
 }
+
+
+.list-type {
+	padding-left: 0rem;
+}
+
+.item-list-content {
+	text-decoration: none;
+	width: 65rem;
+}
+
+.item-list-div {
+	display: flex;
+}
+
+.item-list-img {
+  	width: 15rem;
+  	height: 16rem;
+}
+
+.item-list-title {
+    font-family: Binggrae-Bold;	
+}
+
+.item-list-price {
+	float: right;
+    font-family: Binggrae-Bold;
+}
+
 /*	HC's_CSS	--	end	*/
 
 hr {
