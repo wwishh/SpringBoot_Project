@@ -14,7 +14,6 @@
    rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
-
 <script type="text/javascript">
    $(function(){
       $("#search").keyup(function(){
@@ -59,8 +58,19 @@
       $("#btnsearch").click(function(){
          alert("이벤트 감지");
       });
+      
+      
+      $("#alarmBtn").click(function(){
+    	  //세션에서 현재 로그인한 사용자의 아이디를 가져와야 됨
+    	  var myid = '${sessionScope.myid}';
+    	  alert(myid);
+    	  //location.href="/message/goChattingList?user_id="+myid;
+    	  
+      });
+      
    });
    
+   <!--사용자 정의함수-->
    function selectSearch() {
        $(document).on("click","b.searchResult",function(event){
           var s=$(this).html();
@@ -156,14 +166,15 @@ nav{
 				<div class="input-group w-25">
 					<c:if test="${sessionScope.myid == null}">
 						${sessionScope.myid = "guest"}
-						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
 					</c:if>
-					<c:if test="${sessionScope.myid != null}">
-						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
-					</c:if>
+					<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
 						
 				</div>
-				 </div>
+				
+				<div>
+					<i class="bi bi-bell-fill alarmBtn" style="cursor: pointer;"></i>
+				</div>
+				
 
              <div id="result"></div>
             

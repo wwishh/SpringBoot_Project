@@ -24,7 +24,10 @@
 		</div>
 		<div
 			class="row gx-5 gx-lg-6 row-cols-3 cols-md-6 justify-content-center">
-			<form action="p_insert" method="post" enctype="multipart/form-data">
+			<form action="insert" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="member_id" value="${sessionScope.myid }">
+				<input type="hidden" name="member_name" value="${sessionScope.myname }">
+				<input type="hidden" name="member_hp" value="${sessionScope.myhp }">
 				<div class=form-control>
 					<div class="Product_category">
 						<div>카테고리</div>
@@ -74,7 +77,7 @@
 					<div class="Product_name">
 						<div>주소	</div>
 						<div class="insert_content">
-							현재주소 api 사용 예정
+							<input type="text" readonly="readonly" name="j_addr" class="form-control" value="현재주소 api 사용 예정">
 							<!-- <input type="text" name="j_title" class="form-control" placeholder="상품명을 입력해주세요"
 								required="required"> -->
 						</div>

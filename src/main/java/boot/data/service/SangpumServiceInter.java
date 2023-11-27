@@ -6,6 +6,8 @@ import boot.data.Dto.SangpumDto;
 
 public interface SangpumServiceInter {
 	
+	public SangpumDto getSangpumById(int sangIdx);
+
 	public int getMaxNum();
 	public int getMainCount();
 	public int getTotalCount(String option, String search);

@@ -10,6 +10,7 @@ import boot.data.Dto.SangpumDto;
 @Mapper
 public interface SangpumMapperInter {
 	
+	public SangpumDto getSangpumById(int sangIdx);
 	public int getMaxNum();
 	public int getMainCount();
 	public int getTotalCount(Map<String, String> map);

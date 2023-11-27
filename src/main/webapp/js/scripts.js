@@ -18,4 +18,6 @@ function cardShow() {
 	document.getElementById("listType").style.display = "none";
 	document.getElementById("cardType").style.display = "";
 	}
+	
+	
 /*	HC's_js	--	end	*/

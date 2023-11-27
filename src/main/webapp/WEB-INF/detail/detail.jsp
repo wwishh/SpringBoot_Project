@@ -18,7 +18,31 @@
 </style>
 <title>Insert title here</title>
 <script type="text/javascript">
-	$(function(){
+$(function() {
+	
+	$("#createRoomBtn").click(function(){
+		var sangidx = $(this).attr("sangIdx");
+		//alert(sangidx); //상품idx가져와서 채팅room생성
+		
+		$.ajax({
+			type:"post",
+			url:"/createRoom",
+			data:{"sangidx":sangidx},
+			dataType:"html",
+			success:function(res){
+				if(res==0){
+					alert("자신이 판매하는 상품은 구매할 수 없습니다.");
+					location.href="/goSellerRooms?sangidx="+sangidx;
+				}else{
+					location.href="/goChattingRoom?room_num="+res;
+				}				
+			}
+		})
+		
+	})
+	
+
+	
 		$("#iamportPayment").click(function(){ 
         	payment(); //버튼 클릭하면 호출 
         });
@@ -74,7 +98,10 @@
 
 		<div class="carousel-inner rounded">
 			<div class="carousel-item active">
-				<img src="../img/${dto.j_imageurl }" class="d-block w-100" alt="...">
+				<%-- <img src="../img/${dto.j_imageurl }" class="d-block w-100" alt="..."> --%>
+				<c:forTokens var="pho" items="${dto.j_imageurl }" delims=",">
+               		<img class="card-img-top" src="../img/${pho }" alt="..." />
+               	</c:forTokens>
 			</div>
 			<div class="carousel-item">
 				<img src="../img/detail2.PNG" class="d-block w-100" alt="...">
@@ -105,7 +132,7 @@
 				<div id="region-name">${dto.j_addr }</div>
 			</div>
 			<div style="margin-left: auto; margin-top: 5vh;">
-				<button class="btn btn-dark" onclick="location.href='chatRoom'">채팅</button>
+				<button class="btn btn-dark" id="createRoomBtn" sangIdx="1">채팅</button>
 			</div>
 		</div>
 		<div id="article-profile-right">
@@ -142,8 +169,5 @@
 		
 	</div>
 	
-	
-	
-
 </body>
 </html>
