@@ -50,6 +50,7 @@ $(function() {
 	
 	//버튼 클릭하면 실행
     function payment(data) {
+				
     	const randomString = generateRandomString(8);
         IMP.init('imp78057427');//아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
         IMP.request_pay({// param
@@ -58,12 +59,31 @@ $(function() {
             merchant_uid: randomString, //"iamport_test_id", //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
             name: "${dto.j_title}",//"도서", //결제창에 노출될 상품명
             amount: "${dto.j_price}", //금액
-            buyer_email : "${sessionScope.myemail}", 
-            buyer_name : "${sessionScope.myname}",
-            buyer_tel : "${sessionScope.myhp}"
+            //j_sangid: "${dto.j_sangid}",
+            //u_id: "${sessionScope.myid}"
+            //buyer_email : "${sessionScope.myemail}", 
+            //buyer_name : "${sessionScope.myname}",
+            //buyer_tel : "${sessionScope.myhp}"
         }, function (rsp) { // callback
             if (rsp.success) {
+            	
+        		var p_method = "kakaopay";
+        		var j_sangid = "${dto.j_sangid}";
+        		var u_id = "${sessionScope.myid}";
+            	
+            	
                 alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
+                //alert(j_sangid)
+                $.ajax({
+        			type:"post",
+        			url:"/purchase/insert",
+        			data:{"p_method":p_method, "j_sangid":j_sangid, "u_id":u_id},
+        			dataType:"html",
+        			success:function(res){
+        				//alert("등록 성공");		
+        			}
+        		});
+                
             } else {
                 alert("실패 : 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
             }
@@ -95,21 +115,17 @@ $(function() {
 			<button type="button" data-bs-target="#carouselExampleIndicators"
 				data-bs-slide-to="2" aria-label="Slide 3"></button>
 		</div>
-
+		
+		
 		<div class="carousel-inner rounded">
-			<div class="carousel-item active">
-				<%-- <img src="../img/${dto.j_imageurl }" class="d-block w-100" alt="..."> --%>
-				<c:forTokens var="pho" items="${dto.j_imageurl }" delims=",">
-               		<img class="card-img-top" src="../img/${pho }" alt="..." />
-               	</c:forTokens>
-			</div>
-			<div class="carousel-item">
-				<img src="../img/detail2.PNG" class="d-block w-100" alt="...">
-			</div>
-			<div class="carousel-item">
-				<img src="../img/detail1.PNG" class="d-block w-100" alt="...">
-			</div>
-		</div>
+    <c:forEach var="pho" items="${dto.j_imageurl}" varStatus="loopStatus">
+        <div class="carousel-item${loopStatus.first ? ' active' : ''}">
+            <img class="d-block w-100" src="../img/${pho}" alt="...">
+        </div>
+    </c:forEach>
+</div>
+					
+		
 		<button class="carousel-control-prev" type="button"
 			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span

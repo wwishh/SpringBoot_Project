@@ -16,10 +16,10 @@ public interface SearchMapperInter {
 	public List<SangpumDto> mainSangList(String search);
 	
 	//검색리스트
-	public List<SangpumDto> sangList(String search, String option);
+	public List<SangpumDto> sangList(String search, String option, String category);
 	
 	//검색한 상품 갯수
-	public int getSangpumCount(String search);
+	public int getSangpumCount(String search, String category);
 	//최근 검색 기능
 	public List<SearchSaveDto> searchSave(String s_id);
 	

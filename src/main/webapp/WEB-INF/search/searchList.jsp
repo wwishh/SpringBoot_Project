@@ -44,13 +44,14 @@ $(function(){
        
        var search=$("#search2").val(); //검색어
        var option= $("#selOption").val(); //필터
-       //alert(option);
+       var category = $("#category").val();//카테고리
+       //alert(category);
        
        $.ajax({
     	   type:"get",
     	   dataType:"json",
     	   url:"/search/sangpumCount",
-    	   data:{"search":search},
+    	   data:{"search":search, "category":category},
     	   success:function(res){
 
     		   var count = "";
@@ -73,7 +74,7 @@ $(function(){
           type:"get",
           dataType:"json",
           url:"/search/list",
-          data:{"search":search, "option":option},
+          data:{"search":search, "option":option, "category": category},
           success:function(res){
         	  
         	 //alert("hi")
@@ -120,6 +121,10 @@ $(function(){
     	$("#btnsearch2").trigger("click");
     });
     
+    $("#category").change(function(){
+    	$("#btnsearch2").trigger("click");
+    });
+    
     $("#search2").keypress(function(e){
         //검색어 입력 후 엔터키 입력하면 조회버튼 클릭
         if(e.keyCode && e.keyCode == 13){
@@ -137,17 +142,14 @@ $(function(){
     	var num = $(this).attr('num');
     	
     	var i_id = $("#myid").val();
+    	
+    	var interest = $(this);
+
+    	//alert(interest);
     	//alert(i_id);
     	//alert(num);
-    	
-    	
-    	 
-    	 
-    	 
-    	 
-    	 
-    	 
-    	 if (currentColor === "rgb(255, 0, 0)") {
+
+    	if (currentColor === "rgb(255, 0, 0)") {
              // 현재 색상이 빨간색인 경우 검은색으로 변경합니다.
              $(this).css("color", "black");
              $.ajax({
@@ -167,7 +169,7 @@ $(function(){
              	   url:"/sangpum/minusInterest",
              	   data:{"num":num},
              	   success:function(res){
-             		  $("i.interest").text(res.mInterest);
+             		  interest.text(res.mInterest);
              		       		   
              	   }
                 });
@@ -193,7 +195,7 @@ $(function(){
            	   url:"/sangpum/plusInterest",
            	   data:{"num":num},
            	   success:function(res){
-           		  $("i.interest").text(res.pInterest);
+           		interest.text(res.pInterest);
            		       		   
            	   }
               });
@@ -215,15 +217,46 @@ $(document).on("click","div.sangpum", function(event){
 </script>
 </head>
 <body>
-  <div class="input-group w-25" >
+<div class="container"> <!-- 내용을 중앙에 정렬하기 위한 컨테이너 추가 -->
+    <div class="row justify-content-center">
+      <div class="col-md-6"> <!-- 필요에 따라 컬럼 너비를 조절합니다. -->
+  <div class="input-group w-75">
   	  <input type="hidden" id="myid" value="${sessionScope.myid }">
       <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"
-       id="search2" autocomplete="off" value="${search }"/>
+       id="search2" autocomplete="off" value="${search }" style="width:200px"/>
       <input type="button" value="검색" id="btnsearch2" class="btn btn-dark">
-     </div>
+      
+      <select id="category" class="form-select" style="margin-left:50px; width:100px;">
+      							<option value="all" selected="selected">전체</option>
+								<option value="mobile">모바일</option>
+								<option value="digital">디지털</option>
+								<option value="computer">컴퓨터/주변기기</option>
+								<option value="camera">전자제품/카메라</option>
+								<option value="leisure">스포츠/레저</option>
+								<option value="w_clothing">여성의류</option>		<!-- women's clothing -->
+								<option value="m_clothing">남성의류</option>		<!-- men's clothing -->
+								<option value="c_clothing">아동의류</option>		<!-- children's clothing -->
+								<option value="beauty">뷰티/미용</option>
+								<option value="food">식품</option>
+								<option value="hobby">취미</option>
+								<option value="c_goods ">굿즈/수집품</option>		<!-- Collectible_goods -->
+								<option value="h_goods">생활용품</option>			<!-- Household_goods -->
+								<option value="m_goods">잡화용품</option>			<!-- miscellaneous goods -->
+								<option value="cm_goods">아동잡화</option>			<!-- Children's miscellaneous goods -->								
+								<option value="interior">가구/인테리어</option>
+								<option value="pet">반려동/식물</option>
+								<option value="etc">기타</option>
+							</select>
+  </div>
+  </div>
+  </div>
+  </div>
+  
+     
      <div id=search>
      	<div id="sangCount" style="margin-top : 50px; margin-left:280px;"></div>
-     	<select id="selOption" class="form-select" aria-label="Default select example" style="float : right; margin-right:200px; width:100px">
+     	
+     	<select id="selOption" class="form-select" aria-label="Default select example" style="float : right; margin-right:200px; width:100px;">
   			<option value="j_readcount" selected>인기순</option>
   			<option value="j_interest">좋아요순</option>
   			<option value="j_price">높은 가격순</option>
