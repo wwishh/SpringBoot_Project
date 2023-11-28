@@ -76,6 +76,7 @@ public class LoginController {
 				HttpSession session)
 		{
 			HashMap<String, String> map = new HashMap<>();
+			
 			int check = service.loginPassCheck(u_id, u_pass);
 			
 			if(check==1) {
@@ -99,6 +100,10 @@ public class LoginController {
 		public String logout(HttpSession session)
 		{
 			session.removeAttribute("loginok");
+			session.removeAttribute("myid");
+			session.removeAttribute("myname");
+			session.removeAttribute("myhp");
+			session.removeAttribute("myemail");
 			
 			return "redirect:main";
 		}

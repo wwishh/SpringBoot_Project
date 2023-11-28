@@ -21,7 +21,7 @@
   </select>
   
   <select id="loginPassCheck" parameterType="Map" resultType="int">
-  select count(*) from user where u_id=#{u_id} and u_pass=#{u_pass}
+  select count(*) from user where BINARY(u_id)=#{u_id} and BINARY(u_pass)=#{u_pass}
   </select>
   
   <select id="getDataById" parameterType="String" resultType="login"> 
