@@ -32,9 +32,10 @@ $(function() {
 			success:function(res){
 				if(res==0){
 					alert("자신이 판매하는 상품은 구매할 수 없습니다.");
-					location.href="/goSellerRooms?sangidx="+sangidx;
+					location.href="/goChattingRoom?room_num="+0+"&sangidx="+sangidx;
+					//location.href="/goSellerRooms?sangidx="+sangidx;
 				}else{
-					location.href="/goChattingRoom?room_num="+res;
+					location.href="/goChattingRoom?room_num="+res+"&sangidx="+sangidx;
 				}				
 			}
 		})

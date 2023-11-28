@@ -46,6 +46,18 @@ public class MessageService implements MessageServiceInter {
 		mapper.deleteMessageByRoom(room_num);
 	}
 
+	@Override
+	public int getRecentMessageByRoom(int room_num) {
+		// TODO Auto-generated method stub
+		return mapper.getRecentMessageByRoom(room_num);
+	}
+
+	@Override
+	public MessageDto getMessageByNum(int mess_num) {
+		// TODO Auto-generated method stub
+		return mapper.getMessageByNum(mess_num);
+	}
+
 
 	/*@Override
 	public int getCountOfMessage(String user_num, String other) {

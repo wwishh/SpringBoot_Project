@@ -17,4 +17,10 @@
 	<delete id="deleteMessageByRoom" parameterType="int">
 		delete from message where room_num=#{room_num}
 	</delete>
+	<select id="getRecentMessageByRoom" parameterType="int" resultType="int">
+		select ifnull(max(mess_num),0) from message where room_num=#{room_num}
+	</select>
+	<select id="getMessageByNum" parameterType="int" resultType="message">
+		select * from message where mess_num=#{mess_num}
+	</select>
 </mapper>

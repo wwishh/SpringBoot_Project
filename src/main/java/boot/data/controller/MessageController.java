@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import boot.data.Dto.MessageDto;
 import boot.data.Dto.MessageRoomDto;
+import boot.data.Dto.SangpumDto;
 import boot.data.service.MessageRoomService;
 import boot.data.service.MessageService;
 import boot.data.service.SangpumService;
@@ -46,7 +47,7 @@ public class MessageController {
 	SangpumService sangservice;
 	
 	
-	@GetMapping("/goChattingRoom")
+	/*@GetMapping("/goChattingRoom")
 	public String goChattingRoom(@RequestParam int room_num,Model model) {
 		
 		String roomname = sangservice.getSangpumById(roomservice.getRoomById(room_num).getJ_sangid()).getJ_title();
@@ -54,6 +55,38 @@ public class MessageController {
 		model.addAttribute("room_num", room_num);
 		model.addAttribute("roomName", roomname);
 		return "/2/jsp/chat";
+	}*/
+	
+	@GetMapping("/goChattingRoom")
+	public String goChattingRoom(@RequestParam int room_num,
+								@RequestParam int sangidx,
+								Model model) {
+		
+		//판매자가 상품 디테일 페이지에서 채팅을 눌렀을 경우, 해당 상품에 관한 모든 채팅방을 가져온다.
+		if(room_num==0) {
+			List<MessageRoomDto> rooms = roomservice.getRoomsBySangpum(sangidx);
+			
+			for(MessageRoomDto dto:rooms) {
+				//채팅방에서 마지막 메시지를 얻고
+				int recentMessNum = mservice.getRecentMessageByRoom(dto.getRoom_num());
+				
+				if(recentMessNum==0) {//방은 있지만 아직 채팅을 나눈적 없음
+					dto.setRecent_mess("");
+				}else {
+					//얻은 메시지를 해당 룸의 마지막 메시지로 설정
+					dto.setRecent_mess(mservice.getMessageByNum(recentMessNum).getMess_content());
+				}
+				
+			}
+			
+			model.addAttribute("rooms", rooms);
+		}
+		
+		SangpumDto sangdto= sangservice.getSangpumById(sangidx);
+		
+		model.addAttribute("room_num", room_num);
+		model.addAttribute("sangdto", sangdto);
+		return "/2/jsp/chatdesign";
 	}
 	
 	@GetMapping("/goSellerRooms")
