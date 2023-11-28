@@ -56,4 +56,21 @@ public class LoginService implements LoginServiceInter {
 		return loginInter.getDataById(u_id);
 	}
 
+	@Override
+	public int findIdCheck(String u_name, String u_email, String u_hp) {
+		// TODO Auto-generated method stub
+		Map<String,String>map = new HashMap<>();
+		map.put("u_name", u_name);
+		map.put("u_email", u_email);
+		map.put("u_hp", u_hp);
+		return loginInter.findIdCheck(map);
+	}
+
+	@Override
+	public String getId(String u_name, String u_email, String u_hp) {
+		// TODO Auto-generated method stub
+		return loginInter.getId(u_name, u_email, u_hp);
+	}
+	
+
 }
