@@ -345,6 +345,8 @@ $(function(){
 	wsOpen();//웹소켓 오픈
 	
 	var room_num = "${room_num}";
+	//alert(room_num);
+	getChattingRooms("${sessionScope.myid}");
 	
 	getChatting("${room_num}");//기존 채팅방 가져오기
 	$(".messagefilepreview").hide();
@@ -383,12 +385,55 @@ $(function(){
 	
 });
 
+//사용자 정의함수
+
+	room_num=$("#room_num");
+
+	//로그인한 사용자가 들어있는 채팅방 모두 불러오기, 종모양 눌렀을 경우
+	function getChattingRooms(user_id) {
+		
+		//alert(user_id);
+
+		$.ajax({
+			type:"get",
+			dataType:"json",
+			url:"/message/getMessageList",
+			data:{"user_id":user_id},
+			success:function(res){
+				var roomList="";
+				
+				$.each(res, function(i,ele){
+					
+					var other;
+					
+					if(user_id=ele.sender_id){
+						other=ele.receiver_id
+					}else{
+						other=ele.sender_id
+					}
+					
+					roomList+="<li class='clearfix' onclick='getChatting("+ele.room_num+")'>";
+					roomList+="<img src='../img/"+ele.sang_img+"' alt='avatar'>";
+					roomList+="<div class='about'>";
+					roomList+="<div class='name'>"+other+"</div>";
+					roomList+="<div class='status'>"+ele.recent_mess+"</div>";
+					roomList+="</div></li>";          		
+				})
+				
+				$("#chattingrooms").html(roomList);
+				
+				
+				
+			}
+			
+		});
+	}
 
 
 	//상대방과 하던 채팅 가져오기
-	function getChatting(room_num, scrollPos){
+	function getChatting(roomNum, scrollPos){
 		
-		//alert(room_num);
+		room_num=roomNum;
 		
 		if(room_num==0){
 			return;
@@ -435,6 +480,8 @@ $(function(){
 						$(".chat-history").scrollTop(scrollPos);
 					},300)
 				}
+				
+				
 			}
 		});
 	
@@ -549,7 +596,8 @@ $(function(){
 
 			$("#chatting").val("");
 			
-			getChatting(room_num); 
+			getChatting(room_num);
+			getChattingRooms("${sessionScope.myid}");
 			
 		}
 	}	

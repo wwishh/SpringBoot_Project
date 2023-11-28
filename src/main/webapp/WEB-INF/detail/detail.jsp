@@ -130,7 +130,7 @@ $(function() {
 				<div id="region-name">${dto.j_addr }</div>
 			</div>
 			<div style="margin-left: auto; margin-top: 5vh;">
-				<button class="btn btn-dark" id="createRoomBtn" sangIdx="1">채팅</button>
+				<button class="btn btn-dark" id="createRoomBtn" sangIdx="${dto.j_sangid }">채팅</button>
 			</div>
 		</div>
 		<div id="article-profile-right">

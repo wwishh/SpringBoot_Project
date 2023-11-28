@@ -16,4 +16,7 @@
 	<select id="getRoomsBySangpum" parameterType="int" resultType="room">
 		select * from messageroom where j_sangid=#{j_sangid} order by room_num desc
 	</select>
+	<select id="selectAllRooms" parameterType="String" resultType="room">
+		select distinct * from messageroom where sender_id=#{user_id} or receiver_id=#{user_id}
+	</select>
 </mapper>

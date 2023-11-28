@@ -20,4 +20,6 @@ public interface MessageRoomMapperInter {
 	public MessageRoomDto getRoomById(int room_num);
 	
 	public List<MessageRoomDto> getRoomsBySangpum(int j_sangid);
+	
+	public List<MessageRoomDto> selectAllRooms(String user_id);
 }

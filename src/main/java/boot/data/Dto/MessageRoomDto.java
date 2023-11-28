@@ -17,4 +17,5 @@ public class MessageRoomDto {
 	private Timestamp room_createday;
 
 	private String recent_mess;
+	private String sang_img;
 }

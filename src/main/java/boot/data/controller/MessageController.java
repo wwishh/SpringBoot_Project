@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpSession;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.MessageDto;
 import boot.data.Dto.MessageRoomDto;
@@ -80,6 +82,8 @@ public class MessageController {
 			}
 			
 			model.addAttribute("rooms", rooms);
+		}else if(room_num==-1&& sangidx==-1) {//종모양 클릭시
+			return "/2/jsp/chatdesign";
 		}
 		
 		SangpumDto sangdto= sangservice.getSangpumById(sangidx);
@@ -99,6 +103,42 @@ public class MessageController {
 		
 		return "/2/jsp/room";
 	}
+	
+	
+	//종모양 클릭시 자신이 채팅했던 모든 방 나옴
+	@GetMapping("/message/getMessageList")
+	@ResponseBody
+	public List<MessageRoomDto> getMessageList(@RequestParam String user_id){
+		
+		//ModelAndView mv = new ModelAndView();
+		
+		List<MessageRoomDto> rooms = roomservice.selectAllRooms(user_id);
+		
+		System.out.println(rooms.get(0).getRoom_num());
+		
+		for(MessageRoomDto dto:rooms) {
+			//채팅방에서 마지막 메시지를 얻고
+			int recentMessNum = mservice.getRecentMessageByRoom(dto.getRoom_num());
+			//상품들의 이미지 가져오기
+			String sangpumimgs = sangservice.getSangpumById(dto.getJ_sangid()).getJ_imageurl();
+			StringTokenizer st = new StringTokenizer(sangpumimgs,",");
+			String photo = st.nextToken();
+			
+			if(recentMessNum==0) {//방은 있지만 아직 채팅을 나눈적 없음
+				dto.setRecent_mess("");
+			}else {
+				//얻은 메시지를 해당 룸의 마지막 메시지로 설정
+				dto.setRecent_mess(mservice.getMessageByNum(recentMessNum).getMess_content());
+				dto.setSang_img(photo);
+			}
+			
+		}
+		
+		//mv.addObject("rooms", rooms);
+		//mv.setViewName("/2/jsp/chatdesign");
+		return rooms;
+	}
+	
 	
 	@GetMapping("/message/chatting")
 	@ResponseBody

@@ -170,13 +170,15 @@ nav{
 					</c:if>
 					<c:if test="${sessionScope.myid != null}">
 						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
+						<!-- 채팅방 , /message/getMessageList?user_id=${sessionScope.myid}-->
+						<div>
+							<i class="bi bi-bell-fill alarmBtn" style="cursor: pointer;" onclick="location.href='/goChattingRoom?room_num=-1&sangidx=-1'"></i>
+						</div>
 					</c:if>
 						
 				</div>
 				
-				<div>
-					<i class="bi bi-bell-fill alarmBtn" style="cursor: pointer;"></i>
-				</div>
+				
 				
 
              <div id="result"></div>

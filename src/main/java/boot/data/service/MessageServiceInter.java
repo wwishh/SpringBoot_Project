@@ -15,5 +15,5 @@ public interface MessageServiceInter {
 	public void deleteMessageByRoom(int room_num);
 	public int getRecentMessageByRoom(int room_num);
 	public MessageDto getMessageByNum(int mess_num);
-
+	
 }
