@@ -1,6 +1,7 @@
 package boot.data.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.AdminLoginDto;
+import boot.data.Dto.NoticeDto;
 import boot.data.service.AdminService;
 
 @Controller
@@ -27,6 +31,7 @@ public class AdminController {
 				//로그인인지 아닌지 판단
 				String adminloginok=(String)session.getAttribute("a_loginok");
 				
+				 
 				//한번도 실행안하면 null
 				if(adminloginok==null) {
 					return "/3/adminlogin/adminLoginForm";
@@ -44,6 +49,12 @@ public class AdminController {
 			session.setAttribute("a_id", a_id);
 			session.setAttribute("a_loginok", "ok");
 			
+			AdminLoginDto a_dto= service.getAdminID(a_id);
+			session.setAttribute("a_email",a_dto.getA_email());
+			session.setAttribute("a_right",a_dto.getA_right());
+			session.setAttribute("a_hp", a_dto.getA_hp());
+			session.setAttribute("a_name",a_dto.getA_name());
+			
 			return "/admin/layout-admin/admin_main/admin_main";
 		}
 		
@@ -55,20 +66,38 @@ public class AdminController {
 		session.removeAttribute("a_loginok");
 		session.removeAttribute("a_id");
 		session.removeAttribute("a_pass");
+		session.removeAttribute("a_email");
+		session.removeAttribute("a_right");
+		session.removeAttribute("a_hp");
+		session.removeAttribute("a_name");
+		
 		
 		return "redirect:/";
 	}
 	
 	
 	@GetMapping("/notice")
-	public String main() {
+	public String main(Model model) {
+		List<NoticeDto>list=service.getAllNotice();
+		
+		model.addAttribute("list",list);
 		return "/admin/admin/notice/notice_listForm";
 	}
 	
-	@GetMapping("/n_addaction")
+	@GetMapping("/n_addform")
 	public String n_add() {
 		return "/admin/admin/notice/notice_addForm";
 	}
+	
+	@PostMapping("/a_notice_insert")
+	public ModelAndView a_notice_add(@ModelAttribute NoticeDto n_dto) {
+		ModelAndView model = new ModelAndView();
+		service.insertNotice(n_dto);
+		
+		model.setViewName("redirect:notice");
+		return model;
+	}
+	
 	
 	
 }

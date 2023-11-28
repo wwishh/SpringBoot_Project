@@ -56,15 +56,31 @@ public class SearchController {
 	//검색 상품 리스트
 	@GetMapping("/search/list")
 	@ResponseBody
-	public List<SangpumDto> searchList(String search, String option){
+	public List<SangpumDto> searchList(String search, String option, String category){
 		//System.out.println(option);
-		return inter.sangList(search, option);
+		return inter.sangList(search, option, category);
 	}
 	
 	@GetMapping("/search/sangpumCount")
 	@ResponseBody
-	public int searchSangpumCount(String search) {
-		return inter.getSangpumCount(search);
+	public int searchSangpumCount(String search, String category) {
+		return inter.getSangpumCount(search, category);
 	}
+	
+	//최근검색어 삭제
+	@GetMapping("/search/delete")
+	@ResponseBody
+	public void recentdelete(String s_num) {
+		inter.recentdelete(s_num);
+	}
+	
+	//최근검색어 모두삭제
+	
+	 @GetMapping("/search/alldelete")
+	 @ResponseBody 
+	 public void allrecentdelete(String s_id) {
+		 inter.allrecentdelete(s_id); 
+	 }
+	 
 	
 }

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.MessageRoomDto;
 import boot.data.Dto.SangpumDto;
+import boot.data.Dto.SearchSaveDto;
 import boot.data.mapper.SearchMapperInter;
 import boot.data.service.MessageRoomService;
 import boot.data.service.SangpumService;
@@ -128,9 +129,9 @@ public class IndexController {
 		
 		ModelAndView model=new ModelAndView();
 		
-		List<String> list=inter.searchSave(s_id);
+		List<SearchSaveDto> list=inter.searchSave(s_id);
 		List<String> title=inter.bestsearch();
-			
+		
 		model.addObject("list", list);
 		model.addObject("title", title);
 		model.setViewName("/3/search2/search2");

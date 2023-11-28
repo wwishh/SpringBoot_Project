@@ -130,7 +130,7 @@ nav{
 				
 				<div style="justify-content: space-between;">
 				<c:if test="${sessionScope.loginok==null}">
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='loginform'">로그인</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='../loginform'">로그인</button>
 				</c:if>
 				
 				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid!='wish'&&sessionScope.myid!='oliver'}">
@@ -175,6 +175,7 @@ nav{
 							<i class="bi bi-bell-fill alarmBtn" style="cursor: pointer;" onclick="location.href='/goChattingRoom?room_num=-1&sangidx=-1'"></i>
 						</div>
 					</c:if>
+					<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
 						
 				</div>
 				

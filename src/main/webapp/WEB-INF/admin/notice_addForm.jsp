@@ -13,21 +13,21 @@
 </head>
 <body>
 	<form action="insert" method="post">
-		<input type="hidden" name="id" value="${sessionScope.a_id }">
+		<input type="hidden" name="id" value="${sessionScope.myid }">
 		<table class="table table-bordered" style="width: 500px;">
 			<caption align="top"><b>공지사항 글쓰기</b></caption>
 			<tr>
 				<th>아이디</th>
 				<td>
-					<input type="email" name="subject" class="form-control"
-					required="required" autofocus="autofocus" value="${sessionScope.a_email }" readonly> 
+					<input type="text" name="subject" class="form-control"
+					required="required" autofocus="autofocus"> 
 				</td>
 			</tr>
 			<tr>
 				<th>작성자</th>
 				<td>
 					<input type="text" name="subject" class="form-control"
-					required="required" autofocus="autofocus" value="${sessionScope.a_name}" readonly> 
+					required="required" autofocus="autofocus"> 
 				</td>
 			</tr>
 			<tr>
@@ -47,7 +47,7 @@
 				<td colspan="2" align="center">
 					<button type="submit" class="btn btn-outline-success">등록</button>
 					<button type="button" class="btn btn-outline-info"
-					onclick="location.href='notice'">목록</button>
+					onclick="location.href='list'">목록</button>
 				</td>
 			</tr>
 		</table>

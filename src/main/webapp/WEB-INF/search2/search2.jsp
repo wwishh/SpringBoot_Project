@@ -71,24 +71,45 @@
          //alert("이벤트 감지");
          var searchword=$("#search").val();
          var s_id=$("#btnsearch").val();
+         
+          
 
          location.href="search/main?search="+searchword+"&s_id="+s_id
 
       });
       
-      //최근 검색어 클릭시 검색창에 값 받아오기
-      $(".recentsearch").click(function(){
-    	 var recentSearch=$(this).html();
+      //최근 검색어 삭제
+      $(".recentdelete").click(function(){
+    	 var s_num = $(".searchsavenum").val();
     	 
-    	 $("#search").val(recentSearch);
+    	 $.ajax({
+    		 type:"get",
+             dataType:"html",
+             url:"/search/delete",
+             data:{"s_num":s_num},
+             success:function(){
+            	 //alert("성공!");
+            	 location.reload();
+             }
+    	 });
       });
       
-      //인기 검색어 클릭시 검색창에 값 받아오기
-      $(".bestsearch").click(function(){
-     	 var recentSearch=$(this).children("span").html();
-     	 
-     	 $("#search").val(recentSearch);
-       });
+      //최근 검색어 모두 삭제
+      $("#allrecentdelete").click(function(){
+    	 var s_id = $("#btnsearch").val();
+    	 //alert(s_id);
+    	 
+    	 $.ajax({
+    		 type:"get",
+             dataType:"html",
+             url:"/search/alldelete",
+             data:{"s_id":s_id},
+             success:function(){
+            	//alert("성공!");
+            	location.reload();
+             }
+    	 });
+      });
       
    });
    
@@ -155,9 +176,9 @@
 	height: auto;
 	border: 1px solid lightgray;
 	border-radius: 30px;
+	font-size: 13px;
 	text-align: center;
-	padding: 5px 5px 5px 5px;
-	cursor: pointer;
+	padding: 6px 9px 6px 9px;
 }
 .bestsearch{
 	cursor: pointer;
@@ -189,15 +210,40 @@
 #search{
 	border: 0px;
 }
-input::placeholder{
+#search::placeholder{
 	font-size: 17pt;
-
+	color: #BDBDBD;
+}
+.recentdelete{
+	cursor: pointer;
+}
+.recentsearch a{
+	text-decoration: none;
+	color: gray;
+}
+#best a{
+	text-decoration: none;
+	color: black;
+}
+#allrecentdelete{
+	text-decoration: none;
+	color: gray;
+}
+.exit{
+	position: absolute;
+	left: 97%;
+	bottom: 94%;
+	font-size: 15pt;
+	color: gray;
+	cursor: pointer;
 }
 </style>
 </head>
 <body>
 
-<div id="mainsearch">
+	<i class="bi bi-x-lg exit" onclick="history.back()"></i>
+	
+	<div id="mainsearch">
 	<div class="input-group w-50" id="searchdiv">
       <input type="search" class="form-control rounded" placeholder="상품을 입력하세요" aria-label="Search" aria-describedby="search-addon"
        id="search" autocomplete="off"/>
@@ -208,15 +254,16 @@ input::placeholder{
    
     <div id="allsearch">
 	    <div id="recent">
-		    <b>최근 검색어</b><br>
+		    <b>최근 검색어</b>&nbsp;
+		    <span style="text-decoration: underline; font-size: 13px;">
+		    	<a href="search/alldelete?s_id=${sessionScope.myid }" id="allrecentdelete">지우기</a>
+		    </span><br>
 		    <c:forEach var="dto" items="${list }" varStatus="i">
-		    	<c:if test="${i.count%7 == 0}">
-		    		<div class="recentsearch">${dto }</div><br>
-		    	</c:if>
-		    	
-		    	<c:if test="${i.count%7 != 0}">
-		    		<div class="recentsearch">${dto }</div>
-		    	</c:if>
+		    		<input type="hidden" class="searchsavenum" value=${dto.s_num }>
+		    		<div class="recentsearch">
+			    		<a href="search/main?search=${dto.s_searchword }&s_id=${sessionScope.myid }">${dto.s_searchword }</a>
+			    		<i class="bi bi-x recentdelete" style="color: #BDBDBD;"></i>
+		    		</div>
 		    </c:forEach>
 	    </div>
 	    <br>
@@ -226,14 +273,22 @@ input::placeholder{
 		    	<div id="bestdiv1">
 			    	<c:forEach var="title" items="${title }" varStatus="i">
 			    		<c:if test="${i.count <= 5}">
-			    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
+			    			<div class="bestsearch"><b>${i.count}</b>
+			    				<a href="search/main?search=${title }&s_id=${sessionScope.myid }">
+			    					<span>${title }</span>
+			    				</a>
+			    			</div>
 			    		</c:if>
 			    	</c:forEach>
 		    	</div>
 		    	<div id="bestdiv2">
 			    	<c:forEach var="title" items="${title }" varStatus="i">
 			    		<c:if test="${i.count > 5}">
-			    			<div class="bestsearch"><b>${i.count}</b> <span>${title }</span></div>
+			    			<div class="bestsearch"><b>${i.count}</b>
+			    				<a href="search/main?search=${title }&s_id=${sessionScope.myid }">
+			    					<span>${title }</span>
+			    				</a>
+			    			</div>
 			    		</c:if>
 			    	</c:forEach>
 		    	</div>
