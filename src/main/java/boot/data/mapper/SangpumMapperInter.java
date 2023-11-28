@@ -23,6 +23,8 @@ public interface SangpumMapperInter {
 	public void deleteSangpum(int num);
 	public void updateInterest(int num);
 	public SangpumDto getSangpum(int num);
-	public void updateReadCount(int num);	//
+	public void updateReadCount(int num);	
+	public void plusInterest(int num);
+	public void minusInterest(int num);
 	
 }

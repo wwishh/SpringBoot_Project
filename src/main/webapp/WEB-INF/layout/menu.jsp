@@ -130,7 +130,7 @@ nav{
 				
 				<div style="justify-content: space-between;">
 				<c:if test="${sessionScope.loginok==null}">
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='loginform'">로그인</button>
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='../loginform'">로그인</button>
 				</c:if>
 				
 				<c:if test="${sessionScope.loginok!=null&&sessionScope.myid!='ho'&&sessionScope.myid!='wish'&&sessionScope.myid!='oliver'}">

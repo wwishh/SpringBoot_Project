@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="boot.data.mapper.SangpumMapperInter">
 
@@ -52,5 +52,13 @@
 	
 	<update id="updateReadCount" parameterType="int">
   		update junggosangpum set j_readcount=j_readcount+1 where j_sangid=#{num}
+  	</update>
+  	
+  	<update id="plusInterest" parameterType="int">
+  		update junggosangpum set j_interest=j_interest+1 where j_sangid=#{num}
+  	</update>
+  	
+  	<update id="minusInterest" parameterType="int">
+  		update junggosangpum set j_interest=j_interest-1 where j_sangid=#{num}
   	</update>
 </mapper>

@@ -56,15 +56,15 @@ public class SearchController {
 	//검색 상품 리스트
 	@GetMapping("/search/list")
 	@ResponseBody
-	public List<SangpumDto> searchList(String search, String option){
+	public List<SangpumDto> searchList(String search, String option, String category){
 		//System.out.println(option);
-		return inter.sangList(search, option);
+		return inter.sangList(search, option, category);
 	}
 	
 	@GetMapping("/search/sangpumCount")
 	@ResponseBody
-	public int searchSangpumCount(String search) {
-		return inter.getSangpumCount(search);
+	public int searchSangpumCount(String search, String category) {
+		return inter.getSangpumCount(search, category);
 	}
 	
 	//최근검색어 삭제
