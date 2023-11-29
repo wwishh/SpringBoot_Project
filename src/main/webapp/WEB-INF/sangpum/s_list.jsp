@@ -13,6 +13,11 @@
 	href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.5.0/kakao.min.js"
+  integrity="sha384-kYPsUbBPlktXsY6/oNHSUDZoTX6+YI51f63jCPEIPFP09ttByAdxd2mEjKuhdqn4" crossorigin="anonymous"></script>
+  <script>
+	Kakao.init('815178a1004a30c81fbcd7151ba42d6b');
+</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -68,6 +73,9 @@
 						</a>
 					</c:forEach>	
 				</ul>
+				<div id="loading" align="center">
+					<img src="../img_source/loading.gif" alt="loading">
+				</div>
 			</section>	 
 			
 			<!-- 카드형 출력방식 -->
@@ -95,55 +103,33 @@
 				</div>			
 		     	</c:forEach>
 	     	</div>
-	     	<!-- 
-	     	<div class="col mb-5">
-					<div class="card h-100">
-						Product image
-						<img class="card-img-top"
-							src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-						Product details
-						<div class="card-body p-4">
-							<div class="text-center">
-								Product name
-								<h5 class="fw-bolder">Fancy Product</h5>
-								Product price
-								$40.00 - $80.00
-							</div>
-						</div>
-						
-						Product actions
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">	
-								<a class="btn btn-outline-dark mt-auto" href="/detail">View
-									options</a>
-							</div>
-						</div>
-					</div>
-				</div>
-	     	 -->
-	     	 <br><br><br>
+  	     	<br><br><br>
 			<div class="kakao_inquiry">
-				<div id="kakao-talk-channel-add-button"
-					data-channel-public-id="_BpxgxjG" data-size="large"
-					data-support-multiple-densities="true">
-				</div>
-				<div id="kakao-talk-channel-chat-button"
-					data-channel-public-id="_BpxgxjG" data-title="question"
-					data-size="large" data-color="yellow" data-shape="mobile"
-					data-support-multiple-densities="true">
-				</div>
+				<div id="add-channel-button"></div>
+				<div id="chat-channel-button"></div>			
 			</div>
 		</div>
 	</section>
 </body>
 <script>
-  window.kakaoAsyncInit = function() {
-    Kakao.Channel.createChatButton({
-      container: '#kakao-talk-channel-chat-button',
-    });
-    Kakao.Channel.createAddChannelButton({
-      container: '#kakao-talk-channel-add-button',
-    });
-  };  
+  Kakao.Channel.createAddChannelButton({
+    container: '#add-channel-button',
+    channelPublicId: '_BpxgxjG',
+  });
+  Kakao.Channel.createChatButton({
+	    container: '#chat-channel-button',
+	    channelPublicId: '_BpxgxjG',
+	  });
+</script>
+
+<script type="text/javascript">
+	const target = document.querySelector('#loading');
+	
+	const observer = new IntersectionObserver((entries) => {
+	  entries.forEach(entry => {
+	    console.log(entry.isIntersecting);
+	  });
+	});
+	observer.observe(target);
 </script>
 </html>
