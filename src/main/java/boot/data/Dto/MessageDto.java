@@ -18,4 +18,5 @@ public class MessageDto {
 	private Timestamp mess_writeday;
 	
 	private String mess_time;
+	private String mess_img;
 }

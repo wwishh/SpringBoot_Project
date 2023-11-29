@@ -55,6 +55,10 @@ public class MessageController {
 		//1.sangidx=0이면 상품선택없이 본인의 채팅 전부 출력, 2.sangidx!=0이면 해당 상품의 채팅방을 출력 but 판매자는 다수 일 수 있고, 구매자는 하나만 가질 수 있기에 방이 없으면 생성해 줌
 		
 		String user_id=(String)session.getAttribute("myid");//로그인 user
+
+		if(user_id.equals("guest")) {
+			return "/loginform";
+		}
 		
 		if(sangidx!=0) {//상품을 선택
 			if(!sangservice.getSangpumById(sangidx).getMember_id().equals(user_id)){//판매자 구매자 상품으로 하나의 방만 있어야 됨, other은 sender_id로 구매자
@@ -69,6 +73,9 @@ public class MessageController {
 			}
 			
 			SangpumDto sangpum = sangservice.getSangpumById(sangidx);
+			StringTokenizer st = new StringTokenizer(sangservice.getSangpumById(sangidx).getJ_imageurl(),",");
+			String photo = st.nextToken();
+			sangpum.setJ_imageurl(photo);
 			model.addAttribute("sangpum", sangpum);
 			
 		}
@@ -260,6 +267,17 @@ public class MessageController {
 		return chat;
 		
 	}
+	
+	@GetMapping("/message/chatProfile")
+	@ResponseBody
+	public SangpumDto chatProfile(@RequestParam int room_num) {
+		SangpumDto sangpum = sangservice.getSangpumById(roomservice.getRoomById(room_num).getJ_sangid());
+		
+		StringTokenizer st = new StringTokenizer(sangpum.getJ_imageurl());
+		sangpum.setJ_imageurl(st.nextToken(","));
+		return sangpum;
+	}
+	
 	
 	@PostMapping("/message/fileupload")
 	@ResponseBody

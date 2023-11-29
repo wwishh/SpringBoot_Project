@@ -346,6 +346,9 @@ body{
 <script type="text/javascript">
 $(function(){
 	
+	$(".messagefilepreview").hide();
+	
+	//비회원 채팅 클릭시 로그인폼으로 이동
 	if("${sangidx}"!=0){
 		if("${sangpum.member_id}"=="${sessionScope.myid}"){
 			alert("상품 판매 채팅방으로 이동합니다.");
@@ -356,10 +359,6 @@ $(function(){
 	
 	
 	getChattingRooms("${sessionScope.myid}","${sangidx}");
-	
-	
-	
-	$(".messagefilepreview").hide();
 	
 	
 	//사진 업로드
@@ -398,6 +397,7 @@ $(function(){
 //사용자 정의함수
 
 	var room_num=0;
+	var other="";
 
 	//로그인한 사용자가 들어있는 채팅방 모두 불러오기, 종모양 눌렀을 경우
 	function getChattingRooms(user_id,sangidx,scrollPos) {
@@ -415,15 +415,13 @@ $(function(){
 					
 					$.each(res, function(i,ele){
 						
-						var other;
-						
 						if(user_id==ele.sender_id){
 							other=ele.receiver_id
 						}else{
 							other=ele.sender_id
 						}
 						
-						roomList+="<li class='clearfix' onclick='getChatting("+ele.room_num+")'>";
+						roomList+="<li class='clearfix' onclick='getChatting("+ele.room_num+", \""+other+"\")'>";
 						roomList+="<img src='../img/"+ele.sang_img+"' alt='avatar'>";
 						roomList+="<div class='about'>";
 						roomList+="<div class='name'>"+other+"</div>";
@@ -459,15 +457,13 @@ $(function(){
 					
 					$.each(res, function(i,ele){
 						
-						var other;
-						
 						if(user_id==ele.sender_id){
 							other=ele.receiver_id
 						}else{
 							other=ele.sender_id
 						}
-						
-						roomList+="<li class='clearfix' onclick='getChatting("+ele.room_num+")'>";
+
+						roomList+="<li class='clearfix' onclick='getChatting("+ele.room_num+", \""+other+"\")'>";
 						roomList+="<img src='../img/"+ele.sang_img+"' alt='avatar'>";
 						roomList+="<div class='about'>";
 						roomList+="<div class='name'>"+other+"</div>";
@@ -498,22 +494,48 @@ $(function(){
 
 
 	//상대방과 하던 채팅 가져오기
-	function getChatting(roomNum, scrollPos){
+	function getChatting(roomNum, otherID, scrollPos){
+		
+		//var other=$("#other").val();
+		//alert(otherID);
 		
 		room_num=roomNum;
-		
-		//alert(room_num);
+		other=otherID;
 		
 		if(room_num==0){
 			return;
 		}
 		
+		//chat profile가져오기
+		$.ajax({
+			type:"get",
+			dataType:"json",
+			url:"/message/chatProfile",
+			data:{"room_num":room_num},
+			success:function(res){
+					
+					var profile=""
+				
+					profile+="<img src='../img/"+res.j_imageurl+"' alt='avatar'>";
+					profile+="<div class='chat-about'>";
+					profile+="<h6 class='m-b-0'>"+other+"<br><small style='color: gray;''>"+res.j_title +"</small></h6>";
+					profile+="</div>";
+					
+					$("#profile").html(profile);
+					
+				}
+		
+				
+			});
+		
+		//chatting가져오기
 		$.ajax({
 			type:"get",
 			dataType:"json",
 			url:"/message/chatting",
 			data:{"room_num":room_num},
 			success:function(res){
+				
 				var chatContent="";
 				
 				chatContent+="<ul class='m-b-0'>";
@@ -573,7 +595,7 @@ $(function(){
 			//소켓이 열리면 초기화 세팅하기
 		}
 		
-		getChatting(room_num);
+		getChatting(room_num, other);
 
 		//메시지 잘 들어왔을 때 실행하는 내용
 		ws.onmessage = function(data) {
@@ -581,7 +603,7 @@ $(function(){
 			var msgJson = JSON.parse(msg)
 
 			
-			getChatting(room_num);
+			getChatting(room_num, other);
 			getChattingRooms("${sessionScope.myid}","${sangidx}");
 		}
 
@@ -677,12 +699,12 @@ $(function(){
     <div class="col-lg-12">
         <div class="card chat-app">
             <div id="plist" class="people-list">
-                <div class="input-group">
+                <!-- <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa fa-search"></i></span>
                     </div>
                     <input type="text" class="form-control" placeholder="Search...">
-                </div>
+                </div> -->
                 <ul class="list-unstyled chat-list mt-2 mb-0">
                 
                 <!-- 채팅방 리스트 -->
@@ -713,12 +735,13 @@ $(function(){
                 <div class="chat-header clearfix">
                     <div class="row">
                         <div class="col-lg-6">
-	                        	<c:if test="${sangdto.j_imageurl!=null }">
-	                        		<img src="../img/${sangdto.j_imageurl }"" alt="avatar">
+	                        	<%-- <c:if test="${sangpum.j_imageurl!=null }">
+	                        		<img src="../img/${sangpum.j_imageurl }"" alt="avatar">
 	                        	</c:if>                         
 	                            <div class="chat-about">
-	                                <h6 class="m-b-0">${sangdto.member_id}<br><small style="color: gray;">${sangdto.j_title }</small></h6>
-	                            </div>
+	                                <h6 class="m-b-0">${sangpum.member_id}<br><small style="color: gray;">${sangpum.j_title }</small></h6>
+	                            </div> --%>
+	                            <div id="profile"></div>
                         </div>
                     </div>
                 </div>
@@ -732,7 +755,7 @@ $(function(){
                     <div class="input-group mb-0">
                     
                     <!-- 사진업로드시 미리보기 -->
-                    <div class="messagefilepreview"></div>
+                    <div class="messagefilepreview" style="display: none;"></div>
                     
 			              <div class="messagefooter">
 							<!-- 이모지 시작-->
