@@ -18,7 +18,7 @@ public interface SangpumMapperInter {
 	
 	public List<SangpumDto> getPagingList(Map<String, Object> map);
 	public void insertSangpum(SangpumDto dto);
-	public SangpumDto getData(int num);
+	//public SangpumDto getData(int num);
 	public void updateSangpum(SangpumDto dto);
 	public void deleteSangpum(int num);
 	public void updateInterest(int num);

@@ -46,6 +46,9 @@ body{
     top: 0;
     padding: 20px;
     z-index: 7;
+    
+    height: 510px;
+    overflow: auto;
 }
 
 .chat-app .chat {
@@ -338,17 +341,24 @@ body{
 }
 
 
+
 </style>
 <script type="text/javascript">
 $(function(){
 	
+	if("${sangidx}"!=0){
+		if("${sangpum.member_id}"=="${sessionScope.myid}"){
+			alert("상품 판매 채팅방으로 이동합니다.");
+		}
+	}
+	
 	wsOpen();//웹소켓 오픈
 	
-	var room_num = "${room_num}";
-	//alert(room_num);
-	getChattingRooms("${sessionScope.myid}");
 	
-	getChatting("${room_num}");//기존 채팅방 가져오기
+	getChattingRooms("${sessionScope.myid}","${sangidx}");
+	
+	
+	
 	$(".messagefilepreview").hide();
 	
 	
@@ -387,46 +397,103 @@ $(function(){
 
 //사용자 정의함수
 
-	room_num=$("#room_num");
+	var room_num=0;
 
 	//로그인한 사용자가 들어있는 채팅방 모두 불러오기, 종모양 눌렀을 경우
-	function getChattingRooms(user_id) {
-		
-		//alert(user_id);
+	function getChattingRooms(user_id,sangidx,scrollPos) {
 
-		$.ajax({
-			type:"get",
-			dataType:"json",
-			url:"/message/getMessageList",
-			data:{"user_id":user_id},
-			success:function(res){
-				var roomList="";
-				
-				$.each(res, function(i,ele){
+		
+		if(sangidx==0){//상품선택 없이 전체 채팅방 불러오기
+			
+			$.ajax({
+				type:"get",
+				dataType:"json",
+				url:"/message/getMessageList",
+				data:{"user_id":user_id},
+				success:function(res){
+					var roomList="";
 					
-					var other;
+					$.each(res, function(i,ele){
+						
+						var other;
+						
+						if(user_id==ele.sender_id){
+							other=ele.receiver_id
+						}else{
+							other=ele.sender_id
+						}
+						
+						roomList+="<li class='clearfix' onclick='getChatting("+ele.room_num+")'>";
+						roomList+="<img src='../img/"+ele.sang_img+"' alt='avatar'>";
+						roomList+="<div class='about'>";
+						roomList+="<div class='name'>"+other+"</div>";
+						roomList+="<div class='status'>"+ele.recent_mess+"</div>";
+						roomList+="</div></li>";          		
+					})
 					
-					if(user_id=ele.sender_id){
-						other=ele.receiver_id
-					}else{
-						other=ele.sender_id
+					$("#chattingrooms").html(roomList);
+					
+					if (scrollPos == null) {
+						setTimeout(function(){
+							$(".people-list").scrollTop(scrollPos);//스크롤 가장 위로						
+						},300)
+					} else {
+						setTimeout(function(){
+							$(".people-list").scrollTop($(".people-list").prop('scrollHeight'));	
+						},300)
 					}
 					
-					roomList+="<li class='clearfix' onclick='getChatting("+ele.room_num+")'>";
-					roomList+="<img src='../img/"+ele.sang_img+"' alt='avatar'>";
-					roomList+="<div class='about'>";
-					roomList+="<div class='name'>"+other+"</div>";
-					roomList+="<div class='status'>"+ele.recent_mess+"</div>";
-					roomList+="</div></li>";          		
-				})
+				}
 				
-				$("#chattingrooms").html(roomList);
-				
-				
-				
-			}
+			});
 			
-		});
+		}else{//상품 디테일 페이지에서 채팅을 클릭했을 때
+			
+			$.ajax({
+				type:"get",
+				dataType:"json",
+				url:"/message/getMessageListBySangIdx",
+				data:{"user_id":user_id, "sangidx":sangidx},
+				success:function(res){
+					var roomList="";
+					
+					$.each(res, function(i,ele){
+						
+						var other;
+						
+						if(user_id==ele.sender_id){
+							other=ele.receiver_id
+						}else{
+							other=ele.sender_id
+						}
+						
+						roomList+="<li class='clearfix' onclick='getChatting("+ele.room_num+")'>";
+						roomList+="<img src='../img/"+ele.sang_img+"' alt='avatar'>";
+						roomList+="<div class='about'>";
+						roomList+="<div class='name'>"+other+"</div>";
+						roomList+="<div class='status'>"+ele.recent_mess+"</div>";
+						roomList+="</div></li>";          		
+					})
+					
+					$("#chattingrooms").html(roomList);
+					
+					if (scrollPos == null) {
+						setTimeout(function(){
+							$(".people-list").scrollTop(scrollPos);//스크롤 가장 위로						
+						},300)
+					} else {
+						setTimeout(function(){
+							$(".people-list").scrollTop($(".people-list").prop('scrollHeight'));	
+						},300)
+					}
+					
+				}
+				
+			});
+			
+		}
+
+		
 	}
 
 
@@ -434,6 +501,8 @@ $(function(){
 	function getChatting(roomNum, scrollPos){
 		
 		room_num=roomNum;
+		
+		//alert(room_num);
 		
 		if(room_num==0){
 			return;
@@ -503,15 +572,17 @@ $(function(){
 		ws.onopen = function(data) {
 			//소켓이 열리면 초기화 세팅하기
 		}
+		
+		getChatting(room_num);
 
 		//메시지 잘 들어왔을 때 실행하는 내용
 		ws.onmessage = function(data) {
 			var msg = data.data;
 			var msgJson = JSON.parse(msg)
 
-			var room_num = $("#room_num").val();//현제 선택된 채팅방
 			
 			getChatting(room_num);
+			getChattingRooms("${sessionScope.myid}","${sangidx}");
 		}
 
 		//채팅 입력창에서 엔터 누르면 채팅 보내짐
@@ -527,8 +598,6 @@ $(function(){
 	//메시지 보내면 동작하는 코드
 	function send() {
 		
-		var room_num=$("#room_num").val();
-		var room_num=$(this).attr("room_num");
 		var msg = $("#chatting").val();
 		var mynum = "${sessionScope.myid}";
 		
@@ -536,9 +605,7 @@ $(function(){
 		if(room_num==0){
 			alert("채팅방을 선택해 주세요.");
 		}else{
-		
-		
-		//alert(room_num);
+
 			
 			//만약 사진을 선택하지 않았다면
 			if(!$("#msgfileupload").val()){
@@ -596,8 +663,6 @@ $(function(){
 
 			$("#chatting").val("");
 			
-			getChatting(room_num);
-			getChattingRooms("${sessionScope.myid}");
 			
 		}
 	}	
@@ -605,7 +670,7 @@ $(function(){
 </script>
 </head>
 <body>
-<input type="hidden" id="room_num" value="${room_num}">
+<%-- <input type="hidden" id="room_num" value="${room_num}"> --%>
 
 <div class="container">
 <div class="row clearfix">
@@ -622,8 +687,11 @@ $(function(){
                 
                 <!-- 채팅방 리스트 -->
                 <div id="chattingrooms">
+                	
+                	<div class="chatrooms"></div>
+                	
                 	<!-- 판매자일경우 구매자들의 방을 가져옴 -->
-                	<c:if test="${room_num==0 }">
+                	<%-- <c:if test="${room_num==0 }">
                 		<c:forEach var="room" items="${rooms }">
                 			<li class="clearfix" onclick="getChatting(${room.room_num})">
                         		<img src="../img/${sangdto.j_imageurl }"" alt="avatar">
@@ -633,11 +701,11 @@ $(function(){
                         			</div>
                     		</li>
                 		</c:forEach>
-                	</c:if>
+                	</c:if> --%>
                 </div>
                 
                 </ul>
-            </div>
+               </div>
             
             
             <!-- getChatting구간 -->
@@ -742,10 +810,7 @@ $(function(){
 						</div>
 							
 						</div>
-                    
-                    
-                        
-					
+		
 						
 					</div>
                 </div>

@@ -49,17 +49,36 @@ public class MessageController {
 	SangpumService sangservice;
 	
 	
-	/*@GetMapping("/goChattingRoom")
-	public String goChattingRoom(@RequestParam int room_num,Model model) {
-		
-		String roomname = sangservice.getSangpumById(roomservice.getRoomById(room_num).getJ_sangid()).getJ_title();
-		
-		model.addAttribute("room_num", room_num);
-		model.addAttribute("roomName", roomname);
-		return "/2/jsp/chat";
-	}*/
-	
 	@GetMapping("/goChattingRoom")
+	public String goChattingRoom(@RequestParam(defaultValue = "0") int sangidx, Model model, HttpSession session) {
+		//System.out.println(sangidx);
+		//1.sangidx=0이면 상품선택없이 본인의 채팅 전부 출력, 2.sangidx!=0이면 해당 상품의 채팅방을 출력 but 판매자는 다수 일 수 있고, 구매자는 하나만 가질 수 있기에 방이 없으면 생성해 줌
+		
+		String user_id=(String)session.getAttribute("myid");//로그인 user
+		
+		if(sangidx!=0) {//상품을 선택
+			if(!sangservice.getSangpumById(sangidx).getMember_id().equals(user_id)){//판매자 구매자 상품으로 하나의 방만 있어야 됨, other은 sender_id로 구매자
+				
+				if(roomservice.getRoomBySangIdxAndUserId(sangidx, user_id)==null) {//방이 없다면, 생성해 줌
+					MessageRoomDto dto = new MessageRoomDto();
+					dto.setJ_sangid(sangidx);
+					dto.setReceiver_id(sangservice.getSangpumById(sangidx).getMember_id());//상품의 판매자가 채팅방의 receiver가 됨
+					dto.setSender_id(user_id);
+					roomservice.insertRoom(dto);//새로운 방 생성					
+				}				
+			}
+			
+			SangpumDto sangpum = sangservice.getSangpumById(sangidx);
+			model.addAttribute("sangpum", sangpum);
+			
+		}
+		
+		model.addAttribute("sangidx", sangidx);
+		
+		return "/2/jsp/chatdesign";
+	}
+	
+	/*@GetMapping("/goChattingRoom")
 	public String goChattingRoom(@RequestParam int room_num,
 								@RequestParam int sangidx,
 								Model model) {
@@ -102,7 +121,7 @@ public class MessageController {
 		model.addAttribute("sangname", sangname);
 		
 		return "/2/jsp/room";
-	}
+	}*/
 	
 	
 	//종모양 클릭시 자신이 채팅했던 모든 방 나옴
@@ -114,7 +133,7 @@ public class MessageController {
 		
 		List<MessageRoomDto> rooms = roomservice.selectAllRooms(user_id);
 		
-		System.out.println(rooms.get(0).getRoom_num());
+		//System.out.println(rooms.get(0).getRoom_num());
 		
 		for(MessageRoomDto dto:rooms) {
 			//채팅방에서 마지막 메시지를 얻고
@@ -126,6 +145,7 @@ public class MessageController {
 			
 			if(recentMessNum==0) {//방은 있지만 아직 채팅을 나눈적 없음
 				dto.setRecent_mess("");
+				dto.setSang_img("user_noimg.PNG");
 			}else {
 				//얻은 메시지를 해당 룸의 마지막 메시지로 설정
 				dto.setRecent_mess(mservice.getMessageByNum(recentMessNum).getMess_content());
@@ -136,6 +156,34 @@ public class MessageController {
 		
 		//mv.addObject("rooms", rooms);
 		//mv.setViewName("/2/jsp/chatdesign");
+		return rooms;
+	}
+	
+	@GetMapping("/message/getMessageListBySangIdx")
+	@ResponseBody
+	public List<MessageRoomDto> getroomsByIdx(@RequestParam String sangidx, @RequestParam String user_id){
+		
+		List<MessageRoomDto> rooms = roomservice.selectRoomsBySangIdx(user_id, sangidx);
+		
+		for(MessageRoomDto dto:rooms) {
+			//채팅방에서 마지막 메시지를 얻고
+			int recentMessNum = mservice.getRecentMessageByRoom(dto.getRoom_num());
+			//상품들의 이미지 가져오기
+			String sangpumimgs = sangservice.getSangpumById(dto.getJ_sangid()).getJ_imageurl();
+			StringTokenizer st = new StringTokenizer(sangpumimgs,",");
+			String photo = st.nextToken();
+			
+			if(recentMessNum==0) {//방은 있지만 아직 채팅을 나눈적 없음
+				dto.setRecent_mess("");
+				dto.setSang_img("user_noimg.PNG");
+			}else {
+				//얻은 메시지를 해당 룸의 마지막 메시지로 설정
+				dto.setRecent_mess(mservice.getMessageByNum(recentMessNum).getMess_content());
+				dto.setSang_img(photo);
+			}
+			
+		}
+		
 		return rooms;
 	}
 	

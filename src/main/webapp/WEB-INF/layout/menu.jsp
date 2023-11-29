@@ -172,10 +172,9 @@ nav{
 						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
 						<!-- 채팅방 , /message/getMessageList?user_id=${sessionScope.myid}-->
 						<div>
-							<i class="bi bi-bell-fill alarmBtn" style="cursor: pointer;" onclick="location.href='/goChattingRoom?room_num=-1&sangidx=-1'"></i>
+							<i class="bi bi-bell-fill alarmBtn" style="cursor: pointer;" onclick="location.href='/goChattingRoom'"></i>
 						</div>
 					</c:if>
-					<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
 						
 				</div>
 				

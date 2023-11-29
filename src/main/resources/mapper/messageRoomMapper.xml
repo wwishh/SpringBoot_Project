@@ -19,4 +19,7 @@
 	<select id="selectAllRooms" parameterType="String" resultType="room">
 		select distinct * from messageroom where sender_id=#{user_id} or receiver_id=#{user_id}
 	</select>
+	<select id="selectRoomsBySangIdx" parameterType="Map" resultType="room">
+		select distinct * from messageroom where (sender_id=#{user_id} or receiver_id=#{user_id}) and j_sangid=#{sangidx}
+	</select>
 </mapper>
