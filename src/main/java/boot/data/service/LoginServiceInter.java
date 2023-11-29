@@ -13,4 +13,6 @@ public interface LoginServiceInter {
 	public LoginDto getDataById(String u_id);
 	public int findIdCheck(String u_name, String u_email, String u_hp);
 	public String getId(String u_name, String u_email, String u_hp);
+	public void failcount(String u_id);
+	public void failreset(String u_id);
 }

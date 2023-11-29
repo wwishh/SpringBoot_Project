@@ -92,10 +92,14 @@ public class LoginController {
 				session.setAttribute("myhp", login.getU_hp());
 				session.setAttribute("myemail", login.getU_email());
 				
+				service.failreset(u_id);
+				
 				session.removeAttribute("findid");
 				
 				return "redirect:main";
 			}else {
+				//실패시  session failcount 1씩증가 ;
+				service.failcount(u_id);
 				return "/3/login/passfail";
 			}
 		
