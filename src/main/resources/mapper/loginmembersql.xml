@@ -28,4 +28,12 @@
   select * from user where u_id=#{u_id}
   </select>
   
+  <select id="findIdCheck" parameterType="Map" resultType="int">
+  select count(*) from user where BINARY(u_name)=#{u_name} and BINARY(u_email)=#{u_email} and BINARY(u_hp)=#{u_hp}
+  </select>
+  
+  <select id="getId" parameterType="String" resultType="String">
+  select u_id from user where u_name=#{u_name} and u_email=#{u_email} and u_hp=#{u_hp}
+  </select>
+  
   </mapper>
