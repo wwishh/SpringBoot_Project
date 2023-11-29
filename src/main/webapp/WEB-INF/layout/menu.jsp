@@ -89,6 +89,8 @@
    $(document).on("mouseout",".searchResult", function(event){
       $(this).css("background-color", "white");
    }); 
+   
+   
 </script>
 <style type="text/css">
 .searchResult{
@@ -98,6 +100,19 @@
 nav{
    font-size: 1.5em;
 }
+
+.alarm {
+        width: 20px;
+        height: 20px;
+        border: 1px solid red;
+        background-color: red;
+        border-radius: 50%;
+        text-align: center;
+        float: right;
+        z-index: -1;
+        margin-right: 30px;
+    }
+
 </style>
 </head>
 <body>
@@ -173,6 +188,7 @@ nav{
 						<!-- 채팅방 , /message/getMessageList?user_id=${sessionScope.myid}-->
 						<div>
 							<i class="bi bi-bell-fill alarmBtn" style="cursor: pointer;" onclick="location.href='/goChattingRoom'"></i>
+							<div class="alarm">0</div>
 						</div>
 					</c:if>
 						

@@ -18,4 +18,5 @@ public class MessageRoomDto {
 
 	private String recent_mess;
 	private String Sang_img;
+	private int mess_alarmCnt;
 }

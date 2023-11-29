@@ -340,7 +340,15 @@ body{
 	height: 75px;
 }
 
-
+ .alarm {
+        width: 20px;
+        height: 20px;
+        border: 1px solid red;
+        background-color: red;
+        border-radius: 50%;
+        text-align: center;
+        float: right;
+    }
 
 </style>
 <script type="text/javascript">
@@ -415,16 +423,22 @@ $(function(){
 					
 					$.each(res, function(i,ele){
 						
+						var alarm="";
+						
 						if(user_id==ele.sender_id){
 							other=ele.receiver_id
 						}else{
 							other=ele.sender_id
 						}
 						
+						if(ele.mess_alarmCnt>0){
+							alarm="<div id='alarm' class='alarm'>"+ele.mess_alarmCnt+"</div>";
+						}
+						
 						roomList+="<li class='clearfix' onclick='getChatting("+ele.room_num+", \""+other+"\")'>";
 						roomList+="<img src='../img/"+ele.sang_img+"' alt='avatar'>";
 						roomList+="<div class='about'>";
-						roomList+="<div class='name'>"+other+"</div>";
+						roomList+="<div class='name'>"+other+alarm+"</div>";
 						roomList+="<div class='status'>"+ele.recent_mess+"</div>";
 						roomList+="</div></li>";          		
 					})
@@ -496,8 +510,6 @@ $(function(){
 	//상대방과 하던 채팅 가져오기
 	function getChatting(roomNum, otherID, scrollPos){
 		
-		//var other=$("#other").val();
-		//alert(otherID);
 		
 		room_num=roomNum;
 		other=otherID;
@@ -537,21 +549,28 @@ $(function(){
 			success:function(res){
 				
 				var chatContent="";
+				var messCheck="";
 				
 				chatContent+="<ul class='m-b-0'>";
 				$.each(res, function(i,ele){
+					
+					if(ele.mess_readCnt==1){
+						messCheck="안읽음";
+					}
+					
 					//내가 채팅을 보낼 때(오른쪽)
 					if(ele.sender_id=="${sessionScope.myid}"){
+						//alert(ele.mess_readCnt);
 						chatContent+="<li class='clearfix'>";
 						chatContent+="<div class='message-data text-right'>";
-						chatContent+="<span class='message-data-time'>"+ele.mess_time+"</span>";
+						chatContent+="<span class='message-data-time'><small style='color: gray;'>"+messCheck+"</small>&nbsp;&nbsp;"+ele.mess_time+"</span>";
 						chatContent+="</div>";
 						chatContent+="<div class='message other-message float-right'>"+ele.mess_content+"</div>";
 						chatContent+="</li>";
-					}else{
+					}else{//상대 일때
 						chatContent+="<li class='clearfix'>";
 						chatContent+="<div class='message-data'>";
-						chatContent+="<span class='message-data-time'>"+ele.mess_time+"</span>";
+						chatContent+="<span class='message-data-time'><small style='color: gray;'>"+messCheck+"</small>&nbsp;&nbsp;"+ele.mess_time+"</span>";
 						chatContent+="</div>";
 						chatContent+="<div class='message my-message'>"+ele.mess_content+"</div>";
 						chatContent+="</li>";
@@ -575,7 +594,7 @@ $(function(){
 				
 			}
 		});
-	
+		
 		
 	};
 	
@@ -706,7 +725,7 @@ $(function(){
                     <input type="text" class="form-control" placeholder="Search...">
                 </div> -->
                 <ul class="list-unstyled chat-list mt-2 mb-0">
-                
+
                 <!-- 채팅방 리스트 -->
                 <div id="chattingrooms">
                 	
@@ -745,12 +764,14 @@ $(function(){
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 채팅 보이는 구간 -->
                 <div class="chat-history">
+
+
                 	<div id="chatShow"></div>
                 </div>
-                
+
                 <div class="chat-message clearfix">
                     <div class="input-group mb-0">
                     

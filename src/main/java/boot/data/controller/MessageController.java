@@ -85,51 +85,6 @@ public class MessageController {
 		return "/2/jsp/chatdesign";
 	}
 	
-	/*@GetMapping("/goChattingRoom")
-	public String goChattingRoom(@RequestParam int room_num,
-								@RequestParam int sangidx,
-								Model model) {
-		
-		//판매자가 상품 디테일 페이지에서 채팅을 눌렀을 경우, 해당 상품에 관한 모든 채팅방을 가져온다.
-		if(room_num==0) {
-			List<MessageRoomDto> rooms = roomservice.getRoomsBySangpum(sangidx);
-			
-			for(MessageRoomDto dto:rooms) {
-				//채팅방에서 마지막 메시지를 얻고
-				int recentMessNum = mservice.getRecentMessageByRoom(dto.getRoom_num());
-				
-				if(recentMessNum==0) {//방은 있지만 아직 채팅을 나눈적 없음
-					dto.setRecent_mess("");
-				}else {
-					//얻은 메시지를 해당 룸의 마지막 메시지로 설정
-					dto.setRecent_mess(mservice.getMessageByNum(recentMessNum).getMess_content());
-				}
-				
-			}
-			
-			model.addAttribute("rooms", rooms);
-		}else if(room_num==-1&& sangidx==-1) {//종모양 클릭시
-			return "/2/jsp/chatdesign";
-		}
-		
-		SangpumDto sangdto= sangservice.getSangpumById(sangidx);
-		
-		model.addAttribute("room_num", room_num);
-		model.addAttribute("sangdto", sangdto);
-		return "/2/jsp/chatdesign";
-	}
-	
-	@GetMapping("/goSellerRooms")
-	public String goSellerRooms(@RequestParam int sangidx, Model model) {
-		List<MessageRoomDto> rooms = roomservice.getRoomsBySangpum(sangidx);
-		String sangname=sangservice.getSangpumById(sangidx).getJ_title();
-		
-		model.addAttribute("rooms", rooms);
-		model.addAttribute("sangname", sangname);
-		
-		return "/2/jsp/room";
-	}*/
-	
 	
 	//종모양 클릭시 자신이 채팅했던 모든 방 나옴
 	@GetMapping("/message/getMessageList")
@@ -159,10 +114,12 @@ public class MessageController {
 				dto.setSang_img(photo);
 			}
 			
+			//방 별 읽지않은 메시지 개수 출력(알림)
+			int unReadMessCnt = mservice.unReadMessByRoom(user_id,dto.getRoom_num());
+			dto.setMess_alarmCnt(unReadMessCnt);
+			
 		}
-		
-		//mv.addObject("rooms", rooms);
-		//mv.setViewName("/2/jsp/chatdesign");
+
 		return rooms;
 	}
 	
@@ -189,6 +146,10 @@ public class MessageController {
 				dto.setSang_img(photo);
 			}
 			
+			//방 별 읽지않은 메시지 개수 출력(알림)
+			int unReadMessCnt = mservice.unReadMessByRoom(user_id,dto.getRoom_num());
+			dto.setMess_alarmCnt(unReadMessCnt);
+			
 		}
 		
 		return rooms;
@@ -206,13 +167,24 @@ public class MessageController {
 			e.printStackTrace();
 		}
 		
-		//사용자의 num 받기
+		//사용자의 id 받기
 		String myid=(String)session.getAttribute("myid");
 						
 		List<MessageDto> chat=new ArrayList<>();
 		
+		//해당 채팅방의 모든 메시지를 가져옴
 		chat = mservice.selectAllChatByRoom(room_num);
 		//Collections.reverse(chat);//역정렬
+		
+		for(MessageDto mess:chat) {
+			//가져온 메시지에서 메시지 받는 사람이 현재 로그인한 사용자와 같다면 db의 readCnt를 0으로 변경
+			if(mess.getReceiver_id().equals(myid)) {
+				mservice.messageReadByNum(mess.getMess_num());
+			}
+		}
+		
+		//readCnt를 0으로 변경 후 다시 출력
+		chat = mservice.selectAllChatByRoom(room_num);
 		
 		//채팅 시간 
 		//대화 시간 오늘 날짜에서 빼기(몇 초전... 몇 분 전...)
@@ -306,7 +278,6 @@ public class MessageController {
 		
 		return map;
 	}
-	
 	
 
 }
