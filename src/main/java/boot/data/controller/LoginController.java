@@ -157,9 +157,7 @@ public class LoginController {
 	@PostMapping("/update")
 	public String update(LoginDto login) {
 		
-		String email=login.getU_email();
-		login.setU_email(email);
-		
+		System.out.println(login);
 		service.updateuserinfo(login);
 		
 		return "redirect:main";

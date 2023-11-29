@@ -27,7 +27,7 @@ border-width: 0 0 1px;
 			 <div>
 			 <h5>Id</h5>
 			 	<div>
-			 	<input type="text" name="u_id" class="bottom-border" style="width:40vw; height:4vh;" value="${dto.u_id }" disabled="disabled">
+			 	<input type="text" name="u_id" class="bottom-border" style="width:40vw; height:4vh;" value="${dto.u_id }">
 			 	</div>
 			 </div>
 			 
