@@ -13,6 +13,11 @@
 	href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.5.0/kakao.min.js"
+  integrity="sha384-kYPsUbBPlktXsY6/oNHSUDZoTX6+YI51f63jCPEIPFP09ttByAdxd2mEjKuhdqn4" crossorigin="anonymous"></script>
+<script>
+  Kakao.init('815178a1004a30c81fbcd7151ba42d6b'); // 사용하려는 앱의 JavaScript 키 입력
+</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -63,27 +68,20 @@
 	     	</div>
      		<br><br><br>
 			<div class="kakao_inquiry">
-				<div id="kakao-talk-channel-add-button"
-					data-channel-public-id="_BpxgxjG" data-size="large"
-					data-support-multiple-densities="true">
-				</div>
-				<div id="kakao-talk-channel-chat-button"
-					data-channel-public-id="_BpxgxjG" data-title="question"
-					data-size="large" data-color="yellow" data-shape="mobile"
-					data-support-multiple-densities="true">
-				</div>
+				<div id="add-channel-button"></div>
+				<div id="chat-channel-button"></div>
 			</div>
 		</div>
 	</section>
 </body>
 <script>
-  window.kakaoAsyncInit = function() {
-    Kakao.Channel.createChatButton({
-      container: '#kakao-talk-channel-chat-button',
-    });
-    Kakao.Channel.createAddChannelButton({
-      container: '#kakao-talk-channel-add-button',
-    });
-  };  
+  Kakao.Channel.createAddChannelButton({
+    container: '#add-channel-button',
+    channelPublicId: '_BpxgxjG',
+  });
+  Kakao.Channel.createChatButton({
+	    container: '#chat-channel-button',
+	    channelPublicId: '_BpxgxjG',
+	  });
 </script>
 </html>
