@@ -10,5 +10,18 @@
 	<delete id="deleteInterest" parameterType="Map">
 		delete from likes where i_id=#{i_id} and i_sangpum=#{i_sangpum}
 	</delete>
+	
+	<!-- <select id="getCount" parameterType="Map" resultType="int">
+		select count(*) from likes where i_id=#{i_id} and i_sangpum=#{i_sangpum}
+	</select> -->
+	
+<!-- <select id="getAllLikeStatus" parameterType="Map" resultType="Map">
+    select i_sangpum, count(*) as likeStatus from likes
+    where i_id=#{i_id} and i_sangpum in
+    <foreach collection="i_sangpumList" item="id" open="(" separator="," close=")">
+        #{id}
+    </foreach>
+    group by i_sangpum
+</select> -->
 
 </mapper>
