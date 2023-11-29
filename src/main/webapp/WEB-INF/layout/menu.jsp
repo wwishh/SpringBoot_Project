@@ -169,8 +169,8 @@ nav{
 			
 		</div>
 
-		<div id="result"></div>
-
+		<div id="result"></div>	
+	</div>
 	</nav>
          
 </body>
