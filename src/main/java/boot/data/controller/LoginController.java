@@ -11,12 +11,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.LoginDto;
+import boot.data.mapper.InterestMapperInter;
+import boot.data.mapper.PurchaseMapperInter;
+import boot.data.mapper.SangpumMapperInter;
 import boot.data.service.LoginService;
 
 @Controller
 public class LoginController {
+	
+	@Autowired
+	SangpumMapperInter sanginter;
+	
+	@Autowired
+	PurchaseMapperInter purchaseinter;
+	
+	@Autowired
+	InterestMapperInter interstinter;
 	
 	@Autowired
 	LoginService service;
@@ -108,6 +121,48 @@ public class LoginController {
 			return "redirect:main";
 		}
 	
+	//마이페이지
+	@GetMapping("/mypage")
+	public ModelAndView mypage(String u_id) {
+		ModelAndView model = new ModelAndView();
+		
+		LoginDto dto = service.getDataById(u_id);
+		int likes = interstinter.countlikes(u_id);
+		int purchase = purchaseinter.countpurchase(u_id);
+		int sell = sanginter.countIdOfsell(u_id);
+		
+		model.addObject("sell", sell);
+		model.addObject("purchase", purchase);
+		model.addObject("likes", likes);
+		model.addObject("dto", dto);
+		model.setViewName("/2/login/mypage");
+		
+		return model;
+	}
 	
+	//회원정보 데이터 가져오기
+	@GetMapping("/updateform")
+	public ModelAndView updateform(String u_id) {
+		ModelAndView model = new ModelAndView();
+		
+		LoginDto dto = service.getDataById(u_id);
+		
+		model.addObject("dto", dto);
+		model.setViewName("/2/login/updateform");
+		
+		return model;
+	}
+	
+	//회원정보수정
+	@PostMapping("/update")
+	public String update(LoginDto login) {
+		
+		String email=login.getU_email();
+		login.setU_email(email);
+		
+		service.updateuserinfo(login);
+		
+		return "redirect:main";
+	}
 	
 }

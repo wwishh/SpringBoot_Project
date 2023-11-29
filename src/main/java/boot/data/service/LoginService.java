@@ -56,4 +56,11 @@ public class LoginService implements LoginServiceInter {
 		return loginInter.getDataById(u_id);
 	}
 
+	@Override
+	public void updateuserinfo(LoginDto login) {
+		// TODO Auto-generated method stub
+		loginInter.updateuserinfo(login);
+	}
+	
+
 }

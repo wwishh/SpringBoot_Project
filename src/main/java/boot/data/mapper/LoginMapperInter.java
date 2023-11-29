@@ -21,4 +21,6 @@ public interface LoginMapperInter {
 	public int loginPassCheck(Map<String, String> map);
 
 	public LoginDto getDataById(String u_id);
+	
+	public void updateuserinfo(LoginDto login);
 }

@@ -10,5 +10,9 @@
 	<delete id="deleteInterest" parameterType="Map">
 		delete from likes where i_id=#{i_id} and i_sangpum=#{i_sangpum}
 	</delete>
+	
+	<select id="countlikes" parameterType="String" resultType="int">
+		select count(*) from likes where i_id=#{i_id}
+	</select>
 
 </mapper>

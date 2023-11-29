@@ -11,4 +11,6 @@ public interface LoginServiceInter {
 	public String getName(String u_id);
 	public int loginPassCheck(String u_id, String u_pass);
 	public LoginDto getDataById(String u_id);
+	public void updateuserinfo(LoginDto login);
+	
 }
