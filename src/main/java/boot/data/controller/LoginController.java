@@ -10,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.SessionScope;
 
 import boot.data.Dto.LoginDto;
 import boot.data.service.LoginService;
@@ -89,6 +92,8 @@ public class LoginController {
 				session.setAttribute("myhp", login.getU_hp());
 				session.setAttribute("myemail", login.getU_email());
 				
+				session.removeAttribute("findid");
+				
 				return "redirect:main";
 			}else {
 				return "/3/login/passfail";
@@ -107,7 +112,35 @@ public class LoginController {
 			
 			return "redirect:main";
 		}
+		@GetMapping("/idsearch")
+		public String idsearch()
+		{
+			return "/2/login/findidform";
+		}
+		@GetMapping("/pwsearch")
+		public String pwsearch()
+		{
+			return "/2/login/findpwform";
+		}
+		@PostMapping("/findid")
+		public String findid(@RequestParam String u_name,
+				@RequestParam String u_email,
+				@RequestParam String u_hp,
+				HttpSession session)
+		{
+			HashMap<String, String> map = new HashMap<>();
+			int check = service.findIdCheck(u_name, u_email,u_hp); //u_name ,u_email,u_hp
+			String findid= service.getId(u_name, u_email, u_hp);
+			//System.out.println(check);
+			//System.out.println(findid);
+			if(check==1) {
+				
+				session.setAttribute("findid", findid);
+				
+				return "/2/login/findidsuccess";
+			}else {
+			return "/2/login/findidform";
+			}
 	
-	
-	
+		}
 }
