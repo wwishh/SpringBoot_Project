@@ -37,143 +37,100 @@
 </style>
 <script>
 $(function(){
+
 	
 	// 현재 사용자의 아이디
     var i_id = $("#myid").val();
 	//alert(i_id)
-	
-	
-	// 현재 페이지의 상품 아이디 목록을 추출
-    var i_sangpumList = [];
-    $("i.interest").each(function () {
-        var num = $(this).attr('num');
-        i_sangpumList.push(parseInt(num));
-    });
-        
-    // Ajax 요청을 통해 getAllLikeStatus 값을 가져옴
-    /* $.ajax({
-        type: "get",
-        dataType: "json",
-        url: "/interest/getAllLikeStatus",
-        data: JSON.stringify({"i_id": i_id, "i_sangpumList": i_sangpumList}),
-        success: function (likeStatusList) {
-            // likeStatusList는 [{i_sangpum: 1, likeStatus: 0}, {i_sangpum: 2, likeStatus: 1}, ...] 형태
-            // 각 상품에 대한 좋아요 여부를 확인하여 초기 색상을 설정
-            likeStatusList.forEach(function (item) {
-                var num = item.i_sangpum;
-                var likeStatus = item.likeStatus;
-                var interest = $("i.interest[num='" + num + "']");
 
-                if (likeStatus === 1) {
-                    interest.css("color", "red");
-                } else {
-                    interest.css("color", "black");
-                }
+
+    $("#btnsearch2").click(async function (e) {
+        console.log("Button clicked");
+
+        var search = $("#search2").val(); // 검색어
+        var option = $("#selOption").val(); // 필터
+        var category = $("#category").val(); // 카테고리
+
+        console.log("Search:", search);
+        console.log("Option:", option);
+        console.log("Category:", category);
+
+        try {
+            var countRes = await $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "/search/sangpumCount",
+                data: { "search": search, "category": category }
             });
+
+            console.log("Count Response:", countRes);
+
+            var count = "<b>상품 " + countRes + "</b>";
+            if (search == "" || countRes == 0) {
+                $("#sangCount").html("<b>" + search + "에 대한 검색결과가 없습니다</b>");
+            } else {
+                $("#sangCount").html(count);
+            }
+
+            var listRes = await $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "/search/list",
+                data: { "search": search, "option": option, "category": category }
+            });
+
+            console.log("List Response:", listRes);
+
+            var s = "";
+            var count = 1;
+
+            for (const dto of listRes) {
+                var i_sangpum = dto.j_sangid;
+                var imagePaths = dto.j_imageurl.split(',');
+
+                var result = await intertestCount(i_id, i_sangpum);
+                console.log("Interest Count Result:", result);
+
+                s += "<div style='display : inline-block;'>";
+                s += "<div class='sangpum'>";
+                s += "<input type='hidden' name='num' id='num' value='" + dto.j_sangid + "'>";
+                s += "<img src='../img/" + imagePaths[0] + "' style='width:250px; height:250px'><br>";
+                s += "<b>" + dto.j_title + "</b>";
+                s += "<p>" + dto.j_explanation + "</p>";
+                s += "<b>" + dto.j_price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }) + "</b>";
+                s += "</div>";
+                s += "<div style='margin-left:20px;'>";
+                s += "<i class='bi bi-eye-fill'>" + dto.j_readcount + "</i>&nbsp;&nbsp;";
+                if (result == 1) {
+                    s += "<i class='bi bi-heart-fill interest' style='color:red' num='" + dto.j_sangid + "'>" + dto.j_interest + "</i>";
+                } else {
+                    s += "<i class='bi bi-heart-fill interest' num='" + dto.j_sangid + "'>" + dto.j_interest + "</i>";
+                }
+
+                s += "</div>";
+                s += "</div>";
+
+                if (count % 4 == 0) {
+                    s += "<br>";
+                }
+
+                count++;
+            }
+
+            if (search == "") {
+                $("#list").html("");
+            } else {
+                console.log(s);
+                $("#list").html(s);
+            }
+        } catch (error) {
+            console.error("Error:", error);
         }
-    }); */
-	
-	
-	
-	
-	
-	
-	
-    $("#btnsearch2").click(function(e){
-    	
-       
-       var search=$("#search2").val(); //검색어
-       var option= $("#selOption").val(); //필터
-       var category = $("#category").val();//카테고리
-
-       
-       $.ajax({
-    	   type:"get",
-    	   dataType:"json",
-    	   url:"/search/sangpumCount",
-    	   data:{"search":search, "category":category},
-    	   success:function(res){
-
-    		   var count = "";
-    		   
-    		   count += "<b>상품 " + res + "</b>";
-    		   
-    		   if(search=="" || res==0){
-                   $("#sangCount").html("<b>"+search+ "에 대한 검색결과가 없습니다</b>");
-                   
-                }
-                else if(count!=0){
-                   $("#sangCount").html(count);
-                }
-    		   
-    		   
-    	   }
-       });
-       
-       $.ajax({
-          type:"get",
-          dataType:"json",
-          url:"/search/list",
-          data:{"search":search, "option":option, "category": category},
-          success:function(res){
-        	  
-        	 //alert("hi")
-        	   
-             var s="";
-        	 var count = 1;
-
-
-         
-             $.each(res,function(i,dto){
-            	 
-            	 //alert(dto.j_sangid)
-            	 var i_sangpum = dto.j_sangid;
-            	 //alert(typeof(i_sangpum))
-            	 var imagePaths = dto.j_imageurl.split(',');
-            	 
-
-           		         
-           		        s+="<div style='display : inline-block;'>";
-               	 		s+="<div class='sangpum'>";
-                		s+="<input type='hidden' name='num' id='num' value='" + dto.j_sangid + "'>";
-                		s+= "<img src='../img/" + imagePaths[0] + "' style='width:250px; height:250px'><br>";
-                		s+="<b>" + dto.j_title + "</b>";
-                		s+="<p>" + dto.j_explanation + "</p>";
-                		s+="<b>"+dto.j_price.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }) +"</b>";
-                		s+="</div>";
-                		s+="<div style='margin-left:20px;'>";
-                		s+= "<i class='bi bi-eye-fill'>" + dto.j_readcount + "</i>&nbsp;&nbsp;";
-           		        s+= "<i class='bi bi-heart-fill interest' num='" + dto.j_sangid + "'>" + dto.j_interest + "</i>";
-           		      	s+="</div>";
-                      	s+="</div>";
-                      	if(count%4==0){
-                      		s+="<br>";
-                      	}
-                      		
-                      	count++;
-                      	//console.log(count)
-
-                      	 
-              	   	});
-             
-             if(search==""){
-                 $("#list").html("");
-              }
-               else{
-                 $("#list").html(s);
-              } 
-              	   	
-   	
-         }
-
-              	   
-      });
-  
-             
     });
-
-
+	
+	$("#btnsearch2").click();
     
+  
     
     $("#selOption").change(function(){
     	$("#btnsearch2").trigger("click");
@@ -273,6 +230,60 @@ $(document).on("click","div.sangpum", function(event){
 	location.href="../sangpum/detail?num=" + num;
 });
 
+async function intertestCount(i_id, i_sangpum){
+	
+	return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "get",
+            dataType: "html",
+            url: "/interest/count",
+            data: {"i_id": i_id, "i_sangpum": i_sangpum},
+            success: function(res) {
+                console.log(res);
+                resolve(res);
+            },
+            error: function(error) {
+                reject(error);
+            }
+        });
+    });
+}
+
+
+async function getCount(search, category) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "/search/sangpumCount",
+            data: { "search": search, "category": category },
+            success: function (res) {
+                resolve(res);
+            },
+            error: function (error) {
+                reject(error);
+            }
+        });
+    });
+}
+
+async function getList(search, option, category) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "/search/list",
+            data: { "search": search, "option": option, "category": category },
+            success: function (res) {
+                resolve(res);
+            },
+            error: function (error) {
+                reject(error);
+            }
+        });
+    });
+}
+
 
 
 </script>
@@ -325,37 +336,9 @@ $(document).on("click","div.sangpum", function(event){
   			<option value="j_postdate">등록일순</option>
 		</select>
      	<div id="list" style="margin-top : 20px; margin-left:260px;">
-     	<c:if test="${list.size()==0 }">
-     		<b>${search }에 대한 검색결과가 없습니다</b>
-     	</c:if>
-     	<c:if test="${list.size()!=0 }">
-     	<div style="margin-left:20px">
-     	<b>상품 ${list.size() }</b>
-     	</div>
-     	<c:forEach var="dto" items="${list }">
-     	<div style='display : inline-block;'>
-     		<div class='sangpum'>
-     			<input type="hidden" name="num" id="num" value="${dto.j_sangid }">
-     				<c:set var="imagePaths" value="${dto.j_imageurl.split(',')}" />
-                	<img src="../img/${imagePaths[0]}" style='width:250px; height:250px'><br>
-                	<b>${dto.j_title}</b>
-                	<p>${dto.j_explanation}</p>
-                	<b><fmt:formatNumber value="${dto.j_price}" type="currency"/></b>
-                </div>
-                <div style='margin-left:20px;'>
-                	<i class='bi bi-eye-fill'>${dto.j_readcount}</i>&nbsp;&nbsp;
-                	<%-- <i class='bi bi-heart-fill interest' style='color:red' num='${dto.j_sangid }'>${dto.j_interest}</i> --%>
-                	<i class='bi bi-heart-fill interest' num='${dto.j_sangid }'>${dto.j_interest}</i>
-                </div>
-             </div>  
-     	</c:forEach>
-     	</c:if>
+     	
      	</div>
      	
      </div>
-     
-     
-
-
 </body>
 </html>
