@@ -48,20 +48,11 @@
                     <img src="images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="a_name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
-                    <div class="a_email">john.doe@example.com</div>
+                    <div class="a_name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${sessionScope.a_name}</div>
+                    <div class="a_email">${sessionScope.a_email}</div>
                     <div class="logout"><button type="button" onclick="location.href='adminlogoutprocess'">로그아웃</button></div>
-                    <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
-                        </ul>
+                    <div class="a_hp">
+                        ${sessionScope.a_hp}
                     </div>
                 </div>
             </div>
@@ -77,7 +68,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="pages/typography.html">
+                        <a href="information">
                             <i class="material-icons">text_fields</i>
                             <span>개인회원정보</span>
                         </a>
