@@ -140,15 +140,12 @@ body {
 /* 카카오 채팅하기 아이콘*/ 
 .kakao_inquiry {		
 	float: right;
-	display: flex;
-	margin-right: 6.6rem;
-	margin-top: -6.5rem; 
-	width: 7rem;
-    height: 3rem;
+	display: flex;	
+	margin-top: -4rem; 
     z-index: 99;
 }
 
-#kakao-talk-channel-chat-button > a > img {
+#add-channel-button > a > img{
 	height: 3rem;
 }
 
@@ -207,9 +204,12 @@ body {
 }
 
 .item-list-title {
-    font-family: Binggrae-Bold;	
+    font-family: Binggrae-Bold;
+	
 }
-
+list-type > a > h2{
+    text-decoration: none;
+}
 .item-list-price {
 	float: right;
     font-family: Binggrae-Bold;
