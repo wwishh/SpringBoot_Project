@@ -17,4 +17,5 @@ public class LoginDto {
 	private Timestamp u_writerdate;
 	private Timestamp u_final_logindate;
 	private String u_hp;
+	private int failcount;
 }

@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../../css/notice_styles.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gaegu:wght@300&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap" rel="stylesheet">
 
@@ -13,28 +14,62 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table>
+ <div><jsp:include page="notice_addForm.jsp"/></div>
 	
-	 <tr>
-	 	<th><button type="button" onclick="location.href='n_addaction'">공지사항 추가</button></th>
-	 </tr>
-	 <tr>
-	 	<th>번호</th><th>제목</th><th>작성자</th><th>등록일</th><th>수정/삭제</th>
-	 </tr>
-	 
-	 <c:forEach var="d_dto" items="${list }" varStatus="i">
-		<tr>
-			<td>${d_dto.n_num }</td>
-			<td>${d_dto.n_title }</td>
-			<td>${d_dto.n_name }</td>
-			<td><fmt:formatDate value="${d_dto.n_registration_date }" pattern="yyyy-MM-dd HH:mm"/></td>
-			<td align="center">
-				<button type="button" num="${d_dto.n_num }" onclick="">수정</button>
-				<button type="button" num="${d_dto.n_num }" onclick="">삭제</button>
-			</td>
-		</tr>
-	</c:forEach>
-	</table>
+	<section class="notice">
+  <div class="page-title">
+        <div class="container">
+            <h3>공지사항</h3>
+        </div>
+    </div>
+
+    <!-- board seach area -->
+    <div id="board-search">
+        <div class="container">
+            <div class="search-window">
+                <form action="">
+                    <div class="search-wrap">
+                        <label for="search" class="blind">공지사항 내용 검색</label>
+                        <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">
+                        <button type="submit" class="btn btn-dark">검색</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+   
+  <!-- board list area -->
+    <div id="board-list">
+        <div class="container">
+            <table class="board-table">
+                <thead>
+                <tr>
+                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-title">제목</th>
+                    <th>작성자</th>
+                    <th scope="col" class="th-date">등록일</th>
+                    <th>수정/삭제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="n_dto" items="${list }" varStatus="i">
+                <tr>
+                    <td>${i.count }</td>
+                    <th><a href="#!">${n_dto.n_title }</a></th>
+                    <td>${n_dto.n_name }</td>
+                    <td><fmt:formatDate value="${n_dto.n_registration_date }" pattern="yyyy-MM-dd HH:mm"/></td>
+                    <td align="center">
+					<div><jsp:include page="notice_correction.jsp?num=${n_dto.n_num }"/></div><button type="button" num="${n_dto.n_num }" onclick="">수정</button>
+					<button type="button" num="${n_dto.n_num }" onclick="">삭제</button>
+					</td>
+                </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
 	
 </body>
 </html>

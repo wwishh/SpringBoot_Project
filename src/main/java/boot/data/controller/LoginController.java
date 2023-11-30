@@ -10,8 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.SessionScope;
 
 import boot.data.Dto.LoginDto;
 import boot.data.mapper.InterestMapperInter;
@@ -91,8 +94,9 @@ public class LoginController {
 			HashMap<String, String> map = new HashMap<>();
 			
 			int check = service.loginPassCheck(u_id, u_pass);
+			int failcheck = service.failcheck(u_id);
 			
-			if(check==1) {
+			if(check==1 && failcheck<5) {
 				session.setMaxInactiveInterval(60*60*1); //1시간
 				session.setAttribute("myid", u_id);
 				session.setAttribute("loginok", "yes");
@@ -102,8 +106,17 @@ public class LoginController {
 				session.setAttribute("myhp", login.getU_hp());
 				session.setAttribute("myemail", login.getU_email());
 				
+				service.failreset(u_id);
+				
+				session.removeAttribute("findid");
+				
 				return "redirect:main";
-			}else {
+			}else if(check==1 && failcheck>=5) {
+				return "/3/login/failfive";
+			}
+			else {
+				//실패시  session failcount 1씩증가 ;
+				service.failcount(u_id);
 				return "/3/login/passfail";
 			}
 		
@@ -120,6 +133,35 @@ public class LoginController {
 			
 			return "redirect:main";
 		}
+		@GetMapping("/idsearch")
+		public String idsearch()
+		{
+			return "/2/login/findidform";
+		}
+		@GetMapping("/pwsearch")
+		public String pwsearch()
+		{
+			return "/2/login/findpwform";
+		}
+		@PostMapping("/findid")
+		public String findid(@RequestParam String u_name,
+				@RequestParam String u_email,
+				@RequestParam String u_hp,
+				HttpSession session)
+		{
+			HashMap<String, String> map = new HashMap<>();
+			int check = service.findIdCheck(u_name, u_email,u_hp); //u_name ,u_email,u_hp
+			String findid= service.getId(u_name, u_email, u_hp);
+			//System.out.println(check);
+			//System.out.println(findid);
+			if(check==1) {
+				
+				session.setAttribute("findid", findid);
+				
+				return "/2/login/findidsuccess";
+			}else {
+			return "/2/login/findidform";
+			}
 	
 	//마이페이지
 	@GetMapping("/mypage")

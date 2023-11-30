@@ -13,7 +13,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 <!-- 모달 트리거 버튼 -->
     <button style="position: absolute; right: 10%;" id="modalButton">공지사항 추가</button>
 
@@ -80,6 +79,5 @@ window.addEventListener('click', function(event) {
 });
 
 </script>
-
 </body>
 </html>
