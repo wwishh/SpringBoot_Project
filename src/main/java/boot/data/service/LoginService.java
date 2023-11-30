@@ -71,6 +71,27 @@ public class LoginService implements LoginServiceInter {
 		// TODO Auto-generated method stub
 		return loginInter.getId(u_name, u_email, u_hp);
 	}
+
+	@Override
+	public void failcount(String u_id) {
+		// TODO Auto-generated method stub
+		loginInter.failcount(u_id);
+	}
+
+	@Override
+	public void failreset(String u_id) {
+		// TODO Auto-generated method stub
+		loginInter.failreset(u_id);
+		
+	}
+
+	@Override
+	public int failcheck(String u_id) {
+		// TODO Auto-generated method stub
+		return loginInter.failcheck(u_id);
+	}
+
+	
 	
 
 }
