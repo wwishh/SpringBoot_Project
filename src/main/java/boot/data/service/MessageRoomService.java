@@ -55,6 +55,15 @@ public class MessageRoomService implements MessageRoomServiceInter {
 		return mapper.getRoomsBySangpum(j_sangid);
 	}
 
+	@Override
+	public List<MessageRoomDto> selectAllRooms(String user_id, String sangidx) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<>();
+		map.put("user_id", user_id);
+		map.put("sangidx", sangidx);
+		return mapper.selectAllRooms(map);
+	}
+
 	
 
 }

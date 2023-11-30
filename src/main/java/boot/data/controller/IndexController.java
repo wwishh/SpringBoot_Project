@@ -97,7 +97,7 @@ public class IndexController {
 		
 		String sender_id= (String)session.getAttribute("myid");
 		//중고상품판매자의 user_num을 찾을 수 있도록 수정해야 됨
-		String seller_id = "test2";
+		String seller_id = sangservice.getSangpumById(sangidx).getMember_id();//"test2"
 		
 		//현재 채팅을 보내려는 사용자가 판매자이면 방을 생성할 수 없음
 		if(sender_id.equals(seller_id)) {

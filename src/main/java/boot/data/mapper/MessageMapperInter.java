@@ -15,8 +15,12 @@ public interface MessageMapperInter {
 	public void insertMessage(MessageDto dto);
 	public void deleteMessage(String mess_num);
 	public int selectMaxNum();
-	//public int getCountOfMessage(Map<String, String> map);
 	public void deleteMessageByRoom(int room_num);
+	public int getRecentMessageByRoom(int room_num);
+	public MessageDto getMessageByNum(int mess_num);
+	public void messageReadByNum(int mess_num);
+	public int unReadMessByRoom(Map<String, Object> map);
+	public int totalUnreadMessByUserID(String user_id);
 
 	/*public List<MessageDto> selectAllChatMemeber(Map<String, String> map);
 	public MessageDto selectRecentMessage(Map<String, String> map);

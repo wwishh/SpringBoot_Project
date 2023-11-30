@@ -15,72 +15,7 @@
 <title>Insert title here</title>
 </head>
 <body>
- <!-- 모달 트리거 버튼 -->
-    <button style="position: absolute; right: 10%;" id="modalButton">공지사항 추가</button>
-
-    <!-- 모달 창 -->
-    <div id="myModal" class="modal">
-        <div class="modal-content" style="width: 50%;">
-        <span class="close" id="closeModal">&times;</span>
-            <form action="a_notice_insert" method="post">
-		<table id="n_table" class="table table-bordered">
-			<caption align="top"><b>공지사항 글쓰기</b></caption>
-			<tr>
-				<th>이메일</th>
-				<td>
-					<input type="hidden" name="n_id" value="${sessionScope.a_id }">
-					<input type="email" name="subject" class="form-control"
-					required="required" autofocus="autofocus" value="${sessionScope.a_email }" readonly> 
-				</td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td>
-					<input type="text" name="n_name" class="form-control"
-					required="required" autofocus="autofocus" value="${sessionScope.a_name}" readonly> 
-				</td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td>
-					<input type="text" name="n_title" class="form-control">
-				</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td>
-					<textarea name="n_content" class="form-control"
-					required="required" autofocus="autofocus" style="height: 300px;"> </textarea>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<button type="submit" class="btn btn-outline-success">등록</button>
-				</td>
-			</tr>
-		</table>
-	</form>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-<script type="text/javascript">
-//script.js
-document.getElementById('modalButton').addEventListener('click', function() {
-    document.getElementById('myModal').style.display = 'block';
-});
-
-document.getElementById('closeModal').addEventListener('click', function() {
-    document.getElementById('myModal').style.display = 'none';
-});
-
-window.addEventListener('click', function(event) {
-    if (event.target === document.getElementById('myModal')) {
-        document.getElementById('myModal').style.display = 'none';
-    }
-});
-
-</script>
+ <div><jsp:include page="notice_addForm.jsp"/></div>
 	
 	<section class="notice">
   <div class="page-title">
@@ -120,12 +55,12 @@ window.addEventListener('click', function(event) {
                 <tbody>
                 <c:forEach var="n_dto" items="${list }" varStatus="i">
                 <tr>
-                    <td>i</td>
+                    <td>${i.count }</td>
                     <th><a href="#!">${n_dto.n_title }</a></th>
                     <td>${n_dto.n_name }</td>
                     <td><fmt:formatDate value="${n_dto.n_registration_date }" pattern="yyyy-MM-dd HH:mm"/></td>
                     <td align="center">
-					<button type="button" num="${n_dto.n_num }" onclick="">수정</button>
+					<div><jsp:include page="notice_correction.jsp?num=${n_dto.n_num }"/></div><button type="button" num="${n_dto.n_num }" onclick="">수정</button>
 					<button type="button" num="${n_dto.n_num }" onclick="">삭제</button>
 					</td>
                 </tr>

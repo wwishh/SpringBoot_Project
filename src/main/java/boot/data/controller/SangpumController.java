@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.SangpumDto;
 import boot.data.service.SangpumService;
+import boot.data.mapper.InterestMapperInter;
 import boot.data.mapper.SangpumMapperInter;
 
 @Controller
@@ -30,7 +31,8 @@ public class SangpumController {
 	
 	@Autowired
 	SangpumMapperInter inter;
-	
+
+		
 	@Autowired
 	SangpumService service;
 	
@@ -149,4 +151,6 @@ public class SangpumController {
 		model.setViewName("/2/sangpum/s_list");
 		return model;
 	}
+	
+	 
 }

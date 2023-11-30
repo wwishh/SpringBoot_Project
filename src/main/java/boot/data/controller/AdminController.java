@@ -97,6 +97,11 @@ public class AdminController {
 		model.setViewName("redirect:notice");
 		return model;
 	}
+
+	@GetMapping("/information")
+	public String information() {
+		return "/admin/admin/member_information/listForm";
+	}
 	
 	
 	

@@ -58,21 +58,37 @@ function CheckCapsLock(event){
 
 </script>
 <style>
-#btnpasson{
-cursor: pointer;
-position: absolute;
-top:107px;
-left: 475px;
-font-size: 30px;
-}
-#btnpassoff{
-cursor: pointer;
-position: absolute;
-top:107px;
-left: 475px;
-font-size:30px;
+#btnpasson {
+	cursor: pointer;
+	position: absolute;
+	top: 107px;
+	left: 475px;
+	font-size: 30px;
 }
 
+#btnpassoff {
+	cursor: pointer;
+	position: absolute;
+	top: 107px;
+	left: 475px;
+	font-size: 30px;
+}
+
+.failcnt {
+	display: flex;
+	flex-direction: row; /* 요소를 행 방향으로 나열합니다. */
+	gap: 3vw; /* 각 요소 사이의 간격을 지정합니다. */
+}
+
+.randomquiz, .randomanswer {
+	border: 1px solid black;
+	width: 13vw;
+	height: 5vh;
+}
+.failfont{
+color: red;
+font-size: 13px;
+}
 </style>
 <title>Insert title here</title>
 </head>
@@ -100,6 +116,15 @@ font-size:30px;
 									<div id="pwmsg" style="color: red;"></div>
 									<i class='bi bi-eye-fill' id="btnpasson"></i> 
 									<i class="bi bi-eye-slash-fill" id="btnpassoff"></i> 
+									
+									<br>
+									
+							<div class="failcnt">
+								<div class="randomquiz"></div>
+								<div class="randomanswer"></div>
+								<b class="failfont">잘못된 로그인시도 5회로 인해 확인요소 강화합니다</b>
+							</div>
+							<b>문구와 일치합니다</b>
 									
 							</div>
 							
