@@ -81,8 +81,9 @@ public class LoginController {
 			HashMap<String, String> map = new HashMap<>();
 			
 			int check = service.loginPassCheck(u_id, u_pass);
+			int failcheck = service.failcheck(u_id);
 			
-			if(check==1) {
+			if(check==1 && failcheck<5) {
 				session.setMaxInactiveInterval(60*60*1); //1시간
 				session.setAttribute("myid", u_id);
 				session.setAttribute("loginok", "yes");
@@ -97,7 +98,10 @@ public class LoginController {
 				session.removeAttribute("findid");
 				
 				return "redirect:main";
-			}else {
+			}else if(check==1 && failcheck>=5) {
+				return "/3/login/failfive";
+			}
+			else {
 				//실패시  session failcount 1씩증가 ;
 				service.failcount(u_id);
 				return "/3/login/passfail";

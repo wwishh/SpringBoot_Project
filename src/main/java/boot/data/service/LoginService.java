@@ -85,6 +85,12 @@ public class LoginService implements LoginServiceInter {
 		
 	}
 
+	@Override
+	public int failcheck(String u_id) {
+		// TODO Auto-generated method stub
+		return loginInter.failcheck(u_id);
+	}
+
 	
 	
 

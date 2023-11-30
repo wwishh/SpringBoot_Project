@@ -29,4 +29,6 @@ public interface LoginMapperInter {
 	public void failcount(String u_id);
 	
 	public void failreset(String u_id);
+	
+	public int failcheck(String u_id);
 }

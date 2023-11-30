@@ -43,4 +43,12 @@
   <update id="failreset" parameterType="String">
   update user set failcount=0 where u_id=#{u_id}
   </update>
+  
+  <select id="failcheck" parameterType="String" resultType="int">
+  select failcount from user where u_id=#{u_id}
+  </select>
+  
+  <select id ="failuser" resultType="login">
+  select u_id from user where failcount>=5 
+  </select>
   </mapper>
