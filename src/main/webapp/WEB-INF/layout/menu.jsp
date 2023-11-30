@@ -145,15 +145,15 @@ nav {
 				
 				
 				 
-				
-				
-				
-				
-				
+				<!-- 마이페이지 -->
+				<c:if test="${sessionScope.loginok!=null }">
+					<input type="button" value="마이페이지" onclick="location.href='../mypage?u_id=${sessionScope.myid}'" class="btn btn-outline-primary">
+				</c:if>
+
 				<!-- 검색창 -->
 				<div class="input-group w-25">
 					<c:if test="${sessionScope.myid == null}">
-						${sessionScope.myid = "guest"}
+						<input type="hidden" value="${sessionScope.myid = 'guest'}">
 					</c:if>
 						<i class="bi bi-search"
 							onclick="location.href='/search?s_id=${sessionScope.myid}'"

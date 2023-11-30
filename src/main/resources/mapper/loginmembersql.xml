@@ -28,6 +28,10 @@
   select * from user where u_id=#{u_id}
   </select>
   
+  <update id="updateuserinfo" parameterType="login">
+  	update user set u_pass=#{u_pass},u_name=#{u_name},u_email=#{u_email},u_hp=#{u_hp} where u_id=#{u_id}
+  </update>
+  
   <select id="findIdCheck" parameterType="Map" resultType="int">
   select count(*) from user where BINARY(u_name)=#{u_name} and BINARY(u_email)=#{u_email} and BINARY(u_hp)=#{u_hp}
   </select>

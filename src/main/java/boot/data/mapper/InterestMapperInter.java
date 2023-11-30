@@ -8,4 +8,5 @@ public interface InterestMapperInter {
 	public void deleteInterest(String i_id, int i_sangpum);
 	public int getCount(String i_id, int i_sangpum);
 
+	public int countlikes(String i_id);
 }

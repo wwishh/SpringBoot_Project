@@ -57,6 +57,12 @@ public class LoginService implements LoginServiceInter {
 	}
 
 	@Override
+	public void updateuserinfo(LoginDto login) {
+		// TODO Auto-generated method stub
+		loginInter.updateuserinfo(login);
+	}
+
+	@Override
 	public int findIdCheck(String u_name, String u_email, String u_hp) {
 		// TODO Auto-generated method stub
 		Map<String,String>map = new HashMap<>();
