@@ -10,9 +10,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<script type="text/javascript">
-	alert("아이디나 비밀번호가 잘못되었습니다!!");
-	history.back();
-	</script>
+<script>
+alert("반복적인 로그인실패로 아이디 로그인 잠금 문의바람");
+history.back();
+</script>
 </body>
 </html>

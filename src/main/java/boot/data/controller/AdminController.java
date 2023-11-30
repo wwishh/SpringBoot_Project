@@ -98,6 +98,11 @@ public class AdminController {
 		return model;
 	}
 	
+	@GetMapping("/information")
+	public String information() {
+		return "/admin/admin/member_information/listForm";
+	}
+	
 	
 	
 }

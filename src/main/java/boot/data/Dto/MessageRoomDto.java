@@ -16,4 +16,7 @@ public class MessageRoomDto {
 	private String receiver_id;
 	private Timestamp room_createday;
 
+	private String recent_mess;
+	private String Sang_img;
+	private int mess_alarmCnt;
 }
