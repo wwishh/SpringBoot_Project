@@ -15,4 +15,8 @@
 		select count(*) from likes where i_id=#{i_id}
 	</select>
 
+	<select id="selectlikesangpum" parameterType="String" resultType="sangpum">
+		select * from junggosangpum where j_sangid in (
+		select i_sangpum from likes where i_id=#{i_id})
+	</select>
 </mapper>

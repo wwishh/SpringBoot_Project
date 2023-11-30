@@ -83,7 +83,7 @@
 			<div id="userinfo">
 				<b style="font-size: 20pt;">${dto.u_name}</b><br>
 				<b style="font-size: 13pt; color: #BDBDBD;">${dto.u_email}</b><br>
-				<b style="font-size: 11pt; color: #BDBDBD;">가입일 : <fmt:formatDate value="${dto.u_writerdate}" pattern="yyyy.HH.dd"/></b><br>				
+				<b style="font-size: 11pt; color: #BDBDBD;">가입일 : <fmt:formatDate value="${dto.u_writerdate}" pattern="yyyy.HH.dd"/></b><br>		
 				<button type="button" class="btn btn-outline-secondary btn-sm" 
 				onclick="location.href='../updateform?u_id=${sessionScope.myid}'">회원정보수정</button>
 			</div>
@@ -92,7 +92,7 @@
 		<div id="allsangpum">
 			<div id="likesangpum">
 				<b>관심상품</b><br>
-				<b style="color: green; cursor: pointer;" onclick="location.href=''">${likes }건</b>
+				<b style="color: green; cursor: pointer;" onclick="location.href='interest/likesangpum?u_id=${sessionScope.myid}'">${likes }건</b>
 			</div>
 			<br>
 			<div id="buysangpum">
