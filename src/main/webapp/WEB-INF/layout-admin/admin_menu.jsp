@@ -68,7 +68,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="pages/typography.html">
+                        <a href="information">
                             <i class="material-icons">text_fields</i>
                             <span>개인회원정보</span>
                         </a>

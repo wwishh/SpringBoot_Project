@@ -27,4 +27,5 @@ public interface SangpumMapperInter {
 	public void plusInterest(int num);
 	public void minusInterest(int num);
 	
+	public int countIdOfsell(String u_id);
 }

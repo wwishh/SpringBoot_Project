@@ -7,4 +7,8 @@
 		insert into purchase values (null, #{u_id}, #{j_sangid}, #{p_method}, now())
 	</insert>
 
+	<select id="countpurchase" parameterType="String" resultType="int">
+		select count(*) from purchase where u_id=#{u_id}
+	</select>
+	
 </mapper>
