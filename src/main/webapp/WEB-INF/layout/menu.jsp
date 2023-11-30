@@ -14,8 +14,74 @@
    rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
+<style type="text/css">
+.searchResult{
+   cursor: pointer;
+}
+
+nav{
+   font-size: 1.5em;
+}
+
+.alarm {
+        width: 20px;
+        height: 20px;
+        border: 1px solid red;
+        background-color: red;
+        border-radius: 50%;
+        text-align: center;
+        float: right;
+        z-index: -1;
+        margin-right: 30px;
+    }
+    
+   .note-num {
+    position: absolute;
+    top: -2px;
+    right: -7px;
+    z-index: 3;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    text-align: center;
+    background-color: red;
+    border-radius: 15px;
+    display: inline-block;
+    padding:1px;
+    color: white;
+    font-size: 15px;
+}
+
+#notification {
+    /* background-image: url('../images/notification.svg'); */
+    position: relative;
+}
+
+</style>
 <script type="text/javascript">
    $(function(){
+	   
+	   $(".note-num").hide();
+	   
+	   var user_id = "${sessionScope.myid}";
+	   
+	   if(user_id!="guest"){
+		   $.ajax({
+			   type:"get",
+			   dataType:"json",
+			   url:"/message/totalAlarm",
+			   data:{"user_id":user_id},
+			   success:function(res){
+				   
+				   if(res!=0){//알림이 있을 경우
+						$(".note-num").text(res);
+				   		$(".note-num").show();
+				   }
+				   
+			   }
+		   });
+	   }
+	   
       $("#search").keyup(function(){
          
          var search=$(this).val();
@@ -60,13 +126,6 @@
       });
       
       
-      $("#alarmBtn").click(function(){
-    	  //세션에서 현재 로그인한 사용자의 아이디를 가져와야 됨
-    	  var myid = '${sessionScope.myid}';
-    	  alert(myid);
-    	  //location.href="/message/goChattingList?user_id="+myid;
-    	  
-      });
       
    });
    
@@ -92,28 +151,7 @@
    
    
 </script>
-<style type="text/css">
-.searchResult{
-   cursor: pointer;
-}
 
-nav{
-   font-size: 1.5em;
-}
-
-.alarm {
-        width: 20px;
-        height: 20px;
-        border: 1px solid red;
-        background-color: red;
-        border-radius: 50%;
-        text-align: center;
-        float: right;
-        z-index: -1;
-        margin-right: 30px;
-    }
-
-</style>
 </head>
 <body>
 	<!-- Navigation-->
@@ -187,8 +225,9 @@ nav{
 						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
 						<!-- 채팅방 , /message/getMessageList?user_id=${sessionScope.myid}-->
 						<div>
-							<i class="bi bi-bell-fill alarmBtn" style="cursor: pointer;" onclick="location.href='/goChattingRoom'"></i>
-							<div class="alarm">0</div>
+						
+							<i class="bi bi-bell" id="notification" style="cursor: pointer;" onclick="location.href='/goChattingRoom'"><span class="note-num"></span></i>
+							
 						</div>
 					</c:if>
 						

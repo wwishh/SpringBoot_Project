@@ -56,18 +56,12 @@ public class MessageRoomService implements MessageRoomServiceInter {
 	}
 
 	@Override
-	public List<MessageRoomDto> selectAllRooms(String user_id) {
-		// TODO Auto-generated method stub
-		return mapper.selectAllRooms(user_id);
-	}
-
-	@Override
-	public List<MessageRoomDto> selectRoomsBySangIdx(String user_id, String sangidx) {
+	public List<MessageRoomDto> selectAllRooms(String user_id, String sangidx) {
 		// TODO Auto-generated method stub
 		Map<String, String> map = new HashMap<>();
 		map.put("user_id", user_id);
 		map.put("sangidx", sangidx);
-		return mapper.selectRoomsBySangIdx(map);
+		return mapper.selectAllRooms(map);
 	}
 
 	

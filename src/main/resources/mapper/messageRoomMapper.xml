@@ -16,10 +16,10 @@
 	<select id="getRoomsBySangpum" parameterType="int" resultType="room">
 		select * from messageroom where j_sangid=#{j_sangid} order by room_num desc
 	</select>
-	<select id="selectAllRooms" parameterType="String" resultType="room">
-		select distinct * from messageroom where sender_id=#{user_id} or receiver_id=#{user_id}
-	</select>
-	<select id="selectRoomsBySangIdx" parameterType="Map" resultType="room">
-		select distinct * from messageroom where (sender_id=#{user_id} or receiver_id=#{user_id}) and j_sangid=#{sangidx}
+	<select id="selectAllRooms" parameterType="Map" resultType="room">
+		select distinct * from messageroom where (sender_id=#{user_id} or receiver_id=#{user_id})
+		<if test="sangidx!=0">
+			and j_sangid=#{sangidx}
+		</if>		 
 	</select>
 </mapper>

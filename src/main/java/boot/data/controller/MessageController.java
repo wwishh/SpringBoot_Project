@@ -85,17 +85,12 @@ public class MessageController {
 		return "/2/jsp/chatdesign";
 	}
 	
-	
-	//종모양 클릭시 자신이 채팅했던 모든 방 나옴
-	@GetMapping("/message/getMessageList")
-	@ResponseBody
-	public List<MessageRoomDto> getMessageList(@RequestParam String user_id){
+	//채팅방 가져오기
+		@GetMapping("/message/getMessageList")
+		@ResponseBody
+		public List<MessageRoomDto> getMessageList(@RequestParam String sangidx, @RequestParam String user_id){
 		
-		//ModelAndView mv = new ModelAndView();
-		
-		List<MessageRoomDto> rooms = roomservice.selectAllRooms(user_id);
-		
-		//System.out.println(rooms.get(0).getRoom_num());
+		List<MessageRoomDto> rooms = roomservice.selectAllRooms(user_id, sangidx);
 		
 		for(MessageRoomDto dto:rooms) {
 			//채팅방에서 마지막 메시지를 얻고
@@ -116,43 +111,33 @@ public class MessageController {
 			
 			//방 별 읽지않은 메시지 개수 출력(알림)
 			int unReadMessCnt = mservice.unReadMessByRoom(user_id,dto.getRoom_num());
+			//System.out.println(unReadMessCnt);
 			dto.setMess_alarmCnt(unReadMessCnt);
 			
 		}
-
+		
 		return rooms;
 	}
-	
-	@GetMapping("/message/getMessageListBySangIdx")
+		
+	@GetMapping("/message/alarmRead")
 	@ResponseBody
-	public List<MessageRoomDto> getroomsByIdx(@RequestParam String sangidx, @RequestParam String user_id){
+	public int alarmRead(@RequestParam int room_num, HttpSession session) {
 		
-		List<MessageRoomDto> rooms = roomservice.selectRoomsBySangIdx(user_id, sangidx);
+		String user_id = (String)session.getAttribute("myid");
 		
-		for(MessageRoomDto dto:rooms) {
-			//채팅방에서 마지막 메시지를 얻고
-			int recentMessNum = mservice.getRecentMessageByRoom(dto.getRoom_num());
-			//상품들의 이미지 가져오기
-			String sangpumimgs = sangservice.getSangpumById(dto.getJ_sangid()).getJ_imageurl();
-			StringTokenizer st = new StringTokenizer(sangpumimgs,",");
-			String photo = st.nextToken();
-			
-			if(recentMessNum==0) {//방은 있지만 아직 채팅을 나눈적 없음
-				dto.setRecent_mess("");
-				dto.setSang_img("user_noimg.PNG");
-			}else {
-				//얻은 메시지를 해당 룸의 마지막 메시지로 설정
-				dto.setRecent_mess(mservice.getMessageByNum(recentMessNum).getMess_content());
-				dto.setSang_img(photo);
+		List<MessageDto> chat=new ArrayList<>();
+		
+		//해당 채팅방의 모든 메시지를 가져옴
+		chat = mservice.selectAllChatByRoom(room_num);
+		
+		for(MessageDto mess:chat) {
+			//가져온 메시지에서 메시지 받는 사람이 현재 로그인한 사용자와 같다면 db의 readCnt를 0으로 변경
+			if(mess.getReceiver_id().equals(user_id)) {
+				mservice.messageReadByNum(mess.getMess_num());
 			}
-			
-			//방 별 읽지않은 메시지 개수 출력(알림)
-			int unReadMessCnt = mservice.unReadMessByRoom(user_id,dto.getRoom_num());
-			dto.setMess_alarmCnt(unReadMessCnt);
-			
 		}
 		
-		return rooms;
+		return 0;
 	}
 	
 	
@@ -175,16 +160,6 @@ public class MessageController {
 		//해당 채팅방의 모든 메시지를 가져옴
 		chat = mservice.selectAllChatByRoom(room_num);
 		//Collections.reverse(chat);//역정렬
-		
-		for(MessageDto mess:chat) {
-			//가져온 메시지에서 메시지 받는 사람이 현재 로그인한 사용자와 같다면 db의 readCnt를 0으로 변경
-			if(mess.getReceiver_id().equals(myid)) {
-				mservice.messageReadByNum(mess.getMess_num());
-			}
-		}
-		
-		//readCnt를 0으로 변경 후 다시 출력
-		chat = mservice.selectAllChatByRoom(room_num);
 		
 		//채팅 시간 
 		//대화 시간 오늘 날짜에서 빼기(몇 초전... 몇 분 전...)
@@ -236,13 +211,20 @@ public class MessageController {
 		}
 		////////////
 		
+		for(MessageDto mess:chat) {
+			//가져온 메시지에서 메시지 받는 사람이 현재 로그인한 사용자와 같다면 db의 readCnt를 0으로 변경
+			if(mess.getReceiver_id().equals(myid)) {
+				mservice.messageReadByNum(mess.getMess_num());
+			}
+		}
+		
 		return chat;
 		
 	}
 	
 	@GetMapping("/message/chatProfile")
 	@ResponseBody
-	public SangpumDto chatProfile(@RequestParam int room_num) {
+	public SangpumDto chatProfile(@RequestParam(required = false) int room_num) {
 		SangpumDto sangpum = sangservice.getSangpumById(roomservice.getRoomById(room_num).getJ_sangid());
 		
 		StringTokenizer st = new StringTokenizer(sangpum.getJ_imageurl());
@@ -277,6 +259,12 @@ public class MessageController {
 		map.put("upload", uploadName);
 		
 		return map;
+	}
+	
+	@GetMapping("/message/totalAlarm")
+	@ResponseBody
+	public int totalAlarm(@RequestParam String user_id) {
+		return mservice.totalUnreadMessByUserID(user_id);
 	}
 	
 

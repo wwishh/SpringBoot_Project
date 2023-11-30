@@ -347,7 +347,9 @@ body{
         background-color: red;
         border-radius: 50%;
         text-align: center;
-        float: right;
+        margin-left:3px;
+        color: white;
+        font: 15px;
     }
 
 </style>
@@ -409,15 +411,12 @@ $(function(){
 
 	//로그인한 사용자가 들어있는 채팅방 모두 불러오기, 종모양 눌렀을 경우
 	function getChattingRooms(user_id,sangidx,scrollPos) {
-
-		
-		if(sangidx==0){//상품선택 없이 전체 채팅방 불러오기
 			
 			$.ajax({
 				type:"get",
 				dataType:"json",
 				url:"/message/getMessageList",
-				data:{"user_id":user_id},
+				data:{"user_id":user_id, "sangidx":sangidx},
 				success:function(res){
 					var roomList="";
 					
@@ -430,7 +429,7 @@ $(function(){
 						}else{
 							other=ele.sender_id
 						}
-						
+
 						if(ele.mess_alarmCnt>0){
 							alarm="<div id='alarm' class='alarm'>"+ele.mess_alarmCnt+"</div>";
 						}
@@ -458,51 +457,6 @@ $(function(){
 				}
 				
 			});
-			
-		}else{//상품 디테일 페이지에서 채팅을 클릭했을 때
-			
-			$.ajax({
-				type:"get",
-				dataType:"json",
-				url:"/message/getMessageListBySangIdx",
-				data:{"user_id":user_id, "sangidx":sangidx},
-				success:function(res){
-					var roomList="";
-					
-					$.each(res, function(i,ele){
-						
-						if(user_id==ele.sender_id){
-							other=ele.receiver_id
-						}else{
-							other=ele.sender_id
-						}
-
-						roomList+="<li class='clearfix' onclick='getChatting("+ele.room_num+", \""+other+"\")'>";
-						roomList+="<img src='../img/"+ele.sang_img+"' alt='avatar'>";
-						roomList+="<div class='about'>";
-						roomList+="<div class='name'>"+other+"</div>";
-						roomList+="<div class='status'>"+ele.recent_mess+"</div>";
-						roomList+="</div></li>";          		
-					})
-					
-					$("#chattingrooms").html(roomList);
-					
-					if (scrollPos == null) {
-						setTimeout(function(){
-							$(".people-list").scrollTop(scrollPos);//스크롤 가장 위로						
-						},300)
-					} else {
-						setTimeout(function(){
-							$(".people-list").scrollTop($(".people-list").prop('scrollHeight'));	
-						},300)
-					}
-					
-				}
-				
-			});
-			
-		}
-
 		
 	}
 
@@ -510,13 +464,23 @@ $(function(){
 	//상대방과 하던 채팅 가져오기
 	function getChatting(roomNum, otherID, scrollPos){
 		
-		
 		room_num=roomNum;
 		other=otherID;
 		
 		if(room_num==0){
 			return;
 		}
+		
+		//채팅방을 클릭하는 순간 현재 user가 receiver인경우 알림을 읽음
+		$.ajax({
+			type:"get",
+			dataType:"html",
+			url:"/message/alarmRead",
+			data:{"room_num":room_num},
+			success:function(){
+				//alert("message read update!");
+			}
+		});
 		
 		//chat profile가져오기
 		$.ajax({
@@ -563,7 +527,7 @@ $(function(){
 						//alert(ele.mess_readCnt);
 						chatContent+="<li class='clearfix'>";
 						chatContent+="<div class='message-data text-right'>";
-						chatContent+="<span class='message-data-time'><small style='color: gray;'>"+messCheck+"</small>&nbsp;&nbsp;"+ele.mess_time+"</span>";
+						chatContent+="<span class='message-data-time'>"+ele.mess_time+"</span>";
 						chatContent+="</div>";
 						chatContent+="<div class='message other-message float-right'>"+ele.mess_content+"</div>";
 						chatContent+="</li>";
@@ -612,18 +576,20 @@ $(function(){
 	function wsEvt() {
 		ws.onopen = function(data) {
 			//소켓이 열리면 초기화 세팅하기
+			getChattingRooms("${sessionScope.myid}","${sangidx}");
+			//getChatting(room_num, other);
 		}
 		
-		getChatting(room_num, other);
+		//getChatting(room_num, other);
 
 		//메시지 잘 들어왔을 때 실행하는 내용
 		ws.onmessage = function(data) {
 			var msg = data.data;
-			var msgJson = JSON.parse(msg)
-
+			var msgJson = JSON.parse(msg);
 			
-			getChatting(room_num, other);
 			getChattingRooms("${sessionScope.myid}","${sangidx}");
+			getChatting(room_num, other);
+
 		}
 
 		//채팅 입력창에서 엔터 누르면 채팅 보내짐
@@ -631,6 +597,8 @@ $(function(){
 			if (e.keyCode == 13) { //enter press
 				if ($("#chatting").val() != '') {
 					send();
+					getChatting(room_num, other);
+					getChattingRooms("${sessionScope.myid}","${sangidx}");
 				}
 			}
 		});
@@ -658,6 +626,8 @@ $(function(){
 						"mynum" : mynum,
 						"type" : "chat"
 					}));
+					
+					
 				}
 				else{//아무것도 작성하지 않을 때
 					alert("메시지를 입력해 주세요.");
@@ -700,6 +670,9 @@ $(function(){
 					}));
 				}
 			}
+			
+			/* getChatting(room_num, other);
+			getChattingRooms("${sessionScope.myid}","${sangidx}"); */
 				
 
 			$("#chatting").val("");

@@ -27,10 +27,10 @@
 		update message set mess_readCnt=0 where mess_num=#{mess_num}
 	</update>
 	<select id="unReadMessByRoom" parameterType="Map" resultType="int">
-		select ifnull(count(mess_num),0) from message where mess_readCnt=1 and receiver_id=#{user_id} and room_num=#{room_num};
+		select ifnull(count(mess_num),0) from message where mess_readCnt=1 and receiver_id=#{user_id} and room_num=#{room_num}
 	</select>
 	<select id="totalUnreadMessByUserID" parameterType="String" resultType="int">
-		select count(mess_num) from message where receiver_id=#{user_id} and mess_readCnt=1;
+		select count(mess_num) from message where receiver_id=#{user_id} and mess_readCnt=1
 	</select>
 	
 </mapper>
