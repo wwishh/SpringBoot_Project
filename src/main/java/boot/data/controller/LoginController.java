@@ -162,6 +162,7 @@ public class LoginController {
 			}else {
 			return "/2/login/findidform";
 			}
+		}
 	
 	//마이페이지
 	@GetMapping("/mypage")
