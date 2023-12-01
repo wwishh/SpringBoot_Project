@@ -153,4 +153,56 @@ public class SangpumController {
 		model.setViewName("/2/sangpum/s_list");
 		return model;
 	}
+	
+	
+	 @GetMapping("/sangupdateform")
+	 public ModelAndView uform(int num) { 
+	  ModelAndView model = new ModelAndView();
+	  
+	  SangpumDto dto = inter.getSangpum(num);
+	  
+	  model.addObject("dto", dto);
+	  model.setViewName("/2/sangpum/s_uform");
+	  
+	  return model; 
+	  }
+	  
+		/*
+		 * @PostMapping("/sangupdate") public String update(SangpumDto dto, HttpSession
+		 * session) {
+		 * 
+		 * 
+		 * String path = session.getServletContext().getRealPath("/savefile");
+		 * SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		 * 
+		 * dto.setUploadfile(dto.getUpload().getOriginalFilename());
+		 * 
+		 * if (dto.getUpload().getOriginalFilename().equals("")) {
+		 * dto.setUploadfile("no"); } else {
+		 * 
+		 * String uploadFile = sdf.format(new Date()) +
+		 * dto.getUpload().getOriginalFilename(); dto.setUploadfile(uploadFile);
+		 * 
+		 * try { dto.getUpload().transferTo(new File(path + "/" + uploadFile)); } catch
+		 * (IllegalStateException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated catch
+		 * block e.printStackTrace(); }
+		 * 
+		 * }
+		 * 
+		 * // update service.updateBoard(dto);
+		 * 
+		 * return "redirect:content?num=" + dto.getNum();
+		 * 
+		 * }
+		 */
+	 
+	
+	@GetMapping("/delete")
+	public String delete(int num) {
+		
+		inter.deleteSangpum(num);
+		
+		return "redirect:list";
+	}
 }

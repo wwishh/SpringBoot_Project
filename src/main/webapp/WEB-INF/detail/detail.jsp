@@ -366,10 +366,18 @@ function list(){
 				<img alt="달달이" src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-c649f052a34ebc4eee35048815d8e4f73061bf74552558bb70e07133f25524f9.png">
 			</div>
 			<div id="article-profile-left">
-				<div id="nickname">${sessionScope.myid }</div>
+				<div id="nickname">${dto.member_id }</div>
 				<div id="region-name">${dto.j_addr }</div>
 			</div>
+			
+
 			<div style="margin-left: auto; margin-top: 5vh;">
+				<c:if test="${sessionScope.loginok!=null and sessionScope.myid==dto.member_id}">	
+					<button type="button" class="btn btn-dark" onclick="location.href='../sangupdateform?num=${dto.j_sangid}'">수정</button>
+				</c:if>
+				<c:if test="${sessionScope.loginok!=null and sessionScope.myid==dto.member_id }">	
+					<button type="button" class="btn btn-dark" onclick="location.href='../delete?num=${dto.j_sangid}'">삭제</button>
+				</c:if>	
 				<button class="btn btn-dark" id="createRoomBtn" sangIdx="${dto.j_sangid }" onclick="goChatting(${dto.j_sangid})">채팅</button>
 			</div>
 		</div>
