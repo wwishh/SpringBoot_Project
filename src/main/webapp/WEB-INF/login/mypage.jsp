@@ -97,7 +97,7 @@
 			<br>
 			<div id="buysangpum">
 				<b>구매내역</b><br>
-				<b style="color: green; cursor: pointer;" onclick="location.href=''">${purchase }건</b>
+				<b style="color: green; cursor: pointer;" onclick="location.href='sangpum/buysangpum?u_id=${sessionScope.myid}'">${purchase }건</b>
 			</div>
 			<br>
 			<div id="sellsangpum">

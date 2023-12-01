@@ -65,4 +65,5 @@
   	<update id="minusInterest" parameterType="int">
   		update junggosangpum set j_interest=j_interest-1 where j_sangid=#{num}
   	</update>
+  	
 </mapper>
