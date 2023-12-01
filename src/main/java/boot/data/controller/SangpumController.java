@@ -94,13 +94,12 @@ public class SangpumController {
 	public Map<String, Integer> plusInterest(int num) {
 		Map<String, Integer> map = new HashMap<>();
 		
-
 		inter.plusInterest(num);
 		
 		int pInterst = inter.getSangpum(num).getJ_interest();
 		
 		map.put("pInterest", pInterst);
-
+		
 		return map;
 	}
 	
@@ -108,13 +107,12 @@ public class SangpumController {
 	@ResponseBody
 	public Map<String, Integer> minusInterest(int num) {
 		Map<String, Integer> map = new HashMap<>();
-
+		
 		inter.minusInterest(num);
 		
 		int mInterst = inter.getSangpum(num).getJ_interest();
 		
 		map.put("mInterest", mInterst);
-		
 		
 		return map;
 	}

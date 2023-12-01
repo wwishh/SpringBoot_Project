@@ -30,6 +30,12 @@ $(function(){
         }
     });
     
+    //잇는거 재가입안되게
+    <c:if test="${not empty error}">
+        alert("${error}");
+    </c:if>
+    
+    
     
 });
 /*

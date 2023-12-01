@@ -19,4 +19,19 @@
 	<select id="getAllNotice" resultType="noticeDto">
 		select * from notice order by n_num
 	</select>
+	
+	<update id="failreset" parameterType="String">
+  	update user set failcount=0 where u_id=#{u_id}
+ 	</update>
+  
+   <select id ="failuser" resultType="login">
+  	select * from user where failcount>=10 
+  	</select>
+  
+  
+  	
+  	
+  	
+  	
+	
 </mapper>
