@@ -14,4 +14,6 @@ public interface MessageRoomServiceInter {
 	public List<MessageRoomDto> getRoomsByUser(String user_id);//로그인한 사용자가 대화중인 모든 방의 리스트
 	public MessageRoomDto getRoomById(int room_num);
 	public List<MessageRoomDto> getRoomsBySangpum(int j_sangid);
+	//채팅방 가져오기
+	public List<MessageRoomDto> selectAllRooms(String user_id, String sangidx);
 }

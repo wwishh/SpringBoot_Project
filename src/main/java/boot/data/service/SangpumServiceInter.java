@@ -14,7 +14,7 @@ public interface SangpumServiceInter {
 	public List<SangpumDto> getPagingList(String option, String search, int startnum, int perpage);
 	public void insertSangpum(SangpumDto dto);
 	public void updateReadCount(int j_sangid);
-	public SangpumDto getData(int j_sangid);
+	//public SangpumDto getData(int j_sangid);
 	public void updateSangpum(SangpumDto dto);
 	public void deleteSangpum(int j_sangid);
 	public void updateInterest(int num);
