@@ -14,6 +14,10 @@
 	.likesangpum{
 		display: inline-block;
 	}
+	.sangpuminfo{
+		display: inline-block;
+		width: 200px;
+	}
 </style>
 </head>
 <body>
@@ -23,7 +27,7 @@
 			<div class="likesangpum">
 				<img src="../img/${dto.sangimg }" style="width: 130px; height: 130px;">
 				<div class="sangpuminfo">
-					<b>${dto.j_title }</b>
+					<b>${dto.j_title }</b><br>
 					<fmt:formatNumber value="${dto.j_price }" type="currency"/>
 				</div>
 				
