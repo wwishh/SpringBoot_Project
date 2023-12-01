@@ -342,7 +342,7 @@ $(function(){
 </head>
 <body>
 	<div id="container" class="container">
-		<h1>${roomName}의 채팅방</h1>
+		<h1>${sangdto.j_title}의 채팅방</h1>
 		<input type="hidden" id="room_num" value="${room_num}">		
 		
 		<!-- 채팅보이는 구간 -->

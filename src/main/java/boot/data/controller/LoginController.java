@@ -12,14 +12,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.annotation.SessionScope;
 
 import boot.data.Dto.LoginDto;
+import boot.data.mapper.InterestMapperInter;
+import boot.data.mapper.PurchaseMapperInter;
+import boot.data.mapper.SangpumMapperInter;
 import boot.data.service.LoginService;
 
 @Controller
 public class LoginController {
+	
+	@Autowired
+	SangpumMapperInter sanginter;
+	
+	@Autowired
+	PurchaseMapperInter purchaseinter;
+	
+	@Autowired
+	InterestMapperInter interstinter;
 	
 	@Autowired
 	LoginService service;
@@ -44,10 +57,38 @@ public class LoginController {
 			Model model)
 	{
 		model.addAttribute("login",login);
-		service.insertMember(login);
-		
-		return "/2/login/gaipsuccess";
+		 // u_id 중복 확인
+	    if (service.getSerchId(login.getU_id())) {
+	        
+	    	//중복잇고 카카오 잇는경우
+	        if(login.getU_id().contains("카카오")) {
+	        	return "login";
+	        }
+	        
+	        else {
+	        	//db에 중복된 경우
+		        model.addAttribute("error", "이미 사용 중인 아이디입니다.");
+	        	return "/2/login/joinform"; // 가입폼으로 리다이렉트
+	        }
+	    
+	    }
+	    
+	    else {
+	        //db에 어떠한 중복이 없는 경우
+	        service.insertMember(login);
+	        
+	        //db에 중복없고 가입한값이 카카오 
+		      if(login.getU_id().contains("카카오")){
+		    	   return "login";
+		       }
+	        
+	        
+	        return "/2/login/gaipsuccess"; // 가입 성공 페이지로 리다이렉트
+	 
+	    }
 	}
+	
+	
 	
 		//로그인시 메인화면 이동
 		@GetMapping("/main")
@@ -74,6 +115,7 @@ public class LoginController {
 		}
 		
 		@PostMapping("/login")
+		@ResponseBody
 		public String loginproc(@RequestParam String u_id,
 				@RequestParam String u_pass,
 				HttpSession session)
@@ -81,8 +123,9 @@ public class LoginController {
 			HashMap<String, String> map = new HashMap<>();
 			
 			int check = service.loginPassCheck(u_id, u_pass);
+			int failcheck = service.failcheck(u_id);
 			
-			if(check==1) {
+			if(check==1 && failcheck<10) {
 				session.setMaxInactiveInterval(60*60*1); //1시간
 				session.setAttribute("myid", u_id);
 				session.setAttribute("loginok", "yes");
@@ -92,11 +135,21 @@ public class LoginController {
 				session.setAttribute("myhp", login.getU_hp());
 				session.setAttribute("myemail", login.getU_email());
 				
+				service.failreset(u_id);
+				
 				session.removeAttribute("findid");
 				
-				return "redirect:main";
-			}else {
-				return "/3/login/passfail";
+				return "success";
+			}else if(check==1 && failcheck>=10) {
+				return "lock";
+			}else if(check==0&& failcheck>=5 && failcheck<=9) {
+				service.failcount(u_id);
+				return "quiz";
+			}
+			else {
+				//실패시  session failcount 1씩증가 ;
+				service.failcount(u_id);
+				return "fail";
 			}
 		
 		}
@@ -141,6 +194,50 @@ public class LoginController {
 			}else {
 			return "/2/login/findidform";
 			}
-	
 		}
+	
+	//마이페이지
+	@GetMapping("/mypage")
+	public ModelAndView mypage(String u_id) {
+		ModelAndView model = new ModelAndView();
+		
+		LoginDto dto = service.getDataById(u_id);
+		int likes = interstinter.countlikes(u_id);
+		int purchase = purchaseinter.countpurchase(u_id);
+		int sell = sanginter.countIdOfsell(u_id);
+		
+		model.addObject("sell", sell);
+		model.addObject("purchase", purchase);
+		model.addObject("likes", likes);
+		model.addObject("dto", dto);
+		model.setViewName("/2/login/mypage");
+		
+		return model;
+	}
+	
+	//회원정보 데이터 가져오기
+	@GetMapping("/updateform")
+	public ModelAndView updateform(String u_id) {
+		ModelAndView model = new ModelAndView();
+		
+		LoginDto dto = service.getDataById(u_id);
+		
+		model.addObject("dto", dto);
+		model.setViewName("/2/login/updateform");
+		
+		return model;
+	}
+	
+	//회원정보수정
+	@PostMapping("/update")
+	public String update(LoginDto login, HttpSession session) {
+		
+		//System.out.println(login);
+		service.updateuserinfo(login);
+		
+		session.setAttribute("myname", login.getU_name());
+		
+		return "redirect:main";
+	}
+	
 }

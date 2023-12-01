@@ -71,11 +71,11 @@ public class SangpumService implements SangpumServiceInter {
 		mapperInter.updateReadCount(j_sangid);
 	}
 
-	@Override
+	/*@Override
 	public SangpumDto getData(int j_sangid) {
 		// TODO Auto-generated method stub
 		return mapperInter.getData(j_sangid);
-	}
+	}*/
 
 	@Override
 	public void updateSangpum(SangpumDto dto) {

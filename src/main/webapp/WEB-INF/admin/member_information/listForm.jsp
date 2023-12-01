@@ -12,6 +12,40 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+  <table class="board-table">
+                <thead>
+                <tr>
+                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-title">제목</th>
+                    <th>작성자</th>
+                    <th scope="col" class="th-date">등록일</th>
+                    <th>수정/삭제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="ldto" items="${list }" varStatus="i">
+                <tr>
+                    <td>${i.count }</td>
+                    <td>${ldto.u_id }</td>
+                    <td>${ldto.u_name }</td>
+                    <td>${ldto.u_email }</td>
+                    <td>${ldto.u_pass }</td>
+                    <td><fmt:formatDate value="${ldto.u_writedate }" pattern="yyyy-MM-dd HH:mm"/></td>
+                    <td><fmt:formatDate value="${ldto.u_final_logindate }" pattern="yyyy-MM-dd HH:mm"/></td>
+                    <td align="center">
+					<div>
+					<jsp:include page="notice_correction.jsp?num=${n_dto.n_num }"/>
+					</div>
+					<button type="button" num="${ldto.n_num }" onclick="#">수정</button>
+					<button type="button" num="${ldto.n_num }" onclick="#">삭제</button>
+					<button type="button" onclick="location.href='../heje'">잠금해제</button>
+					</td>
+                </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+            
+  
+	
 </body>
 </html>

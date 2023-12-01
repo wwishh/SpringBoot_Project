@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import boot.data.Dto.AdminLoginDto;
+import boot.data.Dto.LoginDto;
 import boot.data.Dto.NoticeDto;
 import boot.data.mapper.AdminMapper;
 
@@ -60,6 +61,19 @@ public class AdminService implements AdminServiceInter {
 		// TODO Auto-generated method stub
 		mapperInter.updateNotice(dto);
 	}
+	public void failreset(String u_id) {
+		// TODO Auto-generated method stub
+		mapperInter.failreset(u_id);
+		
+	}
+
+	@Override
+	public List<LoginDto> failuser() {
+		// TODO Auto-generated method stub
+		return mapperInter.failuser();
+	}
+
+	
 	
 	
 }

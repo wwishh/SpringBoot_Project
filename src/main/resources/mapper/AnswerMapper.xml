@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boot.data.mapper.AnswerMapperInter">
+	<insert id="insertAnswer" parameterType="answer">
+		insert into answer (num, name, myid, content, writeday) values (#{num}, #{name}, #{myid}, #{content}, now())
+	</insert>
+	
+	<select id="getAllAnswers" parameterType="String" resultType="answer">
+		select * from answer where num=#{num} order by idx desc
+	</select>
+	
+	<select id="getAnswer" parameterType="String" resultType="answer">
+		select * from answer where idx=#{idx}
+	</select>
+	
+	<update id="updateAnswer" parameterType="answer">
+		update answer set content=#{content} where idx=#{idx}
+	</update>
+	
+	<delete id="deleteAnswer" parameterType="String">
+		delete from answer where idx=#{idx}
+	</delete>
+
+</mapper>

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import boot.data.Dto.AdminLoginDto;
+import boot.data.Dto.LoginDto;
 import boot.data.Dto.NoticeDto;
 
 @Mapper
@@ -18,4 +19,7 @@ public interface AdminMapper {
 	public NoticeDto getNoticeNum(int n_num);
 	public void deleteNotice(int n_num);
 	public void updateNotice(NoticeDto dto);
+	public void failreset(String u_id); //페일카운트0
+	public List<LoginDto> failuser(); //페일카운트 10이상 유저리스트
+	
 }

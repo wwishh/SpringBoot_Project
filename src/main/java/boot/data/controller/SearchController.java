@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.SangpumDto;
+import boot.data.mapper.InterestMapperInter;
 import boot.data.mapper.SearchMapperInter;
 
 @Controller
@@ -17,6 +18,7 @@ public class SearchController {
 
 	@Autowired
 	SearchMapperInter inter;
+	
 	
 	@GetMapping("/search/result")
 	@ResponseBody

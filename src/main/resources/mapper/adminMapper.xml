@@ -30,4 +30,19 @@
 	<delete id="deleteNotice" parameterType="int">
 		delete from notice where n_num=#{n_num}
 	</delete>
+	
+	<update id="failreset" parameterType="String">
+  	update user set failcount=0 where u_id=#{u_id}
+ 	</update>
+  
+   <select id ="failuser" resultType="login">
+  	select * from user where failcount>=10 
+  	</select>
+  
+  
+  	
+  	
+  	
+  	
+	
 </mapper>
