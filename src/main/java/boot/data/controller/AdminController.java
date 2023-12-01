@@ -17,12 +17,14 @@ import org.springframework.web.servlet.ModelAndView;
 import boot.data.Dto.AdminLoginDto;
 import boot.data.Dto.NoticeDto;
 import boot.data.service.AdminService;
+import boot.data.service.LoginService;
 
 @Controller
 public class AdminController {
 	
 	@Autowired
 	AdminService service;
+	
 	
 	@GetMapping("/admin")
 	public String adminIndex(HttpSession session) {
@@ -100,6 +102,8 @@ public class AdminController {
 	
 	@GetMapping("/information")
 	public String information() {
+		 service.failuser();  //페일카운트 잇는 유저 전부호출
+		 service.failreset(null); // 버튼누르면 페일카운트 10개인사람을 페일카운트0으로 초기화
 		return "/admin/admin/member_information/listForm";
 	}
 	

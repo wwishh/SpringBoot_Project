@@ -16,6 +16,7 @@
   select count(*) from user where u_id=#{u_id} 
   </select>
   
+  
   <select id="getName" parameterType="String" resultType="String">
   select u_name from user where u_id=#{u_id}
   </select>
@@ -48,7 +49,5 @@
   select failcount from user where u_id=#{u_id}
   </select>
   
-  <select id ="failuser" resultType="login">
-  select u_id from user where failcount>=5 
-  </select>
+  
   </mapper>
