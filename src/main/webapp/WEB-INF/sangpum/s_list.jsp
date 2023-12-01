@@ -18,7 +18,6 @@
   <script>
 	Kakao.init('815178a1004a30c81fbcd7151ba42d6b');
 </script>
-<title>Insert title here</title>
 </head>
 <body>
 	<!-- Section-->

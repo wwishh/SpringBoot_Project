@@ -151,6 +151,4 @@ public class SangpumController {
 		model.setViewName("/2/sangpum/s_list");
 		return model;
 	}
-	
-	 
 }
