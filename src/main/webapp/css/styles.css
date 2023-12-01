@@ -120,6 +120,13 @@ body {
 	display: none;	
 }
 
+.explanation-area{
+	padding-top: 0.5rem;
+}
+
+.explanation{
+	font-size: 25px;
+}
 .Product_title, .Product_category, .Product_name, .Product_price, .Product_file{
 	display: flex;
 	justify-content: space-between;
@@ -141,14 +148,14 @@ body {
 .kakao_inquiry {		
 	float: right;
 	display: flex;
-	margin-right: 6.6rem;
+	margin-right: 6.7rem;
 	margin-top: -6.5rem; 
 	width: 7rem;
     height: 3rem;
     z-index: 99;
 }
 
-#kakao-talk-channel-chat-button > a > img {
+#add-channel-button > a > img {
 	height: 3rem;
 }
 
@@ -188,10 +195,17 @@ body {
 }
 
 
+.info_between{
+	display: flex;
+    justify-content: space-between;
+}
+
 .list-type {
 	padding-left: 0rem;
 }
-
+.list-type > a{
+	text-decoration: none;
+}
 .item-list-content {
 	text-decoration: none;
 	width: 65rem;
@@ -201,9 +215,20 @@ body {
 	display: flex;
 }
 
+.item-list-img-area {
+	width: 16rem;
+	}
+
 .item-list-img {
-  	width: 15rem;
+  	width: 100%;
   	height: 16rem;
+}
+.region-name{
+	font-size: 12px;
+}
+
+.explanation{
+	font-size: 18px;
 }
 
 .item-list-title {
@@ -214,6 +239,12 @@ body {
 	float: right;
     font-family: Binggrae-Bold;
 }
+
+.insert_addr_area{
+	display: flex;
+	width: 16vw;
+}
+
 
 /*	HC's_CSS	--	end	*/
 
@@ -4373,10 +4404,15 @@ textarea.form-control-lg {
   border-radius: var(--bs-card-inner-border-radius);
 }
 
-.card-img,
+.card-img{
+	width: 14vw;
+	height: 16vw;
+}
+
 .card-img-top,
 .card-img-bottom {
-  width: 100%;
+  	width: 100%;
+	height: 100%;
 }
 
 .card-img,

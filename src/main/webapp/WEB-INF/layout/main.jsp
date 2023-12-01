@@ -43,13 +43,16 @@
 		     	<c:forEach var="dto" items="${list }">
 		     	<div class="col mb-5">
 		     		<div class="card h-100">
-		     			<c:if test="${dto.j_imageurl != 'no' }">
-		     				<c:forTokens var="pho" items="${dto.j_imageurl }" delims="," begin="0" end="0">
-		                		<%-- <img class="card-img-top" src="../img/${dto.j_imageurl }" alt="..." /> --%>
-		                		
-		                		<img class="card-img-top" src="../img/${pho }" alt="..." />
-		                	</c:forTokens>
-		                </c:if> 
+		     			<div class="card-img">
+			                <c:if test="${dto.j_imageurl != 'no' }">
+			     				<c:forTokens var="pho" items="${dto.j_imageurl }" delims="," begin="0" end="0">
+			                		<img class="card-img-top" src="../img/${pho }" alt="..." />
+			                	</c:forTokens>
+			                </c:if> 
+			                <c:if test="${dto.j_imageurl == 'no' }">
+		                		<img class="card-img-top" src="../img/noimage.png" alt="..." />
+			                </c:if>
+		                </div> 
 		                <div class="card-body p-4">
 			            	<div class="text-center">
 			            		<h5 class="fw-bolder">${dto.j_title}</h5>

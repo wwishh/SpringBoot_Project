@@ -232,7 +232,7 @@ nav {
 				
 				
 						<input type="hidden" value="${sessionScope.myid = 'guest'}">
-					</c:if>
+<%-- 					</c:if> --%>
 						<i class="bi bi-search"
 							onclick="location.href='/search?s_id=${sessionScope.myid}'"
 							style="cursor: pointer;"></i>
