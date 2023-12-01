@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <!-- iamport.payment.js --> 
@@ -22,8 +23,107 @@
 </style>
 <title>Insert title here</title>
 <script type="text/javascript">
-$(function() {
 	
+	//댓글
+$(function(){
+		
+		list();
+
+		
+		$("#btnansweradd").click(function(){
+			
+			var num = $("#num").val();
+			var name = "${sessionScope.myname}";
+			var myid = "${sessionScope.myid}";
+			var content = $("#content").val();
+			
+			//alert(name)
+			
+			if(content.length==0){
+				alert("댓글을 입력해 주세요");
+				return;
+			} 
+			//alert(myid)
+			$.ajax({
+				type:"post",
+				url:"/answer/ainsert",
+				dataType:"html",
+				data:{"num":num, "content":content, "name":name, "myid":myid},
+				success:function(){
+					//alert("insert완료")
+					
+					list();
+					$("#content").val("");
+				}
+			});
+		});
+
+	
+	//댓글 삭제
+	$(document).on("click","i.del", function(event){
+		var idx = $(".idx").val();
+		//alert(idx);
+		
+		$.ajax({
+			type:"get",
+			url:"/answer/adelete",
+			dataType:"html",
+			data:{"idx":idx},
+			success:function(res){
+				//alert("성공");
+				list();
+			}
+		})
+	});
+	
+	//댓글 수정창 띄우기
+	$(document).on("click","i.mod", function(){
+		idx = $(".idx").val();
+		//alert(idx)
+		
+		$.ajax({
+			type:"get",
+			dataType:"json",
+			url:"/answer/adata",
+			data:{"idx":idx},
+			success:function(res){
+				//alert(res.content)
+				$("#ucontent").val(res.content);
+			}
+		});
+		
+		$("#aUpdateModal").modal("show");
+	});
+	
+	//댓글 수정
+	$(document).on("click","#btnupdate", function(){
+		var content = $("#ucontent").val();
+		
+		$.ajax({
+			type:"post",
+			dataType:"html",
+			url:"/answer/aupdate",
+			data:{"idx":idx, "content":content},
+			success:function(res){
+				$("#aUpdateModal").modal("hide");
+				list();
+			}
+		});
+		
+	});
+	
+	
+	 $("#content").keypress(function(e){
+	        //검색어 입력 후 엔터키 입력하면 등록버튼 클릭
+	        if(e.keyCode && e.keyCode == 13){
+	           $("#btnansweradd").trigger("click");
+	           return false;
+	        }
+
+	     });
+
+	
+	//$("#createRoomBtn").click(function(){
 	/* $("#createRoomBtn").click(function(){
 		var sangidx = $(this).attr("sangIdx");
 		//alert(sangidx); //상품idx가져와서 채팅room생성
@@ -56,8 +156,45 @@ $(function() {
 		$("#tossPayment").click(function(){
 			tosspay();
 		});
+		
+		
+
+		
+		
 	});
 	
+//댓글 리스트	
+function list(){
+	
+	var num = $("#num").val();
+	var loginok = "${sessionScope.loginok}";
+	var myid = "${sessionScope.myid}";
+	
+	$.ajax({
+		type:"get",
+		url:"/answer/alist",
+		dataType:"json",
+		data:{"num":num},
+		success:function(res){
+			$("span.acount").text(res.length);
+
+			var s = "";
+
+			$.each(res,function(i,dto){
+				s+="<b>" +dto.name+"</b>: " + dto.content;
+				s+="<span class='day'>" + dto.writeday+ "</span>";
+				s+='<input type="hidden" class="idx" value="'+dto.idx+'">';
+				if(loginok!=null&&myid==dto.myid){
+					s+= '<i class="bi bi-pencil-square mod" style="cursor:pointer"></i><i class="bi bi-trash3-fill del" style="cursor:pointer"></i><br>'
+				}
+			})
+			
+			
+			
+			$("div.alist").html(s);
+		}
+	});
+} 
 	//채팅방으로 이동
 	function goChatting(sangidx) {
 		//alert(sangidx);
@@ -266,10 +403,54 @@ $(function() {
            		<img alt="" src="../img/toss.png" style="width:70px; height:30px" id="tossPayment">
 			</div>
 			<br>
+			<b>댓글: <span class="acount"></span></b>
+			<div class="alist"></div>
+					
+					<input type="hidden" id="num" value="${dto.j_sangid }">
+					
+					<c:if test="${sessionScope.loginok!=null }">
+						<div class="aform">
+							<div class="d-inline-flex">
+								<input type="text" class="form-control" style="width:500px" placeholder="댓글을 입력하세요" id="content">
+								<button type="button" class="btn btn-dark" id="btnansweradd">등록</button>
+							</div>
+						</div>
+					</c:if> 
 			<hr>
 		</div>	
 		
 	</div>
+	
+	
+	
+	
+	
+	<!-- 댓글 수정 modal창 -->
+	<!-- The Modal -->
+<div class="modal" id="aUpdateModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">댓글 수정</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <input type="text" id="ucontent" class="form-control">
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="btnupdate">수정</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 	
 </body>
 </html>
