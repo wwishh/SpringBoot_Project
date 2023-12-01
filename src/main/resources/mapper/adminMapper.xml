@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="boot.data.mapper.AdminMapper">
 
@@ -19,4 +19,15 @@
 	<select id="getAllNotice" resultType="noticeDto">
 		select * from notice order by n_num
 	</select>
+	<select id="getNoticeNum" parameterType="int" resultType="noticeDto">
+		select * from notice where n_num=#{n_num}
+	</select>
+	
+	<update id="updateNotice" parameterType="noticeDto">
+		update notice set n_title = #{n_title}, n_content = #{n_content}, n_registration_date = now() WHERE n_num = #{n_num}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="int">
+		delete from notice where n_num=#{n_num}
+	</delete>
 </mapper>

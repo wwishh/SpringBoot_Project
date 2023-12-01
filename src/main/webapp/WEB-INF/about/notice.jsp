@@ -8,16 +8,12 @@
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gaegu:wght@300&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap" rel="stylesheet">
-<link href="../../css/admin_notice.css" rel="stylesheet" />
-<link rel="stylesheet" href="../../css/notice_styles.css">
+<link href="../css/admin_notice.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-
- <div><jsp:include page="notice_addForm.jsp"/></div>
-	
-	<section class="notice">
+<section class="notice">
   <div class="page-title">
         <div class="container">
             <h3>공지사항</h3>
@@ -48,26 +44,15 @@
                     <th scope="col" class="th-num">번호</th>
                     <th scope="col" class="th-title">제목</th>
                     <th>작성자</th>
-                    <th scope="col" class="th-date">등록일</th>
-                    <th>수정/삭제</th>
+                   
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="n_dto" items="${list }" varStatus="i">
                 <tr>
                     <td>${i.count }</td>
-                    <th><jsp:include page="notice_detail.jsp">
-						<jsp:param value="${n_dto.n_num }" name="num"/>
-						<jsp:param value="${n_dto.n_title }" name="title"/>
-					</jsp:include></th>
-                    <td>${n_dto.n_name }</td>
-                    <td><fmt:formatDate value="${n_dto.n_registration_date }" pattern="yyyy-MM-dd HH:mm"/></td>
-                    <td align="center">
-					<jsp:include page="notice_correction.jsp">
-						<jsp:param value="${n_dto.n_num }" name="num"/>
-					</jsp:include>
-					<button type="button" class="n_del" num="${n_dto.n_num }" >삭제</button>
-					</td>
+                    <th>${n_dto.n_title }</th>
+                    <td>운영자</td>
                 </tr>
                 </c:forEach>
                 </tbody>
@@ -76,17 +61,5 @@
     </div>
 
 </section>
-<script type="text/javascript">
-	
-	$(".n_del").click(function(){
-		var num=$(this).attr("num");
-		 var isConfirmed = confirm("삭제하시겠습니까?");
-		if(isConfirmed){
-			location.href="notice_delete?num="+num;
-		}
-		
-	});
-</script>
-	
 </body>
 </html>

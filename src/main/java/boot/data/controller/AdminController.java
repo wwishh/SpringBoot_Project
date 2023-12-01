@@ -2,6 +2,7 @@ package boot.data.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.AdminLoginDto;
@@ -79,8 +81,9 @@ public class AdminController {
 	@GetMapping("/notice")
 	public String main(Model model) {
 		List<NoticeDto>list=service.getAllNotice();
-		
 		model.addAttribute("list",list);
+		
+		
 		return "/admin/admin/notice/notice_listForm";
 	}
 	
@@ -98,10 +101,52 @@ public class AdminController {
 		return model;
 	}
 	
+	
+	@ResponseBody
+	@GetMapping("/a_notice_num")
+	public Map<String, Object> a_notice_num(@RequestParam int num) {
+		
+		Map<String, Object>returnMap=new HashMap<>();
+		NoticeDto n_dto = service.getNoticeNum(num);
+		AdminLoginDto a_dto = service.getAdminID(n_dto.getN_id());
+		
+		returnMap.put("n_num", n_dto.getN_num());
+		returnMap.put("n_email", a_dto.getA_email());
+		returnMap.put("n_name", n_dto.getN_name());
+		returnMap.put("n_title", n_dto.getN_title());
+		returnMap.put("n_content", n_dto.getN_content());
+		returnMap.put("n_registration_date", n_dto.getN_registration_date());
+		returnMap.put("n_hits", n_dto.getN_hits());
+		returnMap.put("n_id", n_dto.getN_id());
+		
+		return returnMap;
+	}
+	
+	@PostMapping("a_notice_update")
+	public ModelAndView a_notice_correction(@ModelAttribute NoticeDto n_dto) {
+		ModelAndView model = new ModelAndView();
+		service.updateNotice(n_dto);
+		
+		model.setViewName("redirect:notice");
+		return model;
+	}
+	
+	
+	@GetMapping("/notice_delete")
+	public String noticeDelete(@RequestParam int num) {
+		
+		service.deleteNotice(num);
+		
+		return "redirect:notice";
+	}
+	
+	
 	@GetMapping("/information")
 	public String information() {
 		return "/admin/admin/member_information/listForm";
 	}
+	
+	
 	
 	
 	

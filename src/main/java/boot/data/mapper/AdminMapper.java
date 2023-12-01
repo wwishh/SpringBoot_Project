@@ -15,4 +15,7 @@ public interface AdminMapper {
 	public int adminLoginPassCheck(Map<String, String>map);
 	public void insertNotice(NoticeDto n_dto);
 	public List<NoticeDto> getAllNotice();
+	public NoticeDto getNoticeNum(int n_num);
+	public void deleteNotice(int n_num);
+	public void updateNotice(NoticeDto dto);
 }

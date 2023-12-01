@@ -7,6 +7,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta charset="UTF-8">
+ <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+ <!-- 
+ Expires
+ 리소스가 validate 하지 않다고 판단할 시간을 설정함
+ 유효하지 않은 날짜 포맷(0)과 같은 경우 리소스가 만료 되었음을 의미함.
+ Ex) Expires: Wed, 21 Oct 2015 07:28:00 GMT
+ -->
+ <meta http-equiv="Expires" content="0">
+ <!-- 
+ HTTP 1.0 버전에서 HTTP 1.1의 Cache-Control 헤더와 같은 역할을 함
+ Ex) Pragma: no-cache
+ -->
+ <meta http-equiv="Pragma" content="no-cache">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -23,6 +37,7 @@
 </head>
 <body>
 	<%
+	
 		String a_id=(String)session.getAttribute("a_id");
 	String a_name=(String)session.getAttribute("a_name");
 	

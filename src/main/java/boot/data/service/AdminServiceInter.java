@@ -10,4 +10,7 @@ public interface AdminServiceInter {
 	public int adminLoginPassCheck(String id,String pass);
 	public void insertNotice(NoticeDto n_dto);
 	public List<NoticeDto> getAllNotice();
+	public NoticeDto getNoticeNum(int n_num);
+	public void deleteNotice(int n_num);
+	public void updateNotice(NoticeDto dto);
 }

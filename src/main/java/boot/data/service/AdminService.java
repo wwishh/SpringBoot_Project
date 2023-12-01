@@ -42,6 +42,24 @@ public class AdminService implements AdminServiceInter {
 		// TODO Auto-generated method stub
 		return mapperInter.getAllNotice();
 	}
+
+	@Override
+	public NoticeDto getNoticeNum(int n_num) {
+		// TODO Auto-generated method stub
+		return mapperInter.getNoticeNum(n_num);
+	}
+
+	@Override
+	public void deleteNotice(int n_num) {
+		// TODO Auto-generated method stub
+		mapperInter.deleteNotice(n_num);
+	}
+
+	@Override
+	public void updateNotice(NoticeDto dto) {
+		// TODO Auto-generated method stub
+		mapperInter.updateNotice(dto);
+	}
 	
 	
 }

@@ -99,6 +99,23 @@
 nav{
    font-size: 1.5em;
 }
+#b_mo{
+	position: absolute;
+	top: 5vh;
+	right: 8vw;
+}
+
+#qwe{
+	position: absolute;
+	top: 2vh;
+	right: -15vw;
+}
+.qwe1{
+	position: absolute;
+	top: 2vh;
+	right: 10vw;
+}
+
 </style>
 </head>
 <body>
@@ -118,7 +135,7 @@ nav{
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="/">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+					<li class="nav-item"><a class="nav-link" href="about">About</a></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
 						role="button" data-bs-toggle="dropdown" aria-expanded="false">Fleamarket</a>
@@ -131,7 +148,27 @@ nav{
 				</ul>
 
 
-				<div style="justify-content: space-between;">
+				
+			
+		</div>
+
+		<div id="result"></div>	
+	</div>
+	</nav>
+         <!-- 검색창 -->
+				<div class="input-group w-25" id="qwe">
+					<c:if test="${sessionScope.myid == null}">
+						${sessionScope.myid = "guest"}
+					</c:if>
+					<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
+						
+				</div>
+				
+				<div>
+					<i class="qwe1 bi bi-bell-fill alarmBtn" style="cursor: pointer;"></i>
+				</div>
+				
+         <div id="b_mo" style="justify-content: space-between;">
 				<c:if test="${sessionScope.loginok==null}">
 				<button type="button" class="btn btn-outline-primary" onclick="location.href='../loginform'">로그인</button>
 				</c:if>
@@ -142,36 +179,7 @@ nav{
 				<button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
 				</c:if>
 				
-				
-				
-				 
-				
-				
-				
-				
-				
-				<!-- 검색창 -->
-				<div class="input-group w-25">
-					<c:if test="${sessionScope.myid == null}">
-						${sessionScope.myid = "guest"}
-					</c:if>
-					<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
-						
-				</div>
-				
-				<div>
-					<i class="bi bi-bell-fill alarmBtn" style="cursor: pointer;"></i>
-				</div>
-				
 
-
-			</div>
-			
 		</div>
-
-		<div id="result"></div>	
-	</div>
-	</nav>
-         
 </body>
 </html>
