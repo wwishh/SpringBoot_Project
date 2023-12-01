@@ -23,7 +23,6 @@
 </style>
 <title>Insert title here</title>
 <script type="text/javascript">
-$(function() {
 	
 	//댓글
 $(function(){
@@ -58,7 +57,7 @@ $(function(){
 				}
 			});
 		});
-	});
+
 	
 	//댓글 삭제
 	$(document).on("click","i.del", function(event){
@@ -124,7 +123,7 @@ $(function(){
 	     });
 
 	
-	$("#createRoomBtn").click(function(){
+	//$("#createRoomBtn").click(function(){
 	/* $("#createRoomBtn").click(function(){
 		var sangidx = $(this).attr("sangIdx");
 		//alert(sangidx); //상품idx가져와서 채팅room생성
