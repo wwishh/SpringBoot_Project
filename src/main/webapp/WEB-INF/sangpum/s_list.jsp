@@ -54,22 +54,8 @@
 				
 				<ul class="list-type">
 					<c:forEach var="dto" items="${list }">
-					<c:if test="${dto.j_imageurl != 'no' }">
-						<a href="/sangpum/detail?num=${dto.j_sangid }" class="list-data">
-							<li class="form-control">	
-								<article>
-									<div class="item-list-div">
-										<c:forTokens var="pho" items="${dto.j_imageurl }" delims="," begin="0" end="0">
-					                		<img class="item-list-img" src="../img/${pho }" alt="..." />
-					                	</c:forTokens>
-										<div class="item-list-content">
-											<h2 class="fw-bolder item-list-title">${dto.j_title}</h2><br>
-											<h6 class="item-list-price"><fmt:formatNumber value="${dto.j_price}" type="currency"/></h6> 
-										</div>
-									</div>	
-								</article>
-							</li>
-							</a>
+						<c:if test="${dto.j_imageurl != 'no' }">
+						
 		                </c:if> 
 					</c:forEach>
 				</ul>
@@ -83,11 +69,16 @@
 		     	<c:forEach var="dto" items="${list }">
 		     	<div class="col mb-5">
 		     		<div class="card h-100">
-		                <c:if test="${dto.j_imageurl != 'no' }">
-		     				<c:forTokens var="pho" items="${dto.j_imageurl }" delims="," begin="0" end="0">
-		                		<img class="card-img-top" src="../img/${pho }" alt="..." />
-		                	</c:forTokens>
-		                </c:if> 
+		     			<div class="card-img">
+			                <c:if test="${dto.j_imageurl != 'no' }">
+			     				<c:forTokens var="pho" items="${dto.j_imageurl }" delims="," begin="0" end="0">
+			                		<img class="card-img-top" src="../img/${pho }" alt="..." />
+			                	</c:forTokens>
+			                </c:if> 
+			                <c:if test="${dto.j_imageurl == 'no' }">
+		                		<img class="card-img-top" src="../img/noimage.png" alt="..." />
+			                </c:if>
+		                </div> 
 		                <div class="card-body p-4">
 			            	<div class="text-center">
 			            		<h5 class="fw-bolder">${dto.j_title}</h5>
@@ -124,7 +115,7 @@
 
 
 <script type="text/javascript">
-let currentPage = 1;
+let currentPage = 0;
 
 const target = document.querySelector('#loading');
 
@@ -144,35 +135,59 @@ const observer = new IntersectionObserver((entries) => {
             data: {
               option: "option",
               search: "search",
-              startnum: currentPage * perpage+1,
+              startnum: currentPage * perpage,
               perpage: perpage
             },
             success: function(data) {
          	  	console.log(data);
          	  	console.log(currentPage);
     			var content="";
+    			
     			 $.each(data, function name(i, dto) {
+    				function formatCurrency(price) {
+ 	            	    // 숫자를 통화 형식(3자리마다 쉼표)으로 형식화하는 함수
+ 	            	    return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(price);
+ 	            	}
+    				var images = dto.j_imageurl.split(",");
+    		        var firstImageUrl = images.length > 0 ? images[0] : "noimage.png"; // 첫 번째 이미지 URL
+
+					function formatDate(dateString) {
+    		        	const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+    		        	const formattedDate = new Date(dateString).toLocaleDateString('ko-KR', options);
+    		        	return formattedDate;
+    		        }
+
+    		         
     	              content += "<a href='/sangpum/detail?num=" + dto.j_sangid + "' class='list-data'>";
     	              content += "<li class='form-control'>";
     	              content += "<article>";
     	              content += "<div class='item-list-div'>";
     	             
-    	              var images = dto.j_imageurl.split(",");
-    	              var firstImageUrl = images.length > 0 ? images[0] : ""; // 첫 번째 이미지 URL
+    	              
+    	              content += "<div class='item-list-img-area'>";
+    	              
     	              content += "<img class='item-list-img' src='../img/" + firstImageUrl + "' alt='...'/>";
+    	              content += "</div>";
     	              
     	              content += "<div class='item-list-content'>";
-    	              content += "<h2 class='fw-bolder item-list-title'>" + dto.j_title + "</h2><br>";
-    	              content += "<h6 class='item-list-price'>" + formatCurrency(dto.j_price) + "</h6>";
-    	              function formatCurrency(price) {
-    	            	    // 숫자를 통화 형식(3자리마다 쉼표)으로 형식화하는 함수
-    	            	    return new Intl.NumberFormat('ko-KR', {
-    	            	        style: 'currency',
-    	            	        currency: 'KRW'  // 통화 코드를 적절하게 변경하세요
-    	            	    }).format(price);
-    	            	}
+    	              content += "<h1 class='fw-bolder item-list-title'>" + dto.j_title + "</h1>";
+    	              
+    	              content += "<div class='info_between'>";
+    	              content += "<div><h6 class='item-list-price'>" + formatCurrency(dto.j_price) + "</h6></div>";
+    	              content += "<div>" + formatDate(dto.j_postdate)+ "</div>";
     	              content += "</div>";
+    	              
+    	              content += "<div class='explanation-area'><b class='explanation'>" + dto.j_explanation + "</b></div><br><br><br><br>";
+    	              
+    	              content += "<div class='info_between'>";
+    	              content += "<div class='region-name'>" + dto.j_addr + "</div>";
+    	              content += "<div> 관심 : " + dto.j_interest + " , 조회 : " + dto.j_readcount + "</div>";
     	              content += "</div>";
+    	              
+    	              content += "</div>";
+    	              
+    	              content += "</div>";
+    	              
     	              content += "</article>";
     	              content += "</li>";
     	              content += "</a>";
