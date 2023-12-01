@@ -125,6 +125,7 @@ $(function(){
 
 	
 	$("#createRoomBtn").click(function(){
+	/* $("#createRoomBtn").click(function(){
 		var sangidx = $(this).attr("sangIdx");
 		//alert(sangidx); //상품idx가져와서 채팅room생성
 		
@@ -136,14 +137,16 @@ $(function(){
 			success:function(res){
 				if(res==0){
 					alert("자신이 판매하는 상품은 구매할 수 없습니다.");
+					//location.href="/goChattingRoom?room_num="+0+"&sangidx="+sangidx;
 					location.href="/goSellerRooms?sangidx="+sangidx;
 				}else{
-					location.href="/goChattingRoom?room_num="+res;
+					//location.href="/goChattingRoom?room_num="+res+"&sangidx="+sangidx;
+					location.href="/goChattingRoom?sangidx="+sangidx;
 				}				
 			}
-		})
+		}) 
 		
-	})
+	})*/
 	
 
 	
@@ -193,6 +196,11 @@ function list(){
 		}
 	});
 } 
+	//채팅방으로 이동
+	function goChatting(sangidx) {
+		//alert(sangidx);
+		location.href="/goChattingRoom?sangidx="+sangidx;
+	}
 	
 	
 	//버튼 클릭하면 실행
@@ -363,7 +371,7 @@ function list(){
 				<div id="region-name">${dto.j_addr }</div>
 			</div>
 			<div style="margin-left: auto; margin-top: 5vh;">
-				<button class="btn btn-dark" id="createRoomBtn" sangIdx="1">채팅</button>
+				<button class="btn btn-dark" id="createRoomBtn" sangIdx="${dto.j_sangid }" onclick="goChatting(${dto.j_sangid})">채팅</button>
 			</div>
 		</div>
 		<div id="article-profile-right">

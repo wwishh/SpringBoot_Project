@@ -13,7 +13,11 @@
 	href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<title>Insert title here</title>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.5.0/kakao.min.js"
+  integrity="sha384-kYPsUbBPlktXsY6/oNHSUDZoTX6+YI51f63jCPEIPFP09ttByAdxd2mEjKuhdqn4" crossorigin="anonymous"></script>
+  <script>
+	Kakao.init('815178a1004a30c81fbcd7151ba42d6b');
+</script>
 </head>
 <body>
 	<!-- Section-->
@@ -47,31 +51,35 @@
 			
 			<!-- 리스트형 출력방식 / 기본값 : hide-->
 			<section id="listType" class="form-control">
+				
 				<ul class="list-type">
 					<c:forEach var="dto" items="${list }">
-						<a href="/sangpum/detail?num=${dto.j_sangid }" class="item-list-content">
+					<c:if test="${dto.j_imageurl != 'no' }">
+						<a href="/sangpum/detail?num=${dto.j_sangid }" class="list-data">
 							<li class="form-control">	
 								<article>
 									<div class="item-list-div">
-										<c:if test="${dto.j_imageurl != 'no' }">
-						     				<c:forTokens var="pho" items="${dto.j_imageurl }" delims="," begin="0" end="0">
-						                		<img class="item-list-img" src="../img/${pho }" alt="..."/>
-						                	</c:forTokens>
-						                </c:if> 
+										<c:forTokens var="pho" items="${dto.j_imageurl }" delims="," begin="0" end="0">
+					                		<img class="item-list-img" src="../img/${pho }" alt="..." />
+					                	</c:forTokens>
 										<div class="item-list-content">
-											<h2 class="fw-bolder item-list-title">&nbsp;${dto.j_title}</h2><br>
+											<h2 class="fw-bolder item-list-title">${dto.j_title}</h2><br>
 											<h6 class="item-list-price"><fmt:formatNumber value="${dto.j_price}" type="currency"/></h6> 
 										</div>
 									</div>	
-								</article>	
+								</article>
 							</li>
-						</a>
-					</c:forEach>	
+							</a>
+		                </c:if> 
+					</c:forEach>
 				</ul>
+				<div id="loading" align="center">
+					<img src="../img_source/loading.gif" alt="loading">
+				</div>
 			</section>	 
 			
 			<!-- 카드형 출력방식 -->
-			<div id="cardType" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">     	
+			<div id="cardType" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">     	 	
 		     	<c:forEach var="dto" items="${list }">
 		     	<div class="col mb-5">
 		     		<div class="card h-100">
@@ -95,55 +103,103 @@
 				</div>			
 		     	</c:forEach>
 	     	</div>
-	     	<!-- 
-	     	<div class="col mb-5">
-					<div class="card h-100">
-						Product image
-						<img class="card-img-top"
-							src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-						Product details
-						<div class="card-body p-4">
-							<div class="text-center">
-								Product name
-								<h5 class="fw-bolder">Fancy Product</h5>
-								Product price
-								$40.00 - $80.00
-							</div>
-						</div>
-						
-						Product actions
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">	
-								<a class="btn btn-outline-dark mt-auto" href="/detail">View
-									options</a>
-							</div>
-						</div>
-					</div>
-				</div>
-	     	 -->
-	     	 <br><br><br>
+  	     	<br><br><br>
 			<div class="kakao_inquiry">
-				<div id="kakao-talk-channel-add-button"
-					data-channel-public-id="_BpxgxjG" data-size="large"
-					data-support-multiple-densities="true">
-				</div>
-				<div id="kakao-talk-channel-chat-button"
-					data-channel-public-id="_BpxgxjG" data-title="question"
-					data-size="large" data-color="yellow" data-shape="mobile"
-					data-support-multiple-densities="true">
-				</div>
+				<div id="add-channel-button"></div>
+				<div id="chat-channel-button"></div>			
 			</div>
 		</div>
-	</section>
+	
 </body>
 <script>
-  window.kakaoAsyncInit = function() {
-    Kakao.Channel.createChatButton({
-      container: '#kakao-talk-channel-chat-button',
-    });
-    Kakao.Channel.createAddChannelButton({
-      container: '#kakao-talk-channel-add-button',
-    });
-  };  
+  Kakao.Channel.createAddChannelButton({
+    container: '#add-channel-button',
+    channelPublicId: '_BpxgxjG',
+  });
+  Kakao.Channel.createChatButton({
+	    container: '#chat-channel-button',
+	    channelPublicId: '_BpxgxjG',
+	  });
+</script>
+
+
+<script type="text/javascript">
+let currentPage = 1;
+
+const target = document.querySelector('#loading');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      console.log('Intersection detected. Loading next page.');
+
+      let perpage = 8;
+	  
+	 // Ajax로 다음 페이지의 내용을 불러오는 함수
+     const loadNextPage = () => {
+    	    // 현재 페이지 번호를 사용하여 Ajax 요청을 보냄
+          $.ajax({
+            url: '/ajaxlist',
+            type: 'GET',
+            data: {
+              option: "option",
+              search: "search",
+              startnum: currentPage * perpage+1,
+              perpage: perpage
+            },
+            success: function(data) {
+         	  	console.log(data);
+         	  	console.log(currentPage);
+    			var content="";
+    			 $.each(data, function name(i, dto) {
+    	              content += "<a href='/sangpum/detail?num=" + dto.j_sangid + "' class='list-data'>";
+    	              content += "<li class='form-control'>";
+    	              content += "<article>";
+    	              content += "<div class='item-list-div'>";
+    	             
+    	              var images = dto.j_imageurl.split(",");
+    	              var firstImageUrl = images.length > 0 ? images[0] : ""; // 첫 번째 이미지 URL
+    	              content += "<img class='item-list-img' src='../img/" + firstImageUrl + "' alt='...'/>";
+    	              
+    	              content += "<div class='item-list-content'>";
+    	              content += "<h2 class='fw-bolder item-list-title'>" + dto.j_title + "</h2><br>";
+    	              content += "<h6 class='item-list-price'>" + formatCurrency(dto.j_price) + "</h6>";
+    	              function formatCurrency(price) {
+    	            	    // 숫자를 통화 형식(3자리마다 쉼표)으로 형식화하는 함수
+    	            	    return new Intl.NumberFormat('ko-KR', {
+    	            	        style: 'currency',
+    	            	        currency: 'KRW'  // 통화 코드를 적절하게 변경하세요
+    	            	    }).format(price);
+    	            	}
+    	              content += "</div>";
+    	              content += "</div>";
+    	              content += "</article>";
+    	              content += "</li>";
+    	              content += "</a>";
+    	            });
+         	  	$('.list-type').append(content);
+         	  	
+         	  	if (data.length < perpage) {
+                    // 데이터가 더 이상 없을 때 loading 숨김
+                    $('#loading').hide();
+                  }
+         	  	
+         	  	currentPage++;
+         	  	
+         	  	console.log(currentPage)
+          },
+          error: function(xhr, status, error) {
+            console.error('Error:', error);
+          }
+        });
+          
+      };
+
+      // 다음 페이지 로딩 함수 호출
+      loadNextPage();
+    }
+  });
+});
+observer.observe(target);
 </script>
 </html>

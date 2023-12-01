@@ -19,7 +19,7 @@ border-width: 0 0 1px;
 </head>
 <body>
  <!-- onsubmit return 값이 false면 안넘겨줌 -->
-	<div style="margin:100px 500px; width: 40vw; height:100vh;"  >
+	<div style="margin:100px 500px; width: 40vw; height:100vh;">
 		<form action="update" method="post">
 			<h1>회원정보수정</h1>
 			<br>

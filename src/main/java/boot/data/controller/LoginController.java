@@ -198,10 +198,12 @@ public class LoginController {
 	
 	//회원정보수정
 	@PostMapping("/update")
-	public String update(LoginDto login) {
+	public String update(LoginDto login, HttpSession session) {
 		
-		System.out.println(login);
+		//System.out.println(login);
 		service.updateuserinfo(login);
+		
+		session.setAttribute("myname", login.getU_name());
 		
 		return "redirect:main";
 	}
