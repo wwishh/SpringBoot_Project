@@ -27,10 +27,12 @@
 			<div class="sort">
 				<div class="sort_insert">
 					<!-- <a href="/form">글쓰기</a> -->
+					<c:if test="${sessionScope.loginok!=null }">
 					 <a href="/form">
 						<button style="color: black" class="write">
 						<img src="../../img/writePost.png" style="width: 20px;">글쓰기</button>
 					</a>
+					</c:if>
 				</div>			
 				<div class="sort_listType">
 					<!-- is Selected -->
