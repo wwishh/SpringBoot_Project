@@ -26,9 +26,6 @@ import boot.data.service.LoginService;
 public class LoginController {
 	
 	@Autowired
-	SangpumMapperInter sanginter;
-	
-	@Autowired
 	PurchaseMapperInter purchaseinter;
 	
 	@Autowired
@@ -123,7 +120,14 @@ public class LoginController {
 			HashMap<String, String> map = new HashMap<>();
 			
 			int check = service.loginPassCheck(u_id, u_pass);
-			int failcheck = service.failcheck(u_id);
+			boolean idcheck = service.getSerchId(u_id);
+			int failcheck =0;
+			if (idcheck) {failcheck = service.failcheck(u_id);
+			}
+			
+			
+			
+			System.out.println(service.getSerchId(u_id));
 			
 			if(check==1 && failcheck<10) {
 				session.setMaxInactiveInterval(60*60*1); //1시간
@@ -145,12 +149,13 @@ public class LoginController {
 			}else if(check==0&& failcheck>=5 && failcheck<=9) {
 				service.failcount(u_id);
 				return "quiz";
+			}else if(!idcheck) {
+				return "none";
 			}
-			else {
-				//실패시  session failcount 1씩증가 ;
-				service.failcount(u_id);
-				return "fail";
-			}
+			  else {
+		    	service.failcount(u_id);
+		        return "fail";
+		    }
 		
 		}
 		
@@ -204,8 +209,10 @@ public class LoginController {
 		LoginDto dto = service.getDataById(u_id);
 		int likes = interstinter.countlikes(u_id);
 		int purchase = purchaseinter.countpurchase(u_id);
-		int sell = sanginter.countIdOfsell(u_id);
+		int sell = purchaseinter.countIdOfsell(u_id);
+		int sellcomplete = purchaseinter.sellcomplete(u_id);
 		
+		model.addObject("sellcomplete", sellcomplete);
 		model.addObject("sell", sell);
 		model.addObject("purchase", purchase);
 		model.addObject("likes", likes);

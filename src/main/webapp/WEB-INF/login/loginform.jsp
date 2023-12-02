@@ -65,15 +65,24 @@ $(function(){
 					$(".failfont").html("로그인질문 강화합니다");
 				}else if(res=='fail'){
 					alert("아이디나 비번을 재확인해주세요");
+				}else if(res=='none'){
+					alert("없는 아이디입니다");
 				}
 			
 			}
-				
 		
-			
 			
 		});
 	});
+	
+	 $("#u_pass").keypress(function(e){
+	        //검색어 입력 후 엔터키 입력하면 조회버튼 클릭
+	        if(e.keyCode && e.keyCode == 13){
+	           $("#btnlogin").trigger("click");
+	           return false;
+	        }
+
+	     });
 	
 	
 });
@@ -86,6 +95,7 @@ function CheckCapsLock(event){
 	}
 	
 }
+
 
 </script>
 <style>
@@ -133,7 +143,7 @@ font-size: 13px;
 						<h5 class="card-title text-center">
 							<b>Log In</b>
 						</h5>
-						<form class="form-signin " method="post" action="#">
+						<form class="form-signin">
 							<div class="form-label-group">
 								<input type="text" id="u_id" name="u_id" class="form-control"
 									placeholder="id" required="required" >
@@ -223,10 +233,6 @@ function loginWithKakao() {
   }
 
 
-	
-
-
-  
 </script>
 
 </html>

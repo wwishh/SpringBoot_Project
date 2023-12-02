@@ -25,7 +25,6 @@ spring:
         10MB
       max-request-size:
         10MB
-
         
 #mybatis
 mybatis:

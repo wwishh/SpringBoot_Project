@@ -33,7 +33,11 @@ public class LoginService implements LoginServiceInter {
 	public boolean getSerchId(String u_id) {
 		// TODO Auto-generated method stub
 		int count = loginInter.getSerchId(u_id);
-        return count > 0;
+		if (count >0 )
+			return true;
+		else 
+			return false;
+        
 	}
 
 	@Override

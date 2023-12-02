@@ -36,38 +36,33 @@
 		width: auto;
 		height: auto;
 	}
-	#allsangpum{
-		display: inline-block;
-		width: auto;
-		height: auto;
-		margin-left: 150px;
+	
+	#allsangpum {
+	    display: flex;
+	    flex-wrap: wrap;
+	    justify-content: space-between;
+	    margin-left: 40px;
 	}
-	#likesangpum{
-		width: 150px;
-		border: 1px solid lightgray;
+
+	#likesangpum,
+	#buysangpum,
+	#sellsangpum,
+	#sellcomplete {
+	    width: 50%; /* 필요에 따라 조절하세요. 여유 공간을 위해 마진/패딩을 고려하세요. */
+	    margin-bottom: 20px; /* 필요에 따라 조절하세요. */
+	    margin-top: 20px;
+	    box-sizing: border-box;
+	    border: 1px solid lightgray;
 		border-radius: 30px;
 		padding: 10px 10px 10px 10px;
 		text-align: center;
 	}
-	#buysangpum{
-		width: 150px;
-		border: 1px solid lightgray;
-		border-radius: 30px;
-		padding: 10px 10px 10px 10px;
-		text-align: center;
-	}
-	#sellsangpum{
-		width: 150px;
-		border: 1px solid lightgray;
-		border-radius: 30px;
-		padding: 10px 10px 10px 10px;
-		text-align: center;
-	}
+	
 	#userdetail{
 		display: inline-block;
 		width: auto;
 		height: auto;
-		margin-left: 10%;
+		margin-left: 7%;
 	}
 
 </style>
@@ -84,7 +79,7 @@
 				<b style="font-size: 20pt;">${dto.u_name}</b><br>
 				<b style="font-size: 13pt; color: #BDBDBD;">${dto.u_email}</b><br>
 				<b style="font-size: 11pt; color: #BDBDBD;">가입일 : <fmt:formatDate value="${dto.u_writerdate}" pattern="yyyy.HH.dd"/></b><br>		
-				<button type="button" class="btn btn-outline-secondary btn-sm" 
+				<button type="button" class="btn btn-outline-success btn-sm" 
 				onclick="location.href='../updateform?u_id=${sessionScope.myid}'">회원정보수정</button>
 			</div>
 		</div>
@@ -94,15 +89,21 @@
 				<b>관심상품</b><br>
 				<b style="color: green; cursor: pointer;" onclick="location.href='interest/likesangpum?u_id=${sessionScope.myid}'">${likes }건</b>
 			</div>
-			<br>
+			
 			<div id="buysangpum">
 				<b>구매내역</b><br>
-				<b style="color: green; cursor: pointer;" onclick="location.href=''">${purchase }건</b>
+				<b style="color: green; cursor: pointer;" onclick="location.href='sangpum/buysangpum?u_id=${sessionScope.myid}'">${purchase }건</b>
 			</div>
+			
 			<br>
+			
 			<div id="sellsangpum">
-				<b>판매내역</b><br>
-				<b style="color: green; cursor: pointer;" onclick="location.href=''">${sell }건</b>
+				<b>판매중</b><br>
+				<b style="color: green; cursor: pointer;" onclick="location.href='sangpum/sellsangpum?u_id=${sessionScope.myid}'">${sell }건</b>
+			</div>
+			<div id="sellcomplete">
+				<b>판매완료</b><br>
+				<b style="color: green; cursor: pointer;" onclick="location.href=''">${sellcomplete }건</b>
 			</div>
 		</div>
 	</div>
