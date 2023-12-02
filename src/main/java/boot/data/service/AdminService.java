@@ -61,10 +61,11 @@ public class AdminService implements AdminServiceInter {
 		// TODO Auto-generated method stub
 		mapperInter.updateNotice(dto);
 	}
+
+	@Override
 	public void failreset(String u_id) {
 		// TODO Auto-generated method stub
 		mapperInter.failreset(u_id);
-		
 	}
 
 	@Override
@@ -72,6 +73,8 @@ public class AdminService implements AdminServiceInter {
 		// TODO Auto-generated method stub
 		return mapperInter.failuser();
 	}
+	
+	
 
 	
 	
