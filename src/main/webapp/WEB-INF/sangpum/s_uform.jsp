@@ -25,6 +25,7 @@
 		<div
 			class="row gx-5 gx-lg-6 row-cols-3 cols-md-6 justify-content-center">
 			<form action="sangupdate" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="j_sangid" value="${dto.j_sangid }">
 				<input type="hidden" name="member_id" value="${sessionScope.myid }">
 				<input type="hidden" name="member_name"
 					value="${sessionScope.myname }"> <input type="hidden"
