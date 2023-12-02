@@ -30,9 +30,14 @@ public class LoginService implements LoginServiceInter {
 	}
 
 	@Override
-	public int getSerchId(String u_id) {
+	public boolean getSerchId(String u_id) {
 		// TODO Auto-generated method stub
-		return loginInter.getSerchId(u_id);
+		int count = loginInter.getSerchId(u_id);
+		if (count >0 )
+			return true;
+		else 
+			return false;
+        
 	}
 
 	@Override

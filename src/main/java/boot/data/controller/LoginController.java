@@ -54,10 +54,38 @@ public class LoginController {
 			Model model)
 	{
 		model.addAttribute("login",login);
-		service.insertMember(login);
-		
-		return "/2/login/gaipsuccess";
+		 // u_id 중복 확인
+	    if (service.getSerchId(login.getU_id())) {
+	        
+	    	//중복잇고 카카오 잇는경우
+	        if(login.getU_id().contains("카카오")) {
+	        	return "login";
+	        }
+	        
+	        else {
+	        	//db에 중복된 경우
+		        model.addAttribute("error", "이미 사용 중인 아이디입니다.");
+	        	return "/2/login/joinform"; // 가입폼으로 리다이렉트
+	        }
+	    
+	    }
+	    
+	    else {
+	        //db에 어떠한 중복이 없는 경우
+	        service.insertMember(login);
+	        
+	        //db에 중복없고 가입한값이 카카오 
+		      if(login.getU_id().contains("카카오")){
+		    	   return "login";
+		       }
+	        
+	        
+	        return "/2/login/gaipsuccess"; // 가입 성공 페이지로 리다이렉트
+	 
+	    }
 	}
+	
+	
 	
 		//로그인시 메인화면 이동
 		@GetMapping("/main")
@@ -84,6 +112,7 @@ public class LoginController {
 		}
 		
 		@PostMapping("/login")
+		@ResponseBody
 		public String loginproc(@RequestParam String u_id,
 				@RequestParam String u_pass,
 				HttpSession session)
@@ -91,9 +120,16 @@ public class LoginController {
 			HashMap<String, String> map = new HashMap<>();
 			
 			int check = service.loginPassCheck(u_id, u_pass);
-			int failcheck = service.failcheck(u_id);
+			boolean idcheck = service.getSerchId(u_id);
+			int failcheck =0;
+			if (idcheck) {failcheck = service.failcheck(u_id);
+			}
 			
-			if(check==1 && failcheck<5) {
+			
+			
+			System.out.println(service.getSerchId(u_id));
+			
+			if(check==1 && failcheck<10) {
 				session.setMaxInactiveInterval(60*60*1); //1시간
 				session.setAttribute("myid", u_id);
 				session.setAttribute("loginok", "yes");
@@ -107,15 +143,19 @@ public class LoginController {
 				
 				session.removeAttribute("findid");
 				
-				return "redirect:main";
-			}else if(check==1 && failcheck>=5) {
-				return "/3/login/failfive";
-			}
-			else {
-				//실패시  session failcount 1씩증가 ;
+				return "success";
+			}else if(check==1 && failcheck>=10) {
+				return "lock";
+			}else if(check==0&& failcheck>=5 && failcheck<=9) {
 				service.failcount(u_id);
-				return "/3/login/passfail";
+				return "quiz";
+			}else if(!idcheck) {
+				return "none";
 			}
+			  else {
+		    	service.failcount(u_id);
+		        return "fail";
+		    }
 		
 		}
 		

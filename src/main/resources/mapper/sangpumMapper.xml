@@ -35,9 +35,9 @@
 	</insert>
 
 	<update id="updateSangpum" parameterType="sangpum">
-		update junggosangpum set subject=#{subject}, content=#{content}
-		<if test="photo!=null">
-			,photo=#{photo}
+		update junggosangpum set j_title=#{j_title}, j_price=#{j_price}, j_addr=#{j_addr}, j_explanation=#{j_explanation}
+		<if test="j_imageurl!='no'">
+			,j_imageurl=#{j_imageurl}
 		</if>
 		where j_sangid=#{j_sangid}
 	</update>
