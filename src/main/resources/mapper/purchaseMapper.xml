@@ -11,4 +11,26 @@
 		select count(*) from purchase where u_id=#{u_id}
 	</select>
 	
+	<select id="selectpurchase" parameterType="String" resultType="String">
+		select p_date from purchase where u_id=#{u_id}
+	</select>
+	
+	 <select id="selectbuysangpum" parameterType="String" resultType="sangpum">
+  		select * from junggosangpum where j_sangid in (
+		select j_sangid from purchase where u_id=#{u_id})
+  	</select>
+  	
+  	<select id="countIdOfsell" parameterType="String" resultType="int">
+  		select count(*) from junggosangpum where member_id=#{member_id}
+  	</select>
+  	
+  	<select id="sellsangpumlist" parameterType="String" resultType="sangpum">
+  		select * from junggosangpum where member_id=#{member_id}
+  	</select>
+  	
+  	<select id="sellcomplete" parameterType="String" resultType="int">
+  		select count(*) from junggosangpum JOIN purchase ON junggosangpum.j_sangid = purchase.j_sangid
+		where junggosangpum.member_id = #{member_id}
+  	</select>
+	
 </mapper>

@@ -40,6 +40,7 @@ public class InterestController {
 		ModelAndView model = new ModelAndView();
 		
 	 	List<SangpumDto> list = inter.selectlikesangpum(u_id);
+	 	int likescnt = inter.countlikes(u_id);
 
 	 	for(SangpumDto dto : list) {
 	 		StringTokenizer st = new StringTokenizer(dto.getJ_imageurl(),",");
@@ -48,8 +49,7 @@ public class InterestController {
 	 		
 	 		dto.setSangimg(photo);
 	 	}
-	 	//System.out.println(list);
-	 	
+	 	model.addObject("likescnt", likescnt);
 	 	model.addObject("list", list);
 	 	model.setViewName("/2/mypage/likesangpum");
 		

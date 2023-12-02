@@ -33,4 +33,6 @@ public interface LoginMapperInter {
 	public void failreset(String u_id);
 	
 	public int failcheck(String u_id);
+	
+	
 }

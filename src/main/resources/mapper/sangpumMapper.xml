@@ -15,11 +15,7 @@
   	<select id="getMainCount" resultType="int">
   		select count(*) from junggosangpum
   	</select>
-  	
-  	<select id="countIdOfsell" parameterType="String" resultType="int">
-  		select count(*) from junggosangpum where member_id=#{member_id}
-  	</select>
-  	
+ 
   	<select id="getTotalCount" parameterType="Map" resultType="int">
 		select count(*) from junggosangpum
 		<if test="searchcolumn!=null and searchword!=null">				<!-- 넘기는 값이 있다면 그 값의 갯수를 계산한다 -->
@@ -39,9 +35,9 @@
 	</insert>
 
 	<update id="updateSangpum" parameterType="sangpum">
-		update junggosangpum set subject=#{subject}, content=#{content}
-		<if test="photo!=null">
-			,photo=#{photo}
+		update junggosangpum set j_title=#{j_title}, j_price=#{j_price}, j_addr=#{j_addr}, j_explanation=#{j_explanation}
+		<if test="j_imageurl!='no'">
+			,j_imageurl=#{j_imageurl}
 		</if>
 		where j_sangid=#{j_sangid}
 	</update>
@@ -65,4 +61,5 @@
   	<update id="minusInterest" parameterType="int">
   		update junggosangpum set j_interest=j_interest-1 where j_sangid=#{num}
   	</update>
+  	
 </mapper>
