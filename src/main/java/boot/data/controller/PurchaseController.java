@@ -30,28 +30,55 @@ public class PurchaseController {
 	}
 	
 	//구매내역 리스트
-		@GetMapping("/sangpum/buysangpum")
-		public ModelAndView buysangpum(String u_id) {
+	@GetMapping("/sangpum/buysangpum")
+	public ModelAndView buysangpum(String u_id) {
+		ModelAndView model = new ModelAndView();
+		
+	 	List<SangpumDto> list = inter.selectbuysangpum(u_id);
+	 	int count = inter.countpurchase(u_id);
+	 	String[] buydate = inter.selectpurchase(u_id);
+
+	 	for(SangpumDto dto : list) {
+	 		
+	 		for(int i=0; i<buydate.length; i++) {
+		 		StringTokenizer st = new StringTokenizer(buydate[i]," ");
+			 	buydate[i] = st.nextToken();
+		 	}
+	 		
+	 		StringTokenizer st = new StringTokenizer(dto.getJ_imageurl(),",");
+	 		String photo = st.nextToken();
+	 		//System.out.println(photo);
+	 		
+	 		dto.setBuydate(buydate);
+	 		dto.setSangimg(photo);
+	 	}
+	 	
+	 	model.addObject("buydate", buydate);
+	 	model.addObject("count", count);
+	 	model.addObject("list", list);
+	 	model.setViewName("/2/mypage/buysangpum");
+		
+		return model;
+	}
+		
+		//판매중인 상품 리스트
+		@GetMapping("/sangpum/sellsangpum")
+		public ModelAndView sellsangpum(String u_id) {
 			ModelAndView model = new ModelAndView();
 			
-		 	List<SangpumDto> list = inter.selectbuysangpum(u_id);
-		 	int count = inter.countpurchase(u_id);
-		 	String buydate = inter.selectpurchase(u_id);
-		 	StringTokenizer st = new StringTokenizer(buydate," ");
-		 	buydate = st.nextToken();
+		 	List<SangpumDto> list = inter.sellsangpumlist(u_id);
 		 	
 		 	for(SangpumDto dto : list) {
-		 		st = new StringTokenizer(dto.getJ_imageurl(),",");
+		 		
+		 		StringTokenizer st = new StringTokenizer(dto.getJ_imageurl(),",");
 		 		String photo = st.nextToken();
 		 		//System.out.println(photo);
 		 		
-		 		dto.setBuydate(buydate);
 		 		dto.setSangimg(photo);
 		 	}
-		 	
-		 	model.addObject("count", count);
+
 		 	model.addObject("list", list);
-		 	model.setViewName("/2/mypage/buysangpum");
+		 	model.setViewName("/2/mypage/sellsangpum");
 			
 			return model;
 		}

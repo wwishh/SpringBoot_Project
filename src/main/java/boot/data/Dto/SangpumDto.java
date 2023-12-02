@@ -28,5 +28,5 @@ public class SangpumDto {
 	private String sangimg;
 	
 	//구매일자 메소드
-	private String buydate;
+	private String[] buydate;
 }

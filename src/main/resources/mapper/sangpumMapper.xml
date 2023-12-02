@@ -15,11 +15,7 @@
   	<select id="getMainCount" resultType="int">
   		select count(*) from junggosangpum
   	</select>
-  	
-  	<select id="countIdOfsell" parameterType="String" resultType="int">
-  		select count(*) from junggosangpum where member_id=#{member_id}
-  	</select>
-  	
+ 
   	<select id="getTotalCount" parameterType="Map" resultType="int">
 		select count(*) from junggosangpum
 		<if test="searchcolumn!=null and searchword!=null">				<!-- 넘기는 값이 있다면 그 값의 갯수를 계산한다 -->

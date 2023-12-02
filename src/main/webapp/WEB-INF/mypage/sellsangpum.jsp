@@ -11,10 +11,10 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
-	#allbuysangpum{
+	#allsellsangpum{
 		padding: 50px 50px 50px 50px;
 	}
-	.buysangpum{
+	.sellsangpum{
 		display: inline-block;
 		margin-top: 20px;
 		margin-bottom: 20px;
@@ -30,21 +30,21 @@
 </head>
 <body>
 
-	<div id="allbuysangpum">
-		<h2>구매내역</h2>
+	<div id="allsellsangpum">
+		<h2>판매중</h2>
 		<hr>
 		<input type="hidden" value="${sessionScope.myid }" id="i_id">
 		<c:if test="${count == 0}">
 			<b>등록된 상품이 없습니다.</b>
 		</c:if>
 		<c:forEach var="dto" items="${list }" varStatus="i">
-			<div class="buysangpum">
+			<div class="sellsangpum">
 				<img src="../img/${dto.sangimg }" style="width: 130px; height: 130px; cursor: pointer;" 
 				onclick="location.href='/sangpum/detail?num=${dto.j_sangid}'">
 				<div class="sangpuminfo">
 					<b>${dto.j_title }</b><br>
 					<fmt:formatNumber value="${dto.j_price }" type="currency"/><br>
-					<span>구매일자 : ${buydate[i.index]}</span>
+					<span>등록일자 : <fmt:formatDate value="${dto.j_postdate }" pattern="yyyy.MM.dd"/></span>
 				</div>
 			</div>
 		</c:forEach>

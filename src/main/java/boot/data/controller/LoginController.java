@@ -26,9 +26,6 @@ import boot.data.service.LoginService;
 public class LoginController {
 	
 	@Autowired
-	SangpumMapperInter sanginter;
-	
-	@Autowired
 	PurchaseMapperInter purchaseinter;
 	
 	@Autowired
@@ -172,8 +169,10 @@ public class LoginController {
 		LoginDto dto = service.getDataById(u_id);
 		int likes = interstinter.countlikes(u_id);
 		int purchase = purchaseinter.countpurchase(u_id);
-		int sell = sanginter.countIdOfsell(u_id);
+		int sell = purchaseinter.countIdOfsell(u_id);
+		int sellcomplete = purchaseinter.sellcomplete(u_id);
 		
+		model.addObject("sellcomplete", sellcomplete);
 		model.addObject("sell", sell);
 		model.addObject("purchase", purchase);
 		model.addObject("likes", likes);
