@@ -19,7 +19,16 @@
 #list{
 	width:auto;
 	height:auto;
+	position: relative;
 }
+
+ #result2 {
+        position: absolute;
+        z-index: 1;
+        background-color: white; /* 배경색을 흰색으로 지정해 겹치는 영역이 투명하지 않게 함 */
+        margin-top: 5px; /* 검색창과의 간격 조절 */
+        width: 200px; /* 결과 창의 폭 조절 */
+    }
 
 .sangpum{
 	cursor : pointer;
@@ -42,6 +51,36 @@ $(function(){
 	// 현재 사용자의 아이디
     var i_id = $("#myid").val();
 	//alert(i_id)
+	
+	
+	
+	$("#search2").keyup(function(e){
+         
+         var search=$(this).val();
+
+         $.ajax({
+            type:"get",
+            dataType:"json",
+            url:"/search/result",
+            data:{"search":search},
+            success:function(res){
+               var s="";
+               
+               $.each(res,function(i,dto){
+                   s+="<div class='eachdiv'>"
+                   s+="<b onclick='selectSearch()' class='searchResult'>"+dto+"</b><br>"
+                   s+="</div>"
+                });
+               
+               if(search==""){
+                  $("#result2").html("");
+               }
+               else{
+                  $("#result2").html(s);
+               }
+            }
+         });
+      });
 
 
     $("#btnsearch2").click(async function (e) {
@@ -284,6 +323,16 @@ async function getList(search, option, category) {
     });
 }
 
+function selectSearch() {
+    $(document).on("click","b.searchResult",function(event){
+       var s=$(this).html();
+       //alert(s);
+       
+       $("#search2").val(s);
+       $("#result2").html("");
+    });
+ }
+
 
 
 </script>
@@ -297,6 +346,7 @@ async function getList(search, option, category) {
       <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"
        id="search2" autocomplete="off" value="${search }" style="width:200px"/>
       <input type="button" value="검색" id="btnsearch2" class="btn btn-dark">
+      
       
       <select id="category" class="form-select" style="margin-left:50px; width:100px;">
       							<option value="all" selected="selected">전체</option>
@@ -320,6 +370,8 @@ async function getList(search, option, category) {
 								<option value="etc">기타</option>
 							</select>
   </div>
+  
+  <div id="result2"></div>
   </div>
   </div>
   </div>

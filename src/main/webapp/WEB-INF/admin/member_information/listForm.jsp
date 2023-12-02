@@ -12,6 +12,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+  <table class="board-table">
+                <thead>
+                <tr>
+                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-title">제목</th>
+                    <th>작성자</th>
+                    <th scope="col" class="th-date">등록일</th>
+                    <th>수정/삭제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="ldto" items="${list }" varStatus="i">
+                <tr>
+                    <td>${i.count }</td>
+                    <td>${ldto.u_id }</td>
+                    <td>${ldto.u_name }</td>
+                    <td>${ldto.u_email }</td>
+                    <td>${ldto.u_pass }</td>
+                    <td><fmt:formatDate value="${ldto.u_writerdate }" pattern="yyyy-MM-dd HH:mm"/></td>
+                    <td><fmt:formatDate value="${ldto.u_final_logindate }" pattern="yyyy-MM-dd HH:mm"/></td>
+                   
+					<td align="center">
+					
+					
+					<button type="button" onclick="location.href='../failreset?u_id=${ldto.u_id}'">잠금해제</button>
+					</td>
+                </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+            
+  
+	
 </body>
 </html>
