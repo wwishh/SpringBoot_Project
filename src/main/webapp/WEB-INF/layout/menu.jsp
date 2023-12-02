@@ -231,11 +231,14 @@ nav {
 
             <!-- 검색창 -->
             <div class="input-group w-25">
-               <c:if test="${sessionScope.myid == null}">
+              
+              <c:choose>
+               <c:when test="${sessionScope.myid == null}">
                   <input type="hidden" value="${sessionScope.myid = 'guest'}">
                   <i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
-               </c:if>
-               <c:if test="${sessionScope.myid != null}">
+               </c:when>
+               
+               <c:when test="${sessionScope.myid != null}">
                   <i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
                   <!-- 채팅방 , /message/getMessageList?user_id=${sessionScope.myid}-->
                   <div>
@@ -243,7 +246,11 @@ nav {
                      <i class="bi bi-bell" id="notification" style="cursor: pointer;" onclick="location.href='/goChattingRoom'"><span id="note-num"></span></i>
                      
                   </div>
-               </c:if>
+               </c:when>
+               <c:otherwise>
+               <p>와 호스기 보소</p>
+               </c:otherwise>
+               </c:choose>
                   
             </div>
 

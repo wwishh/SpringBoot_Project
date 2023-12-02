@@ -19,6 +19,13 @@ spring:
     url: jdbc:mysql://final.c3mrqflxzcg0.ap-northeast-2.rds.amazonaws.com:3306/sagobye?serverTimezone=Asia/Seoul
     username: admin
     password: rdsmysql
+  servlet:
+    multipart:
+      max-file-size:
+        10MB
+      max-request-size:
+        10MB
+        
         
   servlet:
     multipart:
