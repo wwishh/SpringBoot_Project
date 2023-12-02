@@ -1,5 +1,6 @@
 package boot.data.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.AdminLoginDto;
+import boot.data.Dto.LoginDto;
 import boot.data.Dto.NoticeDto;
 import boot.data.service.AdminService;
 import boot.data.service.LoginService;
@@ -144,10 +146,23 @@ public class AdminController {
 	
 	
 	@GetMapping("/information")
-	public String information() {
-		 service.failuser();  //페일카운트 잇는 유저 전부호출
-		 service.failreset(null); // 버튼누르면 페일카운트 10개인사람을 페일카운트0으로 초기화
-		return "/admin/admin/member_information/listForm";
+	public ModelAndView information() {
+		List<LoginDto> list = new ArrayList<>();
+		ModelAndView model= new ModelAndView();
+		 
+		list= service.failuser();  //페일카운트 잇는 유저 전부호출
+		
+		 model.addObject("list",list);
+	
+		
+		 model.setViewName("/admin/admin/member_information/listForm");
+		 return model;
+	}
+	@GetMapping("/failreset")
+	public String failreset(@RequestParam String u_id) {
+		
+		service.failreset(u_id); // 버튼누르면 페일카운트 10개인사람을 페일카운트0으로 초기화
+		return "redirect:information";
 	}
 	
 	

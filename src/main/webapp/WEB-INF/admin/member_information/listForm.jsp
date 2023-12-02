@@ -30,15 +30,13 @@
                     <td>${ldto.u_name }</td>
                     <td>${ldto.u_email }</td>
                     <td>${ldto.u_pass }</td>
-                    <td><fmt:formatDate value="${ldto.u_writedate }" pattern="yyyy-MM-dd HH:mm"/></td>
+                    <td><fmt:formatDate value="${ldto.u_writerdate }" pattern="yyyy-MM-dd HH:mm"/></td>
                     <td><fmt:formatDate value="${ldto.u_final_logindate }" pattern="yyyy-MM-dd HH:mm"/></td>
-                    <td align="center">
-					<div>
-					<jsp:include page="notice_correction.jsp?num=${n_dto.n_num }"/>
-					</div>
-					<button type="button" num="${ldto.n_num }" onclick="#">수정</button>
-					<button type="button" num="${ldto.n_num }" onclick="#">삭제</button>
-					<button type="button" onclick="location.href='../heje'">잠금해제</button>
+                   
+					<td align="center">
+					
+					
+					<button type="button" onclick="location.href='../failreset?u_id=${ldto.u_id}'">잠금해제</button>
 					</td>
                 </tr>
                 </c:forEach>
