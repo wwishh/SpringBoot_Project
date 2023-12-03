@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gaegu:wght@300&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
 	#backgrounddiv{
@@ -64,8 +65,17 @@
 		height: auto;
 		margin-left: 7%;
 	}
+	
+.custom-tooltip .tooltip-inner {
+    background-color: white; /* 배경색을 원하는 색상으로 변경하세요 */
+    color : black;
+    font-weight:bold;
+     max-width: none !important; /* 기존의 max-width 스타일을 무시하고 원하는 너비로 설정합니다. */
+    width:400px;
+ }
 
 </style>
+
 </head>
 <body>
 <div id="backgrounddiv">
@@ -82,6 +92,9 @@
 				<button type="button" class="btn btn-outline-success btn-sm" 
 				onclick="location.href='../updateform?u_id=${sessionScope.myid}'">회원정보수정</button>
 			</div>
+			<br><i class="bi bi-pencil-fill" style="color:${color}">회원님의 등급은 ${color}입니다</i>
+			<!-- 아이콘에 툴팁 추가 -->
+        <i class="bi bi-question-circle" style="margin-left:3px; color:${color}" data-bs-placement="bottom"></i>
 		</div>
 		
 		<div id="allsangpum">
@@ -108,5 +121,22 @@
 		</div>
 	</div>
 </div>
+
+<script>
+
+                    var tooltipEl = document.createElement('div');
+                    tooltipEl.innerHTML = '등급은 상품 판매 완료 건수에 따라 정해집니다<br><b style="color:red">red : 0 - 5</b> | <b style="color:orange">orange 5 - 10</b> | ' + 
+                    '<b style="color:blue">blue 10 - 20</b> | <b style="color:purple">purple 20+</b>';
+                    
+                    var tooltip = new bootstrap.Tooltip(document.querySelector('.bi-question-circle'), {
+                        container: 'body',
+                        html: true,
+                        title: tooltipEl,
+                        template: '<div class="tooltip custom-tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'	   
+                    });
+
+            </script>
+
+
 </body>
 </html>

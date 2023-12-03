@@ -21,6 +21,8 @@ import boot.data.mapper.InterestMapperInter;
 import boot.data.mapper.PurchaseMapperInter;
 import boot.data.mapper.SangpumMapperInter;
 import boot.data.service.LoginService;
+import boot.data.service.SangpumService;
+import boot.data.service.SangpumServiceInter;
 
 @Controller
 public class LoginController {
@@ -33,6 +35,9 @@ public class LoginController {
 	
 	@Autowired
 	LoginService service;
+	
+	@Autowired
+	SangpumService sangService;
 	
 	//로그인폼으로
 	@GetMapping("/loginform")
@@ -212,11 +217,24 @@ public class LoginController {
 		int sell = purchaseinter.countIdOfsell(u_id);
 		int sellcomplete = purchaseinter.sellcomplete(u_id);
 		
+		//판매 상품 완료 건수 구해서 연필 색상 구하기
+		int count = sangService.salesCount(u_id);
+		String color ="";
+		if(count<=5)
+			color =  "red";
+		else if(count > 5 && count <=10)
+			color = "orange";
+		else if(count > 10 && count <=20)
+			color = "blue";
+		else
+			color = "purple";
+		
 		model.addObject("sellcomplete", sellcomplete);
 		model.addObject("sell", sell);
 		model.addObject("purchase", purchase);
 		model.addObject("likes", likes);
 		model.addObject("dto", dto);
+		model.addObject("color",color);
 		model.setViewName("/2/login/mypage");
 		
 		return model;
