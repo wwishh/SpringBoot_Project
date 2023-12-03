@@ -62,4 +62,8 @@
   		update junggosangpum set j_interest=j_interest-1 where j_sangid=#{num}
   	</update>
   	
+  	<select id="salesCount" parameterType="String" resultType="int">
+  		SELECT count(*) FROM junggosangpum JOIN purchase ON junggosangpum.j_sangid = purchase.j_sangid where junggosangpum.member_id = #{u_id};
+  	</select>
+  	
 </mapper>

@@ -18,4 +18,7 @@ public interface SangpumServiceInter {
 	public void updateSangpum(SangpumDto dto);
 	public void deleteSangpum(int j_sangid);
 	public void updateInterest(int num);
+	
+	//상품 판매 완료 건수
+	public int salesCount(String u_id);
 }

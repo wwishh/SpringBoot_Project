@@ -22,5 +22,9 @@
 	<delete id="deleteAnswer" parameterType="String">
 		delete from answer where idx=#{idx}
 	</delete>
+	
+	<select id="getAnswerCount" parameterType="String" resultType="int">
+		SELECT count(*) FROM answer JOIN junggosangpum ON answer.num = junggosangpum.j_sangid where answer.num = #{num};
+	</select>
 
 </mapper>
