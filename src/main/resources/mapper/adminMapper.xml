@@ -19,6 +19,10 @@
 	<select id="getAllNotice" resultType="noticeDto">
 		select * from notice order by n_num
 	</select>
+	
+	<select id="getAllNoticeList" parameterType="HashMap" resultType="noticeDto">
+		select * from notice order by n_num desc limit #{start},#{perPage}
+	</select>
 	<select id="getNoticeNum" parameterType="int" resultType="noticeDto">
 		select * from notice where n_num=#{n_num}
 	</select>
@@ -39,10 +43,13 @@
   	select * from user where failcount>=10 
   	</select>
   
-  
+  	<select id="userList" resultType="user">
+  		select * from user order by u_id
+  	</select>
   	
-  	
-  	
-  	
+  	<select id="getTotalNoticeCount" resultType="int">
+  		select count(*) from notice
+  	</select>
+
 	
 </mapper>

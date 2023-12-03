@@ -25,7 +25,7 @@
         // 여기에 "numValue"를 사용하여 필요한 작업을 수행
         // 예를 들어, 해당 "num"에 해당하는 공지사항을 조회하거나 다양한 동적 작업 수행
 %>
-        <button class="check123" value="<%= numValue %>">수정</button>
+        <button class="check123 btn btn-outline-info" value="<%= numValue %>">수정</button>
         <input id="modalcheck" type="hidden" value=<%= numValue %>>
         <!-- 여기에 추가적인 내용을 표시하거나 작업 수행 -->
 

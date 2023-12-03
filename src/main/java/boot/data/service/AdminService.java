@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import boot.data.Dto.AdminLoginDto;
 import boot.data.Dto.LoginDto;
 import boot.data.Dto.NoticeDto;
+import boot.data.Dto.UserDto;
 import boot.data.mapper.AdminMapper;
 
 @Service
@@ -39,9 +40,12 @@ public class AdminService implements AdminServiceInter {
 	}
 
 	@Override
-	public List<NoticeDto> getAllNotice() {
+	public List<NoticeDto> getAllNoticeList(int start,int perPage) {
 		// TODO Auto-generated method stub
-		return mapperInter.getAllNotice();
+		HashMap<String, Integer>map=new HashMap<>();
+		map.put("start", start);
+		map.put("perPage", perPage);
+		return mapperInter.getAllNoticeList(map);
 	}
 
 	@Override
@@ -72,6 +76,24 @@ public class AdminService implements AdminServiceInter {
 	public List<LoginDto> failuser() {
 		// TODO Auto-generated method stub
 		return mapperInter.failuser();
+	}
+
+	@Override
+	public List<UserDto> userList() {
+		// TODO Auto-generated method stub
+		return mapperInter.userList();
+	}
+
+	@Override
+	public int getTotalNoticeCount() {
+		// TODO Auto-generated method stub
+		return mapperInter.getTotalNoticeCount();
+	}
+
+	@Override
+	public List<NoticeDto> getAllNotice() {
+		// TODO Auto-generated method stub
+		return mapperInter.getAllNotice();
 	}
 	
 	

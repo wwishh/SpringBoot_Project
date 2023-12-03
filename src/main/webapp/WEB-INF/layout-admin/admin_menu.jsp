@@ -70,7 +70,7 @@
                     <li>
                         <a href="information">
                             <i class="material-icons">text_fields</i>
-                            <span>개인회원정보</span>
+                            <span>잠금해제</span>
                         </a>
                     </li>
                     <li>
@@ -80,9 +80,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
+                        <a href="a_userlist" class="menu-toggle">
                             <i class="material-icons">widgets</i>
-                            <span>Widgets</span>
+                            <span>회원정보</span>
                         </a>
                         <ul class="ml-menu">
                             <li>

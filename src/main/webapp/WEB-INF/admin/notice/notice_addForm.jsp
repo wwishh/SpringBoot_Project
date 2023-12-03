@@ -14,7 +14,7 @@
 <body>
 
 <!-- 모달 트리거 버튼 -->
-    <button style="position: absolute; right: 10%;" id="modalButton">공지사항 추가</button>
+    <button class="btn btn-outline-success" style="position: absolute; right: 10%;" id="modalButton">공지사항 추가</button>
 
     <!-- 모달 창 -->
     <div id="myModal" class="modal">
