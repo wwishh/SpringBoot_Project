@@ -25,6 +25,8 @@ public class PurchaseController {
 	@ResponseBody
 	public String insert(String u_id, int j_sangid, String p_method) {
 		inter.insertPurchase(u_id, j_sangid, p_method);
+		//구매하면 판매완료 컬럼 1로 변경
+		inter.updatesellcomplete(j_sangid);
 		
 		return "insert";
 	}
@@ -89,26 +91,26 @@ public class PurchaseController {
 			ModelAndView model = new ModelAndView();
 			
 		 	List<SangpumDto> list = inter.sellcomplete(u_id);
-		 	String[] selldate = inter.selectpurchase(u_id);
+		 	String[] selectselldate = inter.selectselldate(u_id);
 		 	int countsell = inter.countsellcomplete(u_id);
 
 		 	for(SangpumDto dto : list) {
 		 		
-		 		for(int i=0; i<selldate.length; i++) {
-			 		StringTokenizer st = new StringTokenizer(selldate[i]," ");
-			 		selldate[i] = st.nextToken();
+		 		for(int i=0; i<selectselldate.length; i++) {
+			 		StringTokenizer st = new StringTokenizer(selectselldate[i]," ");
+			 		selectselldate[i] = st.nextToken();
 			 	}
 		 		
 		 		StringTokenizer st = new StringTokenizer(dto.getJ_imageurl(),",");
 		 		String photo = st.nextToken();
 		 		//System.out.println(photo);
 		 		
-		 		dto.setBuydate(selldate);
+		 		dto.setBuydate(selectselldate);
 		 		dto.setSangimg(photo);
 		 	}
 		 	
 		 	model.addObject("countsell", countsell);
-		 	model.addObject("selldate", selldate);
+		 	model.addObject("selectselldate", selectselldate);
 		 	model.addObject("list", list);
 		 	model.setViewName("/2/mypage/sellcomplete");
 			
