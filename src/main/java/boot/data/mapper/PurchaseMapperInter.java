@@ -17,11 +17,13 @@ public interface PurchaseMapperInter {
 	//구매한 날짜 출력
 	public String[] selectpurchase(String u_id);
 	
-	//판매완료 상품 개수
-	public int sellcomplete(String m_id);
-	
 	//판매중인 상품 개수
 	public int countIdOfsell(String u_id);
 	//판매중인 상품 출력
 	public List<SangpumDto> sellsangpumlist(String u_id);
+	
+	//판매완료 상품 개수
+	public int countsellcomplete(String u_id);
+	//판매안료 상품 출력
+	public List<SangpumDto> sellcomplete(String u_id);
 }

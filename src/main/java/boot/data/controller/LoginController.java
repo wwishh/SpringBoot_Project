@@ -215,7 +215,7 @@ public class LoginController {
 		int likes = interstinter.countlikes(u_id);
 		int purchase = purchaseinter.countpurchase(u_id);
 		int sell = purchaseinter.countIdOfsell(u_id);
-		int sellcomplete = purchaseinter.sellcomplete(u_id);
+		int sellcomplete = purchaseinter.countsellcomplete(u_id);
 		
 		//판매 상품 완료 건수 구해서 연필 색상 구하기
 		int count = sangService.salesCount(u_id);
