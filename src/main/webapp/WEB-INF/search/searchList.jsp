@@ -127,8 +127,10 @@ $(function(){
                 var i_sangpum = dto.j_sangid;
                 var imagePaths = dto.j_imageurl.split(',');
 
-                var result = await intertestCount(i_id, i_sangpum);
+                var result = await interestCount(i_id, i_sangpum);
+                var aCount = await answerCount(i_sangpum);
                 console.log("Interest Count Result:", result);
+                console.log("Answer Count:", aCount);
 
                 s += "<div style='display : inline-block;'>";
                 s += "<div class='sangpum'>";
@@ -140,11 +142,14 @@ $(function(){
                 s += "</div>";
                 s += "<div style='margin-left:20px;'>";
                 s += "<i class='bi bi-eye-fill'>" + dto.j_readcount + "</i>&nbsp;&nbsp;";
+                s+= "<i class='bi bi-chat-left-dots-fill' style='margin-right : 5px'>" + aCount + "</i>";
                 if (result == 1) {
                     s += "<i class='bi bi-heart-fill interest' style='color:red' num='" + dto.j_sangid + "'>" + dto.j_interest + "</i>";
                 } else {
                     s += "<i class='bi bi-heart-fill interest' num='" + dto.j_sangid + "'>" + dto.j_interest + "</i>";
                 }
+                
+                
 
                 s += "</div>";
                 s += "</div>";
@@ -167,6 +172,7 @@ $(function(){
         }
     });
 	
+    //처음 검색 결과 창 진입 시 리스트 출력 
 	$("#btnsearch2").click();
     
   
@@ -269,7 +275,7 @@ $(document).on("click","div.sangpum", function(event){
 	location.href="../sangpum/detail?num=" + num;
 });
 
-async function intertestCount(i_id, i_sangpum){
+async function interestCount(i_id, i_sangpum){
 	
 	return new Promise(function(resolve, reject) {
         $.ajax({
@@ -288,40 +294,26 @@ async function intertestCount(i_id, i_sangpum){
     });
 }
 
-
-async function getCount(search, category) {
-    return new Promise(function (resolve, reject) {
-        $.ajax({
-            type: "get",
-            dataType: "json",
-            url: "/search/sangpumCount",
-            data: { "search": search, "category": category },
-            success: function (res) {
+async function answerCount(i_sangpum){
+	return new Promise(function(resolve, reject){
+		$.ajax({
+			type:"get",
+			dataType:"html",
+			url:"/answer/getAnswerCount",
+			data:{"num":i_sangpum},
+			success:function(res){
+				console.log(res);
                 resolve(res);
             },
-            error: function (error) {
+            error: function(error) {
                 reject(error);
             }
-        });
-    });
+		});
+	});
 }
 
-async function getList(search, option, category) {
-    return new Promise(function (resolve, reject) {
-        $.ajax({
-            type: "get",
-            dataType: "json",
-            url: "/search/list",
-            data: { "search": search, "option": option, "category": category },
-            success: function (res) {
-                resolve(res);
-            },
-            error: function (error) {
-                reject(error);
-            }
-        });
-    });
-}
+
+
 
 function selectSearch() {
     $(document).on("click","b.searchResult",function(event){

@@ -37,5 +37,6 @@ public interface SearchMapperInter {
 	
 	//최근 검색어 모두삭제
 	public void allrecentdelete(String s_id);
+
 	
 }

@@ -18,8 +18,7 @@ public class SearchController {
 
 	@Autowired
 	SearchMapperInter inter;
-	
-	
+		
 	@GetMapping("/search/result")
 	@ResponseBody
 	public List<String> result(String search) {
@@ -83,6 +82,8 @@ public class SearchController {
 	 public void allrecentdelete(String s_id) {
 		 inter.allrecentdelete(s_id); 
 	 }
+	 
+	 
 	 
 	
 }
