@@ -29,11 +29,11 @@
   	</select>
   	
   	<select id="searchSave" parameterType="String" resultType="searchdto">
-  		select * from searchsave where s_id=#{s_id} order by s_num desc limit 10
+  		select * from searchsave where s_id=#{s_id} order by s_num desc limit 7
   	</select>
   	
   	<select id="bestsearch" resultType="String">
-  		select j_title from junggosangpum order by j_readcount limit 10
+  		select j_title from junggosangpum order by j_readcount limit 20
   	</select>
   	
   	<insert id="searchsaveinsert" parameterType="String">

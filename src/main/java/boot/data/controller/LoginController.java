@@ -210,7 +210,7 @@ public class LoginController {
 		int likes = interstinter.countlikes(u_id);
 		int purchase = purchaseinter.countpurchase(u_id);
 		int sell = purchaseinter.countIdOfsell(u_id);
-		int sellcomplete = purchaseinter.sellcomplete(u_id);
+		int sellcomplete = purchaseinter.countsellcomplete(u_id);
 		
 		model.addObject("sellcomplete", sellcomplete);
 		model.addObject("sell", sell);

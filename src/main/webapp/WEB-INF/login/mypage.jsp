@@ -103,7 +103,7 @@
 			</div>
 			<div id="sellcomplete">
 				<b>판매완료</b><br>
-				<b style="color: green; cursor: pointer;" onclick="location.href=''">${sellcomplete }건</b>
+				<b style="color: green; cursor: pointer;" onclick="location.href='sangpum/sellcomplete?u_id=${sessionScope.myid}'">${sellcomplete }건</b>
 			</div>
 		</div>
 	</div>

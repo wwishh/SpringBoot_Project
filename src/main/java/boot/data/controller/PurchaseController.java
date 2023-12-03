@@ -83,4 +83,36 @@ public class PurchaseController {
 			return model;
 		}
 		
+		//판매완료 상품 리스트
+		@GetMapping("/sangpum/sellcomplete")
+		public ModelAndView sellcomplete(String u_id) {
+			ModelAndView model = new ModelAndView();
+			
+		 	List<SangpumDto> list = inter.sellcomplete(u_id);
+		 	String[] selldate = inter.selectpurchase(u_id);
+		 	int countsell = inter.countsellcomplete(u_id);
+
+		 	for(SangpumDto dto : list) {
+		 		
+		 		for(int i=0; i<selldate.length; i++) {
+			 		StringTokenizer st = new StringTokenizer(selldate[i]," ");
+			 		selldate[i] = st.nextToken();
+			 	}
+		 		
+		 		StringTokenizer st = new StringTokenizer(dto.getJ_imageurl(),",");
+		 		String photo = st.nextToken();
+		 		//System.out.println(photo);
+		 		
+		 		dto.setBuydate(selldate);
+		 		dto.setSangimg(photo);
+		 	}
+		 	
+		 	model.addObject("countsell", countsell);
+		 	model.addObject("selldate", selldate);
+		 	model.addObject("list", list);
+		 	model.setViewName("/2/mypage/sellcomplete");
+			
+			return model;
+		}
+		
 }
