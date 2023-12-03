@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import boot.data.Dto.AnswerDto;
@@ -53,4 +54,16 @@ public class AnswerController {
 	public void update(AnswerDto dto) {
 		inter.updateAnswer(dto);
 	}
+	
+	//댓글 갯수
+	@GetMapping("/getAnswerCount")
+	 @ResponseBody
+	 public List<Integer> answerCount(String num) {
+		
+		List<Integer> countList = new ArrayList<>();
+		
+		countList = inter.getAnswerCount(num);
+		
+		 return countList;
+	 }
 }
