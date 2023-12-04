@@ -86,7 +86,6 @@ public class SangpumController {
 		inter.updateReadCount(num);
 
 		SangpumDto dto = inter.getSangpum(num);
-<<<<<<< HEAD
 		
 		int roomCnt = roomservice.getCountAllRoomsBySangpum(dto.getJ_sangid());
 		
@@ -94,11 +93,6 @@ public class SangpumController {
 		
 		model.addObject("roomCnt", roomCnt);
 		
-=======
-
-		model.addObject("dto", dto);
-
->>>>>>> 27daed0aa4beb509f45c84800066156a8c4855bd
 		model.setViewName("/2/detail/detail");
 
 		return model;
