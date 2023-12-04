@@ -180,11 +180,73 @@ public class LoginController {
 		{
 			return "/2/login/findidform";
 		}
+		
+		//로그인페이지에서 비밀번호 찾기버튼 눌러서 폼으로 이동하기
 		@GetMapping("/pwsearch")
 		public String pwsearch()
 		{
 			return "/2/login/findpwform";
 		}
+		
+		
+		
+		//비밀번호 찾기폼에서 인증번호 확인되면 새로운비밀번호설정폼으로 이동시킴
+		@PostMapping("/findpw")
+		public ModelAndView findpw(@RequestParam String u_id,
+				@RequestParam String u_hp
+				)
+		{
+			ModelAndView model = new ModelAndView();
+			HashMap<String, String> map = new HashMap<>();
+			
+			//System.out.println(u_id);
+			service.findpwstart(u_id, u_hp);
+			
+			model.addObject("u_id", u_id);
+			model.setViewName("/2/login/findpwform2");
+			
+			return model;
+		}
+		@PostMapping("/checkuserinfo")
+		@ResponseBody
+		public String checkuserinfo(@RequestParam String u_id,
+		@RequestParam String u_hp,
+		HttpSession session)
+		{
+		int codecheck=service.findpwstart(u_id, u_hp);
+		if(codecheck==1) {
+			return "match";
+		}
+		else {
+			return "fail";
+		}
+		
+		}
+		
+
+		
+		//비밀번호 설정폼에서 버튼누르면 새로운비밀번호로 변경
+		@PostMapping("/pwupdate")
+		@ResponseBody
+		public String pwupdate(@RequestParam String u_id,
+				@RequestParam String pass1,
+				@RequestParam String pass2
+				)
+		{
+			String u_pass = pass1;
+			//System.out.println(u_id);
+			if(pass1.equals(pass2)) {
+				service.pwchange(u_id,u_pass);
+				return "success";
+			}
+			else {
+				return "fail";
+			}
+		}
+			
+		
+		
+		
 		@PostMapping("/findid")
 		public String findid(@RequestParam String u_name,
 				@RequestParam String u_email,

@@ -68,7 +68,7 @@ $(function(){
 	
 	//댓글 삭제
 	$(document).on("click","i.del", function(event){
-		var idx = $(".idx").val();
+		var idx = $(this).attr("idx");
 		//alert(idx);
 		
 		$.ajax({
@@ -85,7 +85,7 @@ $(function(){
 	
 	//댓글 수정창 띄우기
 	$(document).on("click","i.mod", function(){
-		idx = $(".idx").val();
+		idx = $(this).attr("idx");
 		//alert(idx)
 		
 		$.ajax({
@@ -189,11 +189,11 @@ function list(){
 
 			$.each(res,function(i,dto){
 				s+="<b>" +dto.name+"</b>: " + dto.content;
-				s+="<span class='day'>" + dto.writeday+ "</span>";
-				s+='<input type="hidden" class="idx" value="'+dto.idx+'">';
+				s+="<span class='day' style='margin-left:15px'>" + dto.writeday + "</span>";
 				if(loginok!=null&&myid==dto.myid){
-					s+= '<i class="bi bi-pencil-square mod" style="cursor:pointer"></i><i class="bi bi-trash3-fill del" style="cursor:pointer"></i><br>'
+					s+= '<i class="bi bi-pencil-square mod" style="cursor:pointer" idx="'+dto.idx+'"></i><i class="bi bi-trash3-fill del" style="cursor:pointer" idx="'+dto.idx+'"></i>';
 				}
+				s+="<br>";
 			})
 			
 			

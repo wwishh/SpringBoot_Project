@@ -13,26 +13,25 @@
 </head>
 <body>
   <table class="board-table">
-                <thead>
-                <tr>
-                    <th scope="col" class="th-num">번호</th>
-                    <th scope="col" class="th-title">제목</th>
-                    <th>작성자</th>
-                    <th scope="col" class="th-date">등록일</th>
-                    <th>수정/삭제</th>
+                
+                <tr align="center">
+                    <th>num</th>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>email</th>
+                    <th>pass</th>
+                    <th>Lock</th>
                 </tr>
-                </thead>
-                <tbody>
+                
+                
                 <c:forEach var="ldto" items="${list }" varStatus="i">
-                <tr>
+                <tr align="center">
                     <td>${i.count }</td>
                     <td>${ldto.u_id }</td>
                     <td>${ldto.u_name }</td>
                     <td>${ldto.u_email }</td>
                     <td>${ldto.u_pass }</td>
-                    <td><fmt:formatDate value="${ldto.u_writerdate }" pattern="yyyy-MM-dd HH:mm"/></td>
-                    <td><fmt:formatDate value="${ldto.u_final_logindate }" pattern="yyyy-MM-dd HH:mm"/></td>
-                   
+                  	
 					<td align="center">
 					
 					
@@ -40,7 +39,7 @@
 					</td>
                 </tr>
                 </c:forEach>
-                </tbody>
+               
             </table>
             
   
