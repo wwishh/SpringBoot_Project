@@ -33,30 +33,39 @@ $(function(){
         }
     });
     
-    // u_pass 입력란 값이 변경될 때마다 호출되는 이벤트 처리
+ // u_pass 입력란 값이 변경될 때마다 호출되는 이벤트 처리
     $("#u_pass").on('input', function() {
         // 비밀번호 입력 값 가져오기
         var password = $(this).val();
 
         // 비밀번호가 특수문자, 알파벳, 숫자를 각각 1개 이상 포함하는지 검사
         var regex = /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z])(?=.*\d).{8,16}$/;
-
+    	
+        // 비밀번호 길이가 8자 미만인지 체크
+        var isLengthShort = password.length < 8;
+        
+        
         // 비밀번호 길이가 16자를 초과하는지 확인
-        var isLengthValid = password.length <= 16;
+        var isLengthLong = password.length > 16;
+        
+         
 
-        if (regex.test(password) && isLengthValid) {
+        if (!isLengthShort && regex.test(password) && !isLengthLong) {
             // 조건에 맞으면 메시지를 양식맞음으로 변경
             $(".passcheck").html("양식과 일치합니다").css("color", "green");
         } else {
             // 조건에 맞지 않으면 메시지를 양식틀림으로 변경
-            $(".passcheck").html("비밀번호는 특수문자, 알파벳, 숫자가 각각 1개 이상 포함되어야 하며 8자에서 16자 사이여야 합니다.").css("color", "red");
-
-            // 비밀번호 길이가 16자를 초과하는 경우
-            if (password.length > 16) {
+            if (isLengthShort) {
+                $(".passcheck").html("비밀번호는 8자 이상이어야 합니다.").css("color", "red");
+            } else if (isLengthLong) {
                 $(".passcheck").html("비밀번호는 16자를 초과할 수 없습니다.").css("color", "red");
+            } else {
+                $(".passcheck").html("비밀번호는 특수문자, 알파벳, 숫자가 각각 1개 이상 포함되어야 하며 8자에서 16자 사이여야 합니다.").css("color", "red");
             }
         }
     });
+
+
     
     //잇는거 재가입안되게
     <c:if test="${not empty error}">
