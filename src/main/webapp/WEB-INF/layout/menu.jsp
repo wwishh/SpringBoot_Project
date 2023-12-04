@@ -235,8 +235,6 @@ nav{
                      <li><a class="dropdown-item" href="/">New Arrivals</a></li>
                   </ul></li>
             </ul>
-
-
             <div style="justify-content: space-between;">
             <c:if test="${sessionScope.loginok==null}">
             <button type="button" class="btn btn-outline-primary" onclick="location.href='../loginform'">로그인</button>

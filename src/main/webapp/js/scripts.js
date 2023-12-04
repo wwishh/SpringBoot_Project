@@ -14,7 +14,7 @@ function listShow() {
 	document.getElementById("addrType").style.display = "none";
 	document.getElementById("listType").style.display = "block";
 	document.getElementById("cardType").style.display = "none";
-	
+	document.getElementById("pageList").style.display = "";
 	document.getElementById("pageList").style.display = "block";
 	}
 function cardShow() {
