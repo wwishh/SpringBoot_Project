@@ -44,7 +44,9 @@ public class AdminController {
 				
 					return "/3/adminlogin/adminLoginForm";
 				}
-				
+				model.addAttribute("t_u_l_count", service.adminTodayLogin());
+				model.addAttribute("y_u_l_count", service.adminYesterdayLogin());
+				model.addAttribute("w_u_l_count", service.adminWeekLogin());
 				return "/admin/layout-admin/admin_main/admin_main";
 	}
 	
