@@ -31,5 +31,3 @@ mybatis:
   type-aliases-package: boot.data.*
   mapper-locations:
   - mapper/**/*.xml
-
-
