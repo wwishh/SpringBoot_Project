@@ -261,7 +261,7 @@ $(function() {
 				</p>
 			</div>
 			<div>
-				<small class="text-secondary">관심 ${dto.j_interest } 채팅 아직없음 조회 ${dto.j_readcount }</small>
+				<small class="text-secondary">관심 ${dto.j_interest } 채팅 ${roomCnt} 조회 ${dto.j_readcount }</small>
            		<img src="../img/kakaopay.png" style="width:70px; height:30px" id="iamportPayment"> 
            		<img alt="" src="../img/toss.png" style="width:70px; height:30px" id="tossPayment">
 			</div>

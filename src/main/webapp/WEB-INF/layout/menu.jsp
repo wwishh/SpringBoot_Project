@@ -60,28 +60,61 @@ nav{
 
 </style>
 <script type="text/javascript">
+
+	var ws2;
+	
+	//웹소켓 오픈(메시지 알림)
+	function wsOpen2(){
+		ws2 = new WebSocket("ws://" + location.host + "/chating");
+		wsEvt2();
+	}
+	
+	function wsEvt2(){
+		ws2.onopen = function(data) {
+			//소켓이 열리면 초기화 세팅하기
+			getMsgAlarm();
+		}
+	
+		//메시지 잘 들어왔을 때 실행하는 내용
+		ws2.onmessage = function(data){
+			getMsgAlarm(); //메시지 개수 확인->알림표시
+		}
+	}
+	
+	function getMsgAlarm(){
+		
+		var user_id = "${sessionScope.myid}";
+		   
+		   if(user_id!="guest"){
+			   $.ajax({
+				   type:"get",
+				   dataType:"json",
+				   url:"/message/totalAlarm",
+				   data:{"user_id":user_id},
+				   success:function(res){
+					   
+					   if(res>0){//알림이 있을 경우
+							$(".note-num").text(res);
+					   		$(".note-num").show();
+					   }
+					   
+				   }
+			   });
+		   }
+		
+		
+	}
+	
+
    $(function(){
+	   
+	   wsOpen2(); //웹소켓 열기
 	   
 	   $(".note-num").hide();
 	   
-	   var user_id = "${sessionScope.myid}";
+	   getMsgAlarm();
 	   
-	   if(user_id!="guest"){
-		   $.ajax({
-			   type:"get",
-			   dataType:"json",
-			   url:"/message/totalAlarm",
-			   data:{"user_id":user_id},
-			   success:function(res){
-				   
-				   if(res!=0){//알림이 있을 경우
-						$(".note-num").text(res);
-				   		$(".note-num").show();
-				   }
-				   
-			   }
-		   });
-	   }
+	   
 	   
       $("#search").keyup(function(){
          
@@ -214,7 +247,7 @@ nav {
 				<!-- 검색창 -->
 				<div class="input-group w-25">
 					<c:if test="${sessionScope.myid == null}">
-						${sessionScope.myid = "guest"}
+						<input type="hidden" value="${sessionScope.myid = 'guest'}">
 						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
 					</c:if>
 					<c:if test="${sessionScope.myid != null}">
@@ -228,21 +261,6 @@ nav {
 					</c:if>
 						
 				</div>
-				
-				
-				
-						<input type="hidden" value="${sessionScope.myid = 'guest'}">
-					</c:if>
-						<i class="bi bi-search"
-							onclick="location.href='/search?s_id=${sessionScope.myid}'"
-							style="cursor: pointer;"></i>
-
-					</div>
-
-					<div>
-						<i class="bi bi-bell-fill alarmBtn" style="cursor: pointer;"></i>
-					</div>
-
 
 			</div>
 			

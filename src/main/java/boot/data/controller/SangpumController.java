@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import boot.data.Dto.SangpumDto;
+import boot.data.service.MessageRoomService;
 import boot.data.service.SangpumService;
 import boot.data.mapper.InterestMapperInter;
 import boot.data.mapper.SangpumMapperInter;
@@ -35,6 +36,9 @@ public class SangpumController {
 		
 	@Autowired
 	SangpumService service;
+	
+	@Autowired
+	MessageRoomService roomservice;
 	
 	@GetMapping("/form")
 	public String insertform() {
@@ -81,7 +85,11 @@ public class SangpumController {
 		
 		SangpumDto dto = inter.getSangpum(num);
 		
+		int roomCnt = roomservice.getCountAllRoomsBySangpum(dto.getJ_sangid());
+		
 		model.addObject("dto",dto);
+		
+		model.addObject("roomCnt", roomCnt);
 		
 		model.setViewName("/2/detail/detail");
 		
