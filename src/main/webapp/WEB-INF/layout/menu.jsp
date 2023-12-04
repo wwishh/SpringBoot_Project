@@ -58,6 +58,24 @@ nav{
     position: relative;
 }
 
+.b_mo{
+	position: absolute;
+	top: 5vh;
+	right: 8vw;
+}
+
+.qwe{
+	position: absolute;
+	top: 2vh;
+	right: -15vw;
+}
+.qwe1{
+	position: absolute;
+	top: 2vh;
+	right: 10vw;
+}
+
+
 </style>
 <script type="text/javascript">
    $(function(){
@@ -153,34 +171,11 @@ nav{
    
    
 </script>
-<style type="text/css">
-.searchResult {
-   cursor: pointer;
-}
 
-nav {
-   font-size: 1.5em;
-}
-#b_mo{
-	position: absolute;
-	top: 5vh;
-	right: 8vw;
-}
-
-#qwe{
-	position: absolute;
-	top: 2vh;
-	right: -15vw;
-}
-.qwe1{
-	position: absolute;
-	top: 2vh;
-	right: 10vw;
-}
-
-</style>
 </head>
 <body>
+
+
    <!-- Navigation-->
    <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container px-4 px-lg-3">
@@ -197,7 +192,7 @@ nav {
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                <li class="nav-item"><a class="nav-link active"
                   aria-current="page" href="/">Home</a></li>
-               <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+               <li class="nav-item"><a class="nav-link" href="about">About</a></li>
                <li class="nav-item dropdown"><a
                   class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
                   role="button" data-bs-toggle="dropdown" aria-expanded="false">Fleamarket</a>

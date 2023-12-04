@@ -95,6 +95,15 @@ public class SangpumService implements SangpumServiceInter {
 		mapperInter.updateInterest(j_sangid);
 	}
 
+	@Override
+	public List<SangpumDto> localSangpum(String j_addr, int startnum, int perpage) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<>();
+		map.put("j_addr", j_addr);
+		map.put("startnum", startnum);
+		map.put("perpage", perpage);
+		
+		return mapperInter.localSangpum(map);
 	//상품 판매 완료 건수
 	@Override
 	public int salesCount(String u_id) {
