@@ -28,8 +28,13 @@
   		select * from junggosangpum where member_id=#{member_id}
   	</select>
   	
-  	<select id="sellcomplete" parameterType="String" resultType="int">
+  	<select id="countsellcomplete" parameterType="String" resultType="int">
   		select count(*) from junggosangpum JOIN purchase ON junggosangpum.j_sangid = purchase.j_sangid
+		where junggosangpum.member_id = #{member_id}
+  	</select>
+  	
+  	<select id="sellcomplete" parameterType="String" resultType="sangpum">
+  		select * from junggosangpum JOIN purchase ON junggosangpum.j_sangid = purchase.j_sangid
 		where junggosangpum.member_id = #{member_id}
   	</select>
 	

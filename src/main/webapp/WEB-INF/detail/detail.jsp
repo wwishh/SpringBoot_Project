@@ -466,9 +466,9 @@ function list(){
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" id="btnupdate">수정</button>
-					<button type="button" class="btn btn-danger"
-						data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-dark" id="btnupdate">수정</button>
+					<button type="button" class="btn btn-dark"
+						data-bs-dismiss="modal">닫기</button>
 				</div>
 
 			</div>

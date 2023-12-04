@@ -26,4 +26,7 @@ public interface SangpumMapperInter {
 	public void updateReadCount(int num);	
 	public void plusInterest(int num);
 	public void minusInterest(int num);
+	
+	//상품 판매 완료 건수
+	public int salesCount(String u_id);
 }

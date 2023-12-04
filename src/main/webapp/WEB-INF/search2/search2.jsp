@@ -183,7 +183,7 @@
 .bestsearch{
 	cursor: pointer;
 	width: 200px;
-	margin: 7px 0px 7px 0px; 
+	margin: 10px 0px 10px 0px; 
 }
 #bestdiv1{
 	width: 400px;
@@ -272,10 +272,10 @@
 	    	<div id="best">
 		    	<div id="bestdiv1">
 			    	<c:forEach var="title" items="${title }" varStatus="i">
-			    		<c:if test="${i.count <= 5}">
-			    			<div class="bestsearch"><b>${i.count}</b>
+			    		<c:if test="${i.count <= 10}">
+			    			<div class="bestsearch"><b style="font-size: 15px;">${i.count}</b>
 			    				<a href="search/main?search=${title }&s_id=${sessionScope.myid }">
-			    					<span>${title }</span>
+			    					<span style="font-size: 14px;">${title }</span>
 			    				</a>
 			    			</div>
 			    		</c:if>
@@ -283,10 +283,10 @@
 		    	</div>
 		    	<div id="bestdiv2">
 			    	<c:forEach var="title" items="${title }" varStatus="i">
-			    		<c:if test="${i.count > 5}">
-			    			<div class="bestsearch"><b>${i.count}</b>
+			    		<c:if test="${i.count > 10}">
+			    			<div class="bestsearch"><b style="font-size: 15px;">${i.count}</b>
 			    				<a href="search/main?search=${title }&s_id=${sessionScope.myid }">
-			    					<span>${title }</span>
+			    					<span style="font-size: 14px;">${title }</span>
 			    				</a>
 			    			</div>
 			    		</c:if>

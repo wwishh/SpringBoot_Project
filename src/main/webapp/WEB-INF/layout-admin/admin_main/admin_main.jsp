@@ -42,7 +42,23 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="css/themes/all-themes.css" rel="stylesheet" />
+<style type="text/css">
+.graph_wrap {max-width: 864px;margin: 0 auto;padding:20px;}
+.graph_wrap .tit {display: block;text-align: center;font-size: 16px;font-weight: 500;color: #333333;}
+.graph {position: relative;height: 185px;margin-top: 15px;}
+.graph .y-axis {position: absolute;width: 100%;height: 100%;z-index: 1;list-style-type: none;}
+.graph .y-axis > li {position: relative;width:calc(100% - 20px);height: calc(100% / 8);margin-left: 20px;border-top: 1px solid #8c8c8c;text-align: left;}
+.graph .y-axis > li span {position: absolute;top: -7px;left: -20px;font-size: 12px;line-height: 1;}
+.graph .x-axis {display: flex;justify-content: space-around;position: absolute;bottom: -8px;left: 20px;width: calc(100% - 20px);text-align: center;z-index: 2;list-style-type: none;}
+.graph .x-axis > li {font-size: 12px;}
+.graph .bar {display: flex;justify-content: space-around;align-items: flex-end;position: absolute;bottom: 16px;left: 20px;width: calc(100% - 20px);height: calc(100% - 16px);text-align: center;z-index: 3;}
+.graph .bar > li {flex-grow:1;margin: 0 10px;}
+.graph .bar > li span {display: inline-block;width: 100%;height: 100%;max-width: 80px;background: #8ab4f8;}
+.graph .bar:before {content:'';position: absolute;top: -2px;left: 3px;width: 1px;height: calc(100% + 4px);background: #8c8c8c;}
+
+</style>
 </head>
+
 
 <body class="theme-red">
     <!-- Page Loader -->
@@ -80,8 +96,8 @@
                             <i class="material-icons">playlist_add_check</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW TASKS</div>
-                            <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                            <div class="text">user</div>
+                            <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">Count: ${t_u_l_count }</div>
                         </div>
                     </div>
                 </div>
@@ -91,8 +107,8 @@
                             <i class="material-icons">help</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW TICKETS</div>
-                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="text">sale</div>
+                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20">Count:</div>
                         </div>
                     </div>
                 </div>
@@ -102,8 +118,8 @@
                             <i class="material-icons">forum</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW COMMENTS</div>
-                            <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="text">미확인 문의</div>
+                            <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20">Count: </div>
                         </div>
                     </div>
                 </div>
@@ -113,8 +129,8 @@
                             <i class="material-icons">person_add</i>
                         </div>
                         <div class="content">
-                            <div class="text">NEW VISITORS</div>
-                            <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="text">잠긴 회원</div>
+                            <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20">Count: </div>
                         </div>
                     </div>
                 </div>
@@ -129,6 +145,34 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <h2>CPU USAGE (%)</h2>
                                 </div>
+                                <div class="graph_wrap">
+    <strong class="tit">금일 현황</strong>
+    <div class="graph">
+        <!-- 기준 -->
+        <ul class="y-axis">
+            <li><span>35</span></li>
+            <li><span>30</span></li>
+            <li><span>25</span></li>
+            <li><span>20</span></li>
+            <li><span>15</span></li>
+            <li><span>10</span></li>
+            <li><span>5</span></li>
+            <li><span>0</span></li>
+        </ul>
+        <!-- 목록 -->
+        <ul class="x-axis">
+            <li><span>user</span></li>
+            <li><span>sale</span></li>
+            <li><span>inquiry</span></li>
+        </ul>
+        <!-- 바 그래프 (백분율 만큼 height값) -->
+        <ul class="bar">
+            <li style="height:1${t_u_l_count }%;"><span></span></li>
+            <li style="height:70%;"><span></span></li>
+            <li style="height:30%;"><span></span></li>
+        </ul>
+    </div>
+</div>
                                 <div class="col-xs-12 col-sm-6 align-right">
                                     <div class="switch panel-switch-btn">
                                         <span class="m-r-10 font-12">REAL TIME</span>
@@ -136,22 +180,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another action</a></li>
-                                        <li><a href="javascript:void(0);">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="body">
-                            <div id="real_time_chart" class="dashboard-flot-chart"></div>
-                        </div>
+                            
+                       
                     </div>
                 </div>
             </div>
@@ -165,20 +195,20 @@
                                  data-min-Spot-Color="rgb(255,255,255)" data-max-Spot-Color="rgb(255,255,255)" data-spot-Color="rgb(255,255,255)"
                                  data-offset="90" data-width="100%" data-height="92px" data-line-Width="2" data-line-Color="rgba(255,255,255,0.7)"
                                  data-fill-Color="rgba(0, 188, 212, 0)">
-                                12,10,9,6,5,6,10,5,7,5,12,13,7,12,11
+                                로그인현황
                             </div>
                             <ul class="dashboard-stat-list">
                                 <li>
                                     TODAY
-                                    <span class="pull-right"><b>1 200</b> <small>USERS</small></span>
+                                    <span class="pull-right"><b>${t_u_l_count }</b> <small>USERS</small></span>
                                 </li>
                                 <li>
                                     YESTERDAY
-                                    <span class="pull-right"><b>3 872</b> <small>USERS</small></span>
+                                    <span class="pull-right"><b>${y_u_l_count }</b> <small>USERS</small></span>
                                 </li>
                                 <li>
                                     LAST WEEK
-                                    <span class="pull-right"><b>26 582</b> <small>USERS</small></span>
+                                    <span class="pull-right"><b>${w_u_l_count }</b> <small>USERS</small></span>
                                 </li>
                             </ul>
                         </div>
