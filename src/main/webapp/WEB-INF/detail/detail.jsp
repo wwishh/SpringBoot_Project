@@ -439,10 +439,10 @@ function list(){
 			</div>
 			<div>
 				<small class="text-secondary">관심 ${dto.j_interest } 채팅 ${roomCnt}
-					조회 ${dto.j_readcount }</small> <img src="../img/kakaopay.png"
+					조회 ${dto.j_readcount }</small> <!-- <img src="../img/kakaopay.png"
 					style="width: 70px; height: 30px" id="iamportPayment"> <img
 					alt="" src="../img/toss.png" style="width: 70px; height: 30px"
-					id="tossPayment">
+					id="tossPayment"> -->
 			</div>
 			<br> <b>댓글: <span class="acount"></span></b>
 			<div class="alist"></div>
