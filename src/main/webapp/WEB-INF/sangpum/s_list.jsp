@@ -130,8 +130,8 @@
   	     	<br><br><br>
   	     	<div class="UI_option container">
 	  	     	<c:if test="${totalPage>0 }">
-					<div style="width: 30rem; text-align: center;" id="pageList" class="pageList">
-						<ul class="pagination justify-content-center pageList">
+					<div style="width: 30rem; text-align: center;" class="pageList">
+						<ul class="pagination justify-content-center pageList"  id="pageList">
 							<!-- 이전 -->
 							<c:if test="${startPage>1 }">
 								<li class="page-item"><a

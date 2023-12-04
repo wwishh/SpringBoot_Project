@@ -208,44 +208,6 @@ nav{
 <body>
 
 
-<<<<<<< HEAD
-				<div style="justify-content: space-between;">
-				<c:if test="${sessionScope.loginok==null}">
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='../loginform'">로그인</button>
-				</c:if>
-				
-				<c:if test="${sessionScope.loginok!=null}">
-				<img alt="" src="../img/loginprofile.png" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
-				<b>${sessionScope.myname}님이 로그인중입니다</b>
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
-				</c:if>
-				
-				
-				
-				 
-				<!-- 마이페이지 -->
-				<c:if test="${sessionScope.loginok!=null }">
-					<input type="button" value="마이페이지" onclick="location.href='../mypage?u_id=${sessionScope.myid}'" class="btn btn-outline-primary">
-				</c:if>
-
-				<!-- 검색창 -->
-				<div class="input-group w-25">
-					<c:if test="${sessionScope.myid == null}">
-						<input type="hidden" value="${sessionScope.myid = 'guest'}">
-						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
-					</c:if>
-					<c:if test="${sessionScope.myid != null}">
-						<i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
-						<!-- 채팅방 , /message/getMessageList?user_id=${sessionScope.myid}-->
-						<div>
-						
-							<i class="bi bi-bell" id="notification" style="cursor: pointer;" onclick="location.href='/goChattingRoom'"><span class="note-num"></span></i>
-							
-						</div>
-					</c:if>
-						
-				</div>
-=======
    <!-- Navigation-->
    <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container px-4 px-lg-3">
@@ -273,9 +235,6 @@ nav{
                      <li><a class="dropdown-item" href="/">New Arrivals</a></li>
                   </ul></li>
             </ul>
-
->>>>>>> 27daed0aa4beb509f45c84800066156a8c4855bd
-
             <div style="justify-content: space-between;">
             <c:if test="${sessionScope.loginok==null}">
             <button type="button" class="btn btn-outline-primary" onclick="location.href='../loginform'">로그인</button>
