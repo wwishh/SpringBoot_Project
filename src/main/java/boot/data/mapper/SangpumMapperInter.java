@@ -26,4 +26,7 @@ public interface SangpumMapperInter {
 	public void updateReadCount(int num);	
 	public void plusInterest(int num);
 	public void minusInterest(int num);
+	
+	// public List<SangpumDto> localSangpum(String addr);
+	public List<SangpumDto> AjaxPaging(Map<String, Object> map);
 }

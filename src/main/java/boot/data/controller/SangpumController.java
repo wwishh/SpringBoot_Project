@@ -145,6 +145,7 @@ public class SangpumController {
 
 		model.addObject("list", list);
 		model.addObject("totalCount", totalCount);
+		model.addObject("totalPage", totalPage);
 		model.addObject("startPage", startPage);
 		model.addObject("endPage", endPage);
 		model.addObject("currentPage", currentPage);

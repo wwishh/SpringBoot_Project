@@ -18,4 +18,7 @@ public interface SangpumServiceInter {
 	public void updateSangpum(SangpumDto dto);
 	public void deleteSangpum(int j_sangid);
 	public void updateInterest(int num);
+	
+	public List<SangpumDto> localSangpum(String j_addr, int startnum, int perpage);
+	
 }
