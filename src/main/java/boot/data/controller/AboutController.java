@@ -21,4 +21,7 @@ public class AboutController {
 		model.addAttribute("list",list);
 		return "/2/about/about";
 	}
+	
+	
+	
 }

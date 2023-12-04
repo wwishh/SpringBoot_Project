@@ -29,4 +29,6 @@ public interface SangpumMapperInter {
 	
 	// public List<SangpumDto> localSangpum(String addr);
 	public List<SangpumDto> AjaxPaging(Map<String, Object> map);
+	//상품 판매 완료 건수
+	public int salesCount(String u_id);
 }

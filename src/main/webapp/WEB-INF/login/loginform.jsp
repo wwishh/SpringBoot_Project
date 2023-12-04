@@ -159,7 +159,7 @@ font-size: 13px;
 									<i class="bi bi-eye-slash-fill" id="btnpassoff"></i> 
 									
 									<br>
-									
+						<!-- 5회 실패시 잠금 강화기능 구현중
 							<div class="failcnt">
 								<div class="randomquiz"></div>
 								<div class="randomanswer"></div>
@@ -168,7 +168,7 @@ font-size: 13px;
 							</div>
 							
 							<b>문구와 일치합니다</b>
-									
+									-->
 							</div>
 							
 							<br>

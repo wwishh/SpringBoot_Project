@@ -76,4 +76,8 @@
   		</if>
   		order by j_sangid desc
   	</select>
+  	<select id="salesCount" parameterType="String" resultType="int">
+  		SELECT count(*) FROM junggosangpum JOIN purchase ON junggosangpum.j_sangid = purchase.j_sangid where junggosangpum.member_id = #{u_id};
+  	</select>
+  	
 </mapper>

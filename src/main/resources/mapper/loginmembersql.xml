@@ -53,5 +53,13 @@
   select failcount from user where u_id=#{u_id}
   </select>
   
+  <select id="findpwstart" parameterType="Map" resultType="int">
+  select count(*) from user where BINARY(u_id)=#{u_id} and BINARY(u_hp)=#{u_hp}
+  </select>
+  
+  <update id="pwchange" parameterType="String">
+  update user set u_pass=#{u_pass} where u_id=#{u_id}
+  </update>
+  
   
   </mapper>

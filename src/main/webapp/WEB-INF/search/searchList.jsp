@@ -9,6 +9,7 @@
 <link
    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
    rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 <link
    href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=
    Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
@@ -142,7 +143,7 @@ $(function(){
                 s += "</div>";
                 s += "<div style='margin-left:20px;'>";
                 s += "<i class='bi bi-eye-fill'>" + dto.j_readcount + "</i>&nbsp;&nbsp;";
-                s+= "<i class='bi bi-chat-left-dots-fill' style='margin-right : 5px'>" + aCount + "</i>";
+                s+= "<i class='bi bi-chat-left-dots-fill' style='margin-right : 10px'>" + aCount + "</i>";
                 if (result == 1) {
                     s += "<i class='bi bi-heart-fill interest' style='color:red' num='" + dto.j_sangid + "'>" + dto.j_interest + "</i>";
                 } else {

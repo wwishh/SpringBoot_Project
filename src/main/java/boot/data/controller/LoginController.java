@@ -21,6 +21,8 @@ import boot.data.mapper.InterestMapperInter;
 import boot.data.mapper.PurchaseMapperInter;
 import boot.data.mapper.SangpumMapperInter;
 import boot.data.service.LoginService;
+import boot.data.service.SangpumService;
+import boot.data.service.SangpumServiceInter;
 
 @Controller
 public class LoginController {
@@ -33,6 +35,9 @@ public class LoginController {
 	
 	@Autowired
 	LoginService service;
+	
+	@Autowired
+	SangpumService sangService;
 	
 	//로그인폼으로
 	@GetMapping("/loginform")
@@ -175,11 +180,73 @@ public class LoginController {
 		{
 			return "/2/login/findidform";
 		}
+		
+		//로그인페이지에서 비밀번호 찾기버튼 눌러서 폼으로 이동하기
 		@GetMapping("/pwsearch")
 		public String pwsearch()
 		{
 			return "/2/login/findpwform";
 		}
+		
+		
+		
+		//비밀번호 찾기폼에서 인증번호 확인되면 새로운비밀번호설정폼으로 이동시킴
+		@PostMapping("/findpw")
+		public ModelAndView findpw(@RequestParam String u_id,
+				@RequestParam String u_hp
+				)
+		{
+			ModelAndView model = new ModelAndView();
+			HashMap<String, String> map = new HashMap<>();
+			
+			//System.out.println(u_id);
+			service.findpwstart(u_id, u_hp);
+			
+			model.addObject("u_id", u_id);
+			model.setViewName("/2/login/findpwform2");
+			
+			return model;
+		}
+		@PostMapping("/checkuserinfo")
+		@ResponseBody
+		public String checkuserinfo(@RequestParam String u_id,
+		@RequestParam String u_hp,
+		HttpSession session)
+		{
+		int codecheck=service.findpwstart(u_id, u_hp);
+		if(codecheck==1) {
+			return "match";
+		}
+		else {
+			return "fail";
+		}
+		
+		}
+		
+
+		
+		//비밀번호 설정폼에서 버튼누르면 새로운비밀번호로 변경
+		@PostMapping("/pwupdate")
+		@ResponseBody
+		public String pwupdate(@RequestParam String u_id,
+				@RequestParam String pass1,
+				@RequestParam String pass2
+				)
+		{
+			String u_pass = pass1;
+			//System.out.println(u_id);
+			if(pass1.equals(pass2)) {
+				service.pwchange(u_id,u_pass);
+				return "success";
+			}
+			else {
+				return "fail";
+			}
+		}
+			
+		
+		
+		
 		@PostMapping("/findid")
 		public String findid(@RequestParam String u_name,
 				@RequestParam String u_email,
@@ -210,13 +277,26 @@ public class LoginController {
 		int likes = interstinter.countlikes(u_id);
 		int purchase = purchaseinter.countpurchase(u_id);
 		int sell = purchaseinter.countIdOfsell(u_id);
-		int sellcomplete = purchaseinter.sellcomplete(u_id);
+		int sellcomplete = purchaseinter.countsellcomplete(u_id);
+		
+		//판매 상품 완료 건수 구해서 연필 색상 구하기
+		int count = sangService.salesCount(u_id);
+		String color ="";
+		if(count<=5)
+			color =  "red";
+		else if(count > 5 && count <=10)
+			color = "orange";
+		else if(count > 10 && count <=20)
+			color = "blue";
+		else
+			color = "purple";
 		
 		model.addObject("sellcomplete", sellcomplete);
 		model.addObject("sell", sell);
 		model.addObject("purchase", purchase);
 		model.addObject("likes", likes);
 		model.addObject("dto", dto);
+		model.addObject("color",color);
 		model.setViewName("/2/login/mypage");
 		
 		return model;

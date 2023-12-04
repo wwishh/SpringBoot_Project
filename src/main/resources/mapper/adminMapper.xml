@@ -19,6 +19,10 @@
 	<select id="getAllNotice" resultType="noticeDto">
 		select * from notice order by n_num
 	</select>
+	
+	<select id="getAllNoticeList" parameterType="HashMap" resultType="noticeDto">
+		select * from notice order by n_num desc limit #{start},#{perPage}
+	</select>
 	<select id="getNoticeNum" parameterType="int" resultType="noticeDto">
 		select * from notice where n_num=#{n_num}
 	</select>
@@ -39,10 +43,37 @@
   	select * from user where failcount>=10 
   	</select>
   
-  
+  	<select id="userList" resultType="user">
+  		select * from user order by u_id
+  	</select>
   	
-  	
-  	
-  	
+  	<select id="getTotalNoticeCount" resultType="int">
+  		select count(*) from notice
+  	</select>
+
+
+	<select id="adminSale" resultType="sangpum">
+		select * from junggosangpum where sellcomplete=0 order by j_postdate desc
+	</select>
+	
+	<select id="adminSaleComplete" resultType="sangpum">
+		select * from junggosangpum where sellcomplete=1 order by j_postdate desc
+	</select>
+	
+	<select id="adminTodayLogin" resultType="int">
+		select count(*) from user where DATE_FORMAT(u_final_logindate,"%Y-%m-%d")=CURDATE()
+	</select>
+	
+	<select id="adminYesterdayLogin" resultType="int">
+		select count(*) from user where DATE_FORMAT(u_final_logindate,"%Y-%m-%d")=CURDATE() - INTERVAL 1 DAY;
+	</select>
+	
+	<select id="adminWeekLogin" resultType="int">
+		SELECT COUNT(*) FROM user WHERE u_final_logindate BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK) AND NOW()
+	</select>
+	
+	<delete id="deleteUser" parameterType="String">
+		delete from user where u_id=#{u_id}
+	</delete>
 	
 </mapper>

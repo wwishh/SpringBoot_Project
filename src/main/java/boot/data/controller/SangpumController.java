@@ -166,7 +166,8 @@ public class SangpumController {
 		return model;
 	}
 
-	@PostMapping("/sangupdate") public String update(SangpumDto dto, ArrayList<MultipartFile> j_file, HttpSession session) {
+	@PostMapping("/sangupdate")
+	public String update(SangpumDto dto, ArrayList<MultipartFile> j_file, HttpSession session) {
 		  
 		  
 		String path = session.getServletContext().getRealPath("/img");
@@ -208,4 +209,6 @@ public class SangpumController {
 
 		return "redirect:list";
 	}
+	
+	
 }
