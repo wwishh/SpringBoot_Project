@@ -6,14 +6,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../../css/notice_styles.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gaegu:wght@300&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap" rel="stylesheet">
-
+<link href="../../css/admin_notice.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/notice_styles.css">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
+
  <div><jsp:include page="notice_addForm.jsp"/></div>
 	
 	<section class="notice">
@@ -52,24 +53,71 @@
                 </tr>
                 </thead>
                 <tbody>
+                <c:if test="${totalCount>0 }">
                 <c:forEach var="n_dto" items="${list }" varStatus="i">
                 <tr>
                     <td>${i.count }</td>
-                    <th><a href="#!">${n_dto.n_title }</a></th>
+                    <th><jsp:include page="notice_detail.jsp">
+						<jsp:param value="${n_dto.n_num }" name="num"/>
+						<jsp:param value="${n_dto.n_title }" name="title"/>
+					</jsp:include></th>
                     <td>${n_dto.n_name }</td>
                     <td><fmt:formatDate value="${n_dto.n_registration_date }" pattern="yyyy-MM-dd HH:mm"/></td>
                     <td align="center">
-					<div><jsp:include page="notice_correction.jsp?num=${n_dto.n_num }"/></div><button type="button" num="${n_dto.n_num }" onclick="">수정</button>
-					<button type="button" num="${n_dto.n_num }" onclick="">삭제</button>
+					<jsp:include page="notice_correction.jsp">
+						<jsp:param value="${n_dto.n_num }" name="num"/>
+					</jsp:include>
+					<button type="button" class="n_del btn btn-outline-danger" num="${n_dto.n_num }" >삭제</button>
 					</td>
                 </tr>
                 </c:forEach>
+                </c:if>
                 </tbody>
             </table>
+            <!-- 페이지번호 출력 -->
+	<c:if test="${totalCount>0 }">
+		<div style=" text-align: center;">
+			<ul class="pagination justify-content-center">
+				<!-- 이전 -->
+				<c:if test="${startPage>1 }">
+					<li class="page-item"><a
+						href="notice?currentPage=${startPage-1 }"></a></li>
+				</c:if>
+				<c:forEach var="pp" begin="${startPage }" end="${endPage }">
+					<c:if test="${currentPage==pp }">
+						<li class="page-item active"><a class="page-link"
+							href="notice?currentPage=${pp }">${pp }</a></li>
+					</c:if>
+					<c:if test="${currentPage!=pp }">
+						<li class="page-item"><a class="page-link"
+							href="notice?currentPage=${pp }">${pp }</a></li>
+					</c:if>
+				</c:forEach>
+
+
+				<!-- 다음 -->
+				<c:if test="${endPage<totalPage }">
+					<li class="page-item "><a class="page-link"
+						href="notice.jsp?currentPage=${ endPage+1}>">다음</a></li>
+				</c:if>
+			</ul>
+		</div>
+	</c:if>
         </div>
     </div>
 
 </section>
+<script type="text/javascript">
+	
+	$(".n_del").click(function(){
+		var num=$(this).attr("num");
+		 var isConfirmed = confirm("삭제하시겠습니까?");
+		if(isConfirmed){
+			location.href="notice_delete?num="+num;
+		}
+		
+	});
+</script>
 	
 </body>
 </html>

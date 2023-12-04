@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
@@ -7,11 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+   rel="stylesheet">
 <link
-	href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
-	rel="stylesheet">
+   href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@200&display=swap"
+   rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
 <title>Insert title here</title>
@@ -57,6 +57,24 @@ nav{
     /* background-image: url('../images/notification.svg'); */
     position: relative;
 }
+
+.b_mo{
+	position: absolute;
+	top: 5vh;
+	right: 8vw;
+}
+
+.qwe{
+	position: absolute;
+	top: 2vh;
+	right: -15vw;
+}
+.qwe1{
+	position: absolute;
+	top: 2vh;
+	right: 10vw;
+}
+
 
 </style>
 <script type="text/javascript">
@@ -185,46 +203,12 @@ nav{
    
    
 </script>
-<style type="text/css">
-.searchResult {
-	cursor: pointer;
-}
 
-nav {
-	font-size: 1.5em;
-}
-</style>
 </head>
 <body>
-	<!-- Navigation-->
-	<nav class="navbar navbar-expand-lg navbar-light">
-		<div class="container px-4 px-lg-3">
-			<a class="navbar-brand" href="/"> <img alt=""
-				src="../img/icon.PNG" style="width: 20vh;">
-			</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="/">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-						role="button" data-bs-toggle="dropdown" aria-expanded="false">Fleamarket</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="/list">All Products</a></li>
-							<li><hr class="dropdown-divider" /></li>
-							<li><a class="dropdown-item" href="#!">Popular Items</a></li>
-							<li><a class="dropdown-item" href="/">New Arrivals</a></li>
-						</ul></li>
-				</ul>
 
 
+<<<<<<< HEAD
 				<div style="justify-content: space-between;">
 				<c:if test="${sessionScope.loginok==null}">
 				<button type="button" class="btn btn-outline-primary" onclick="location.href='../loginform'">로그인</button>
@@ -261,14 +245,88 @@ nav {
 					</c:if>
 						
 				</div>
+=======
+   <!-- Navigation-->
+   <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container px-4 px-lg-3">
+         <a class="navbar-brand" href="/"> <img alt=""
+            src="../img/icon.PNG" style="width: 20vh;">
+         </a>
+         <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+               <li class="nav-item"><a class="nav-link active"
+                  aria-current="page" href="/">Home</a></li>
+               <li class="nav-item"><a class="nav-link" href="about">About</a></li>
+               <li class="nav-item dropdown"><a
+                  class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+                  role="button" data-bs-toggle="dropdown" aria-expanded="false">Fleamarket</a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                     <li><a class="dropdown-item" href="/list">All Products</a></li>
+                     <li><hr class="dropdown-divider" /></li>
+                     <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                     <li><a class="dropdown-item" href="/">New Arrivals</a></li>
+                  </ul></li>
+            </ul>
 
-			</div>
-			
-		</div>
+>>>>>>> 27daed0aa4beb509f45c84800066156a8c4855bd
 
-		<div id="result"></div>	
-	</div>
-	</nav>
+            <div style="justify-content: space-between;">
+            <c:if test="${sessionScope.loginok==null}">
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='../loginform'">로그인</button>
+            </c:if>
+            
+            <c:if test="${sessionScope.loginok!=null}">
+            <img alt="" src="../img/loginprofile.png" width="50vw" height="50vh" align="left" style="border-radius:30px;"/>
+            <b>${sessionScope.myname}님이 로그인중입니다</b>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='../logoutprocess'">로그아웃</button>
+            </c:if>
+            
+            
+            
+             
+            <!-- 마이페이지 -->
+            <c:if test="${sessionScope.loginok!=null }">
+               <input type="button" value="마이페이지" onclick="location.href='../mypage?u_id=${sessionScope.myid}'" class="btn btn-outline-primary">
+            </c:if>
+
+            <!-- 검색창 -->
+            <div class="input-group w-25">
+              
+              <c:choose>
+               <c:when test="${sessionScope.myid == null}">
+                  <input type="hidden" value="${sessionScope.myid = 'guest'}">
+                  <i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
+               </c:when>
+               
+               <c:when test="${sessionScope.myid != null}">
+                  <i class="bi bi-search" onclick="location.href='/search?s_id=${sessionScope.myid}'" style="cursor: pointer;"></i>
+                  <!-- 채팅방 , /message/getMessageList?user_id=${sessionScope.myid}-->
+                  <div>
+                  
+                     <i class="bi bi-bell" id="notification" style="cursor: pointer;" onclick="location.href='/goChattingRoom'"><span id="note-num"></span></i>
+                     
+                  </div>
+               </c:when>
+               <c:otherwise>
+               <p>와 호스기 보소</p>
+               </c:otherwise>
+               </c:choose>
+                  
+            </div>
+
+         </div>
+         
+      </div>
+
+      <div id="result"></div>   
+   </div>
+   </nav>
          
 </body>
 </html>

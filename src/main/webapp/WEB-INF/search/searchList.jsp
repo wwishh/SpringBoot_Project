@@ -9,6 +9,7 @@
 <link
    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
    rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 <link
    href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Nanum+Pen+Script&family=
    Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
@@ -19,7 +20,16 @@
 #list{
 	width:auto;
 	height:auto;
+	position: relative;
 }
+
+ #result2 {
+        position: absolute;
+        z-index: 1;
+        background-color: white; /* 배경색을 흰색으로 지정해 겹치는 영역이 투명하지 않게 함 */
+        margin-top: 5px; /* 검색창과의 간격 조절 */
+        width: 200px; /* 결과 창의 폭 조절 */
+    }
 
 .sangpum{
 	cursor : pointer;
@@ -42,6 +52,36 @@ $(function(){
 	// 현재 사용자의 아이디
     var i_id = $("#myid").val();
 	//alert(i_id)
+	
+	
+	
+	$("#search2").keyup(function(e){
+         
+         var search=$(this).val();
+
+         $.ajax({
+            type:"get",
+            dataType:"json",
+            url:"/search/result",
+            data:{"search":search},
+            success:function(res){
+               var s="";
+               
+               $.each(res,function(i,dto){
+                   s+="<div class='eachdiv'>"
+                   s+="<b onclick='selectSearch()' class='searchResult'>"+dto+"</b><br>"
+                   s+="</div>"
+                });
+               
+               if(search==""){
+                  $("#result2").html("");
+               }
+               else{
+                  $("#result2").html(s);
+               }
+            }
+         });
+      });
 
 
     $("#btnsearch2").click(async function (e) {
@@ -88,8 +128,10 @@ $(function(){
                 var i_sangpum = dto.j_sangid;
                 var imagePaths = dto.j_imageurl.split(',');
 
-                var result = await intertestCount(i_id, i_sangpum);
+                var result = await interestCount(i_id, i_sangpum);
+                var aCount = await answerCount(i_sangpum);
                 console.log("Interest Count Result:", result);
+                console.log("Answer Count:", aCount);
 
                 s += "<div style='display : inline-block;'>";
                 s += "<div class='sangpum'>";
@@ -101,11 +143,14 @@ $(function(){
                 s += "</div>";
                 s += "<div style='margin-left:20px;'>";
                 s += "<i class='bi bi-eye-fill'>" + dto.j_readcount + "</i>&nbsp;&nbsp;";
+                s+= "<i class='bi bi-chat-left-dots-fill' style='margin-right : 10px'>" + aCount + "</i>";
                 if (result == 1) {
                     s += "<i class='bi bi-heart-fill interest' style='color:red' num='" + dto.j_sangid + "'>" + dto.j_interest + "</i>";
                 } else {
                     s += "<i class='bi bi-heart-fill interest' num='" + dto.j_sangid + "'>" + dto.j_interest + "</i>";
                 }
+                
+                
 
                 s += "</div>";
                 s += "</div>";
@@ -128,6 +173,7 @@ $(function(){
         }
     });
 	
+    //처음 검색 결과 창 진입 시 리스트 출력 
 	$("#btnsearch2").click();
     
   
@@ -230,7 +276,7 @@ $(document).on("click","div.sangpum", function(event){
 	location.href="../sangpum/detail?num=" + num;
 });
 
-async function intertestCount(i_id, i_sangpum){
+async function interestCount(i_id, i_sangpum){
 	
 	return new Promise(function(resolve, reject) {
         $.ajax({
@@ -249,40 +295,36 @@ async function intertestCount(i_id, i_sangpum){
     });
 }
 
-
-async function getCount(search, category) {
-    return new Promise(function (resolve, reject) {
-        $.ajax({
-            type: "get",
-            dataType: "json",
-            url: "/search/sangpumCount",
-            data: { "search": search, "category": category },
-            success: function (res) {
+async function answerCount(i_sangpum){
+	return new Promise(function(resolve, reject){
+		$.ajax({
+			type:"get",
+			dataType:"html",
+			url:"/answer/getAnswerCount",
+			data:{"num":i_sangpum},
+			success:function(res){
+				console.log(res);
                 resolve(res);
             },
-            error: function (error) {
+            error: function(error) {
                 reject(error);
             }
-        });
-    });
+		});
+	});
 }
 
-async function getList(search, option, category) {
-    return new Promise(function (resolve, reject) {
-        $.ajax({
-            type: "get",
-            dataType: "json",
-            url: "/search/list",
-            data: { "search": search, "option": option, "category": category },
-            success: function (res) {
-                resolve(res);
-            },
-            error: function (error) {
-                reject(error);
-            }
-        });
+
+
+
+function selectSearch() {
+    $(document).on("click","b.searchResult",function(event){
+       var s=$(this).html();
+       //alert(s);
+       
+       $("#search2").val(s);
+       $("#result2").html("");
     });
-}
+ }
 
 
 
@@ -297,6 +339,7 @@ async function getList(search, option, category) {
       <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"
        id="search2" autocomplete="off" value="${search }" style="width:200px"/>
       <input type="button" value="검색" id="btnsearch2" class="btn btn-dark">
+      
       
       <select id="category" class="form-select" style="margin-left:50px; width:100px;">
       							<option value="all" selected="selected">전체</option>
@@ -320,6 +363,8 @@ async function getList(search, option, category) {
 								<option value="etc">기타</option>
 							</select>
   </div>
+  
+  <div id="result2"></div>
   </div>
   </div>
   </div>

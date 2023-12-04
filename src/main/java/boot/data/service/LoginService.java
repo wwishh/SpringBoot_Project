@@ -30,9 +30,14 @@ public class LoginService implements LoginServiceInter {
 	}
 
 	@Override
-	public int getSerchId(String u_id) {
+	public boolean getSerchId(String u_id) {
 		// TODO Auto-generated method stub
-		return loginInter.getSerchId(u_id);
+		int count = loginInter.getSerchId(u_id);
+		if (count >0 )
+			return true;
+		else 
+			return false;
+        
 	}
 
 	@Override
@@ -95,6 +100,22 @@ public class LoginService implements LoginServiceInter {
 	public int failcheck(String u_id) {
 		// TODO Auto-generated method stub
 		return loginInter.failcheck(u_id);
+	}
+
+	@Override
+	public int findpwstart(String u_id, String u_hp) {
+		// TODO Auto-generated method stub
+		Map<String,String>map = new HashMap<>();
+		map.put("u_id", u_id);
+		map.put("u_hp", u_hp);;
+		return loginInter.findpwstart(map);
+	}
+
+	@Override
+	public void pwchange(String u_id,String u_pass) {
+		// TODO Auto-generated method stub
+		loginInter.pwchange(u_id, u_pass);
+		
 	}
 
 	

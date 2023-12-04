@@ -88,7 +88,7 @@ public class IndexController {
 	
 	@GetMapping("/insert")
 	public String insert() {
-		return"/2/Product/P_insert";
+		return"/2/sangpum/s_insert";
 	}
 	
 	@PostMapping("/createRoom")

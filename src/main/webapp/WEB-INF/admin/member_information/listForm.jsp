@@ -12,6 +12,37 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+  <table class="board-table">
+                
+                <tr align="center">
+                    <th>num</th>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>email</th>
+                    <th>pass</th>
+                    <th>Lock</th>
+                </tr>
+                
+                
+                <c:forEach var="ldto" items="${list }" varStatus="i">
+                <tr align="center">
+                    <td>${i.count }</td>
+                    <td>${ldto.u_id }</td>
+                    <td>${ldto.u_name }</td>
+                    <td>${ldto.u_email }</td>
+                    <td>${ldto.u_pass }</td>
+                  	
+					<td align="center">
+					
+					
+					<button type="button" onclick="location.href='../failreset?u_id=${ldto.u_id}'">잠금해제</button>
+					</td>
+                </tr>
+                </c:forEach>
+               
+            </table>
+            
+  
+	
 </body>
 </html>

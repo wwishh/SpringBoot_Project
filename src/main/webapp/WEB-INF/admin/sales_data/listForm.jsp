@@ -12,6 +12,23 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h3>판매중 상품</h3>
+	<table class="table">
+		<tr class="table-info">
+		<th>번호</th><th>제목</th><th>아이디</th><th>이름</th><th>가격</th><th>카테고리</th><th>등록일</th>
+		</tr>
+		<c:forEach var="j_dto" items="${list }" varStatus="i">
+                <tr>
+                   <td>${i.count }</td>
+                    <td> ${j_dto.j_title }</td>
+                    <td>${j_dto.member_id }</td>
+                    <td>${j_dto.member_name }</td>
+                    <td>${j_dto.j_price }</td>
+                    <td>${j_dto.j_category }</td>
+                    <td><fmt:formatDate value="${j_dto.j_postdate }" pattern="yyyy-MM-dd HH:mm"/></td>
+                    
+                </tr>
+                </c:forEach>
+	</table>
 </body>
 </html>

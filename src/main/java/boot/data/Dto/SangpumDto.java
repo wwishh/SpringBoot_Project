@@ -23,4 +23,12 @@ public class SangpumDto {
 	private String j_imageurl;
 	private int j_readcount;
 	private int j_interest;
+	
+	//단일이미지 띄우는 메소드
+	private String sangimg;
+	
+	//구매일자 메소드
+	private String[] buydate;
+	
+	private int sellcomplete;
 }
