@@ -351,11 +351,11 @@ function list(){
 			<c:forEach var="pho" items="${dto.j_imageurl}" varStatus="loopStatus">
 				<div class="carousel-item${loopStatus.first ? ' active' : ''}">
 					<c:if test="${dto.sellcomplete == 1 }">
-						<img src="../img/sellcomplete.png" style="z-index: 1; position: absolute;" class="d-block w-100 sellcomplete">
-						<img src="../img/${pho}" alt="..." style="opacity: 0.5;" class="d-block w-100 sangimg">
+						<img src="../img/sellcomplete.png" style="z-index: 1; position: absolute; opacity: 0.7;" class="d-block w-100 h-100">
+						<img src="../img/${pho}" alt="..." style="opacity: 0.4;" class="d-block w-100 h-100">
 					</c:if>
 					<c:if test="${dto.sellcomplete == 0 }">
-						<img src="../img/${pho}" alt="..." class="d-block w-100">
+						<img src="../img/${pho}" alt="..." class="d-block w-100 h-100">
 					</c:if>
 					
 				</div>

@@ -25,11 +25,11 @@
   	</select>
   	
   	<select id="countIdOfsell" parameterType="String" resultType="int">
-  		select count(*) from junggosangpum where member_id=#{member_id}
+  		select count(*) from junggosangpum where member_id=#{member_id} and sellcomplete=0
   	</select>
   	
   	<select id="sellsangpumlist" parameterType="String" resultType="sangpum">
-  		select * from junggosangpum where member_id=#{member_id}
+  		select * from junggosangpum where member_id=#{member_id} and sellcomplete=0
   	</select>
   	
   	<select id="countsellcomplete" parameterType="String" resultType="int">
