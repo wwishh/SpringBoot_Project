@@ -75,7 +75,7 @@
 		     	</c:forEach>
 	     	</div>
      		<br><br><br>
-			<div class="kakao_inquiry">
+			<div class="kakao_inquiry_main">
 				<div id="add-channel-button"></div>
 				<div id="chat-channel-button"></div>
 			</div>

@@ -33,7 +33,7 @@
 	
 	//댓글
 $(function(){
-		
+	
 		list();
 
 		
@@ -68,7 +68,7 @@ $(function(){
 	
 	//댓글 삭제
 	$(document).on("click","i.del", function(event){
-		var idx = $(".idx").val();
+		var idx = $(this).attr("idx");
 		//alert(idx);
 		
 		$.ajax({
@@ -85,7 +85,7 @@ $(function(){
 	
 	//댓글 수정창 띄우기
 	$(document).on("click","i.mod", function(){
-		idx = $(".idx").val();
+		idx = $(this).attr("idx");
 		//alert(idx)
 		
 		$.ajax({
@@ -189,11 +189,11 @@ function list(){
 
 			$.each(res,function(i,dto){
 				s+="<b>" +dto.name+"</b>: " + dto.content;
-				s+="<span class='day'>" + dto.writeday+ "</span>";
-				s+='<input type="hidden" class="idx" value="'+dto.idx+'">';
+				s+="<span class='day' style='margin-left:15px'>" + dto.writeday + "</span>";
 				if(loginok!=null&&myid==dto.myid){
-					s+= '<i class="bi bi-pencil-square mod" style="cursor:pointer"></i><i class="bi bi-trash3-fill del" style="cursor:pointer"></i><br>'
+					s+= '<i class="bi bi-pencil-square mod" style="cursor:pointer" idx="'+dto.idx+'"></i><i class="bi bi-trash3-fill del" style="cursor:pointer" idx="'+dto.idx+'"></i>';
 				}
+				s+="<br>";
 			})
 			
 			
@@ -233,7 +233,7 @@ function list(){
         		var u_id = "${sessionScope.myid}";
             	
             	
-                alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
+                alert("구매가 완료되었습니다");
                 //alert(j_sangid)
                 $.ajax({
         			type:"post",
@@ -246,7 +246,7 @@ function list(){
         		});
                 
             } else {
-                alert("실패 : 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
+                alert("구매에 실패하였습니다\n 코드("+rsp.error_code+") / 메세지(" + rsp.error_msg + ")");
             }
         });
     }
@@ -273,7 +273,7 @@ function list(){
     		var j_sangid = "${dto.j_sangid}";
     		var u_id = "${sessionScope.myid}";
     		
-    		alert("완료 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " +rsp.merchant_uid);
+    		alert("구매가 완료되었습니다");
             //alert(j_sangid)
             $.ajax({
     			type:"post",
@@ -350,7 +350,14 @@ function list(){
 		<div class="carousel-inner rounded">
 			<c:forEach var="pho" items="${dto.j_imageurl}" varStatus="loopStatus">
 				<div class="carousel-item${loopStatus.first ? ' active' : ''}">
-					<img class="d-block w-100" src="../img/${pho}" alt="...">
+					<c:if test="${dto.sellcomplete == 1 }">
+						<img src="../img/sellcomplete.png" style="z-index: 1; position: absolute; opacity: 0.7;" class="d-block w-100 h-100">
+						<img src="../img/${pho}" alt="..." style="opacity: 0.4;" class="d-block w-100 h-100">
+					</c:if>
+					<c:if test="${dto.sellcomplete == 0 }">
+						<img src="../img/${pho}" alt="..." class="d-block w-100 h-100">
+					</c:if>
+					
 				</div>
 			</c:forEach>
 		</div>
@@ -391,8 +398,14 @@ function list(){
 					<button type="button" class="btn btn-dark"
 						onclick="location.href='../delete?num=${dto.j_sangid}'">삭제</button>
 				</c:if>
-				<button class="btn btn-dark" id="createRoomBtn"
+				<c:if test="${dto.sellcomplete == 1 }">
+					<button class="btn btn-dark" id="createRoomBtn"
+					sangIdx="${dto.j_sangid }" onclick="goChatting(${dto.j_sangid})" disabled="disabled">채팅</button>
+				</c:if>
+				<c:if test="${dto.sellcomplete == 0 }">
+					<button class="btn btn-dark" id="createRoomBtn"
 					sangIdx="${dto.j_sangid }" onclick="goChatting(${dto.j_sangid})">채팅</button>
+				</c:if>
 			</div>
 		</div>
 		<div id="article-profile-right">
@@ -411,14 +424,21 @@ function list(){
 		<hr>
 
 		<div>
-			<b>${dto.j_title } </b><br> <small class="text-secondary">${dto.j_category }</small><br>
-			<b><fmt:formatNumber value="${dto.j_price }" type="currency" /></b><br>
-			<br>
+			<b>
+			${dto.j_title } 
+			<c:if test="${dto.sellcomplete == 1 }">
+				<b style="color: red;">[판매완료]</b>
+			</c:if>
+			</b><br> 
+			<small class="text-secondary">${dto.j_category }</small><br>
+			<b><fmt:formatNumber value="${dto.j_price }" type="currency"/></b><br><br>
 			<div>
-				<p>${dto.j_explanation }</p>
+				<p>
+					${dto.j_explanation }
+				</p>
 			</div>
 			<div>
-				<small class="text-secondary">관심 ${dto.j_interest } 채팅 아직없음
+				<small class="text-secondary">관심 ${dto.j_interest } 채팅 ${roomCnt}
 					조회 ${dto.j_readcount }</small> <img src="../img/kakaopay.png"
 					style="width: 70px; height: 30px" id="iamportPayment"> <img
 					alt="" src="../img/toss.png" style="width: 70px; height: 30px"

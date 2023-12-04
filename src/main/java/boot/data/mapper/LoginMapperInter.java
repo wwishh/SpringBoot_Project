@@ -34,5 +34,8 @@ public interface LoginMapperInter {
 	
 	public int failcheck(String u_id);
 	
+	public int findpwstart(Map<String,String>map); //아이디전화번호 체크
+	 
+	public void pwchange(String u_id, String u_pass); //비밀번호 변경
 	
 }

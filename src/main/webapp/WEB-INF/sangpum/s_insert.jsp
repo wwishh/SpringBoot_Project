@@ -82,7 +82,7 @@
 								<input type="text" class="postcode form-control" id="sample6_postcode" placeholder="우편번호" style="width: width: 4vw;">
 								<input type="button" class="postcode_btn form-control" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="background-color: #D3D3D3; width: 8vw;"><br>
 							</div>
-							<input type="text" readonly="readonly"  name="j_addr" class="form-control" id="sample6_address" placeholder="주소"><br>
+							<input type="text" readonly="readonly"  name="j_addr" class="form-control" id="sample6_address" placeholder="주소" required="required"><br>
 							<input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
 							<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 						</div>

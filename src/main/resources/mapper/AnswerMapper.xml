@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boot.data.mapper.AnswerMapperInter">
 	<insert id="insertAnswer" parameterType="answer">
-		insert into answer (num, name, myid, content, writeday) values (#{num}, #{name}, #{myid}, #{content}, now())
+		insert into answer (num, name, myid, content, writeday) values (#{num}, #{name}, #{myid}, #{content}, DATE_ADD(NOW(), INTERVAL 9 HOUR));
 	</insert>
 	
 	<select id="getAllAnswers" parameterType="String" resultType="answer">
