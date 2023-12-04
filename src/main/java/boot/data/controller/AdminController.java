@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import boot.data.Dto.AdminLoginDto;
 import boot.data.Dto.LoginDto;
 import boot.data.Dto.NoticeDto;
+import boot.data.Dto.SangpumDto;
 import boot.data.Dto.UserDto;
 import boot.data.service.AdminService;
 import boot.data.service.LoginService;
@@ -32,7 +33,7 @@ public class AdminController {
 	
 	
 	@GetMapping("/admin")
-	public String adminIndex(HttpSession session) {
+	public String adminIndex(HttpSession session, Model model) {
 		//폼에 id 얻어줘야함
 				String adminid=(String)session.getAttribute("a_id");
 				//로그인인지 아닌지 판단
@@ -43,7 +44,9 @@ public class AdminController {
 				if(adminloginok==null) {
 					return "/3/adminlogin/adminLoginForm";
 				}
-				
+				model.addAttribute("t_u_l_count", service.adminTodayLogin());
+				model.addAttribute("y_u_l_count", service.adminYesterdayLogin());
+				model.addAttribute("w_u_l_count", service.adminWeekLogin());
 				return "/admin/layout-admin/admin_main/admin_main";
 	}
 	
@@ -224,6 +227,30 @@ public class AdminController {
 
 	}
 	
+	
+	@GetMapping("/a_sale")
+	public String a_sale(Model model){
+		List<SangpumDto>list=service.adminSale();
+		model.addAttribute("list",list);
+		
+		
+		return "/admin/admin/sales_data/listForm";
+	}
+	
+	@GetMapping("/a_sale_completed")
+	public String a_sale_completed(Model model){
+		List<SangpumDto>list=service.adminSaleComplete();
+		model.addAttribute("list",list);
+		return "/admin/admin/sales_data/completelistForm";
+	}
+	
+	@GetMapping("user_delete")
+	public String user_delete(@RequestParam String num){
+		service.deleteUser(num);
+		
+		return "redirect:a_userlist";
+		
+	}
 	
 	
 	

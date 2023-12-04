@@ -13,14 +13,14 @@
 </head>
 <body>
 	<h3>회원목록</h3>
-	<table>
-		<tr>
-		<th>번호</th><th>이름</th><th>아이디</th><th>이메일</th><th>마지막로그인</th><th>등록일</th>
+	<table class="table">
+		<tr class="table-danger">
+		<th>번호</th><th>이름</th><th >아이디</th><th>이메일</th><th>마지막로그인</th><th>등록일</th><th>수정/삭제</th>
 		</tr>
 		<c:forEach var="u_dto" items="${list }" varStatus="i">
                 <tr>
                     <td>${i.count }</td>
-                    <td>${u_dto.u_name }</td>
+                    <td> ${u_dto.u_name }</td>
                     <%-- <jsp:include page="user_detail.jsp">
 						<jsp:param value="${u_dto.u_id }" name="u_id"/>
 						<jsp:param value="${u_dto.u_pass }" name="u_pass"/>
@@ -33,10 +33,21 @@
 					<jsp:include page="user_correction.jsp">
 						<jsp:param value="${n_dto.n_num }" name="num"/>
 					</jsp:include>
-					<button type="button" class="u_del" num="${u_dto.u_id }" >삭제</button>
+					<button type="button" class="u_del btn btn-outline-danger" num="${u_dto.u_id }" >삭제</button>
 					</td>
                 </tr>
                 </c:forEach>
 	</table>
+	<script type="text/javascript">
+	
+	$(".u_del").click(function(){
+		var num=$(this).attr("num");
+		 var isConfirmed = confirm("삭제하시겠습니까?");
+		if(isConfirmed){
+			location.href="user_delete?num="+num;
+		}
+		
+	});
+</script>
 </body>
 </html>

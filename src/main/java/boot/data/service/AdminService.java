@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import boot.data.Dto.AdminLoginDto;
 import boot.data.Dto.LoginDto;
 import boot.data.Dto.NoticeDto;
+import boot.data.Dto.SangpumDto;
 import boot.data.Dto.UserDto;
 import boot.data.mapper.AdminMapper;
 
@@ -95,6 +96,43 @@ public class AdminService implements AdminServiceInter {
 		// TODO Auto-generated method stub
 		return mapperInter.getAllNotice();
 	}
+
+	@Override
+	public List<SangpumDto> adminSaleComplete() {
+		// TODO Auto-generated method stub
+		return mapperInter.adminSaleComplete();
+	}
+
+	@Override
+	public List<SangpumDto> adminSale() {
+		// TODO Auto-generated method stub
+		return mapperInter.adminSale();
+	}
+
+	@Override
+	public int adminTodayLogin() {
+		// TODO Auto-generated method stub
+		return mapperInter.adminTodayLogin();
+	}
+
+	@Override
+	public int adminYesterdayLogin() {
+		// TODO Auto-generated method stub
+		return mapperInter.adminYesterdayLogin();
+	}
+
+	@Override
+	public int adminWeekLogin() {
+		// TODO Auto-generated method stub
+		return mapperInter.adminWeekLogin();
+	}
+
+	@Override
+	public void deleteUser(String u_id) {
+		// TODO Auto-generated method stub
+		mapperInter.deleteUser(u_id);
+	}
+	
 	
 	
 

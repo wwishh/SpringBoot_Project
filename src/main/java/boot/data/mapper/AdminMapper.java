@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import boot.data.Dto.AdminLoginDto;
 import boot.data.Dto.LoginDto;
 import boot.data.Dto.NoticeDto;
+import boot.data.Dto.SangpumDto;
 import boot.data.Dto.UserDto;
 
 @Mapper
@@ -26,5 +27,10 @@ public interface AdminMapper {
 	public List<LoginDto> failuser(); //페일카운트 10이상 유저리스트
 	public List<UserDto> userList();
 	public int getTotalNoticeCount();
-	
+	public List<SangpumDto> adminSaleComplete();
+	public List<SangpumDto> adminSale();
+	public int adminTodayLogin();
+	public int adminYesterdayLogin();
+	public int adminWeekLogin();
+	public void deleteUser(String u_id);
 }
