@@ -44,7 +44,7 @@
 				<div class="sangpuminfo">
 					<b>${dto.j_title }</b><br>
 					<fmt:formatNumber value="${dto.j_price }" type="currency"/><br>
-					<span>판매일자 : ${selldate[i.index]}</span>
+					<span>판매일자 : ${selectselldate[i.index]}</span>
 				</div>
 			</div>
 		</c:forEach>

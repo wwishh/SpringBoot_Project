@@ -94,6 +94,8 @@ public class SangpumService implements SangpumServiceInter {
 		// TODO Auto-generated method stub
 		mapperInter.updateInterest(j_sangid);
 	}
+
+	
 	//상품 판매 완료 건수
 	@Override
 	public int salesCount(String u_id) {
