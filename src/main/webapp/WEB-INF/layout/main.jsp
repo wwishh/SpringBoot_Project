@@ -125,7 +125,7 @@ Kakao.API.request({
 })
   .then(function(res) {
 	 
-    console.log(JSON.stringify(res));
+    //console.log(JSON.stringify(res));
     //alert(JSON.stringify(res.id);
     //alert(JSON.stringify(res.kakao_account.phone_number));
    
@@ -147,7 +147,7 @@ Kakao.API.request({
     	
     	},
     	success:function(res){
-    	//refreshMemList();
+    	refreshMemList();
     	console.log("성공");
     	
     	},
