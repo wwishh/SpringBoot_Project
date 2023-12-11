@@ -25,8 +25,8 @@
   - 담당 기능 : 물품 등록수정, 물품리스트 정렬,카카오 상담기능, css
 - 김영준 : 로그인 API
   - 담당 기능 : 로그인페이지, 잠금해제,css
-- 윤호석 : 최신검색어, 좋아요
-  - 담당 기능 : 검색기능, 마이페이지 ,거래기능 ,css
+- 윤호석 : 검색 디테일, 마이페이지
+  - 담당 기능 : 검색기능, 회원정보수정, 관심상품, 구매내역, 판매중/판매완료 ,css
 
 ## DB설계
 
@@ -128,15 +128,19 @@
 
 ### 윤호석
 - 검색 디테일
+  최근 검색어 저장
 ![최근 검색어 기능1](https://github.com/ruky1/Final_Project/assets/45508671/7a7d2943-5533-42c5-a781-43c301b2ec2c)
+해당 결과로 이동
 ![최근 검색어 기능 2](https://github.com/ruky1/Final_Project/assets/45508671/16e0441f-6233-4f9a-9a6f-3fbeea3d336e)
+검색어 중복 저장 방지
 ![최근 검색어 기능 3](https://github.com/ruky1/Final_Project/assets/45508671/21ed53d3-a90f-49c5-a806-d2dc352312aa)
+최근 검색어 삭제
 ![최근 검색어 기능 4](https://github.com/ruky1/Final_Project/assets/45508671/c12a6050-5c8b-4234-9bc0-904186317953)
 
-- 인기 검색어
+- 인기 검색어(조회수 기준 20위)
 ![인기검색어](https://github.com/ruky1/Final_Project/assets/45508671/0bd2556f-9d71-40ba-b955-3f3093f3da16)
 
-- 비회원 검색기
+- 비회원 검색기(최근 검색 저장X)
 ![비회원 검색](https://github.com/ruky1/Final_Project/assets/45508671/c1ebb683-6a29-4e9f-bbb0-65040cc7c7dd)
 
 - 마이페이지
@@ -147,6 +151,7 @@
 
 - 판매 완료
 ![판매완료 1](https://github.com/ruky1/Final_Project/assets/45508671/04354520-4b31-4785-b0e6-269d29743ded)
+판매 완료시 구매불가
 ![판매완료 2](https://github.com/ruky1/Final_Project/assets/45508671/3d337268-d5f0-486c-af60-2751bd6a0b4f)
 
 
