@@ -72,11 +72,11 @@
 - 강연주 이메일 : 123rkdduswn@naver.com
   - Git 주소 : [https://github.com/qqqkyj](https://github.com/qqqkyj)
 - 위시온 이메일 : wson1948@gmail.com
-  - Git 주소 : [https://github.com/dawn-sh](https://github.com/wwishh)
+  - Git 주소 : [https://github.com/wwishh](https://github.com/wwishh)
 - 박희찬 이메일 : luis1018@naver.com
-  - Git 주소 : [https://github.com/jooyoungsong](https://github.com/itephc)
+  - Git 주소 : [https://github.com/itephc](https://github.com/itephc)
 - 김영준 이메일 : sleepysudal@naver.com
-  - Git 주소 : [https://github.com/ssung2sin](https://github.com/sleepysudal)
+  - Git 주소 : [https://github.com/sleepysudal](https://github.com/sleepysudal)
 - 윤호석 이메일 : hs970216@naver.com
   - Git 주소 : [https://github.com/otfeb](https://github.com/otfeb)
 
