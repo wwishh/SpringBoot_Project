@@ -1,8 +1,8 @@
-![image](https://github.com/ruky1/Final_Project/assets/45508671/5fd85f81-a0a1-4621-af52-38c5b4e65096)
+
 # Final_Project
 
 
-<img src="" />
+![image](https://github.com/ruky1/Final_Project/assets/45508671/5fd85f81-a0a1-4621-af52-38c5b4e65096)
 <br>
 <div align=center> 
 4GO BYE 중고 거래 플랫폼<br>
